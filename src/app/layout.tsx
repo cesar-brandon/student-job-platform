@@ -1,5 +1,5 @@
-import AppBar from './components/AppBar'
-import Providers from './components/Providers'
+import AppBar from '@/layouts/AppBar'
+import Providers from '@/common/Providers'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
