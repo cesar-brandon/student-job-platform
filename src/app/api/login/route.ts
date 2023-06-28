@@ -16,9 +16,7 @@ const POST = async (request: Request) => {
   });
 
   if (!user) {
-    return new Response(JSON.stringify({ error: "User not found" }), {
-      status: 404,
-    });
+    return new Response("User not found", { status: 404 });
   }
   if (!(await bcrypt.compare(body.password, user.password))) {
     return new Response("Unauthorized", { status: 401 });

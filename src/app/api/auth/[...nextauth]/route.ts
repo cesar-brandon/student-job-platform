@@ -11,7 +11,7 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res = await fetch("api/login", {
+        const res = await fetch(process.env.BASE_URL + "/api/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -4,11 +4,12 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Button from "@/common/Button";
 
 const ButtonSignin = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  console.log(session, status);
 
   if (session && session.user) {
     return (
-      <div className="felx gap-4 ml-auto">
+      <div className="flex items-center gap-4 ml-auto">
         <p className="text-sky-600">{session.user.name}</p>
         <Button
           onClick={() => signOut()}
