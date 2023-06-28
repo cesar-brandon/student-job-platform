@@ -13,7 +13,7 @@ const AppBar = () => {
             aria-label="Codely"
             href="/"
           >
-            Icon SVG
+            svg
           </a>
           <nav className="lg:flex grow gap-8 items-center justify-center pl-8">
             <HeaderItem title="Inicio" href="" />
