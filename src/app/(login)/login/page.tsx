@@ -2,6 +2,9 @@
 import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
 import { ChangeEvent, FormEvent, useState } from "react";
+import coverImage from "@/public/cover/2.png";
+import BackButton from "@/components/common/BackButton";
+import Carousel from "@/components/layouts/Carousel";
 
 const Login = () => {
   const { data: session, status } = useSession();
@@ -28,16 +31,7 @@ const Login = () => {
 
   return (
     <section className="flex flex-col md:flex-row h-screen items-center">
-      <div className="bg-blue-500 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
-        <Image
-          src="https://ifv-control-asistencia.vercel.app/assets/image-login-ifv-13d7b55b.jpg"
-          alt=""
-          className="w-full h-full object-cover"
-          width={1920}
-          height={1080}
-        />
-      </div>
-
+      <BackButton type="chevron" />
       <div
         className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
         flex items-center justify-center"
@@ -162,6 +156,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+      <Carousel />
     </section>
   );
 };

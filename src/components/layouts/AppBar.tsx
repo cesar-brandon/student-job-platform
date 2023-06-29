@@ -18,7 +18,7 @@ const AppBar = () => {
           <nav className="lg:flex grow gap-8 items-center justify-center pl-8">
             <HeaderItem title="Inicio" href="" underline />
             <HeaderItem title="Estudiantes" href="" underline />
-            <HeaderItem title="Empleos" href="" underline />
+            <HeaderItem title="Blog" href="" underline />
             <span className="ml-auto"></span>
             <HeaderItem title="Inicia sesión" href="login" />
             <Button
