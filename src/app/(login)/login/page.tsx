@@ -1,20 +1,45 @@
+"use client";
 import Image from "next/image";
+import { signIn, useSession } from "next-auth/react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const Login = () => {
+  const { data: session, status } = useSession();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    signIn("credentials", {
+      email: formData.email,
+      password: formData.password,
+      callbackUrl: "http://localhost:3000/feed",
+    });
+  };
+
   return (
     <section className="flex flex-col md:flex-row h-screen items-center">
       <div className="bg-blue-500 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
         <Image
-          src=""
+          src="https://ifv-control-asistencia.vercel.app/assets/image-login-ifv-13d7b55b.jpg"
           alt=""
           className="w-full h-full object-cover"
-          width={500}
-          height={500}
+          width={1920}
+          height={1080}
         />
       </div>
 
       <div
-        className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
+        className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
         flex items-center justify-center"
       >
         <div className="w-full h-100">
@@ -22,17 +47,24 @@ const Login = () => {
             Inicie sesión en su cuenta
           </h1>
 
-          <form className="mt-6" action="#" method="POST">
+          <form
+            className="mt-6"
+            action="#"
+            method="POST"
+            onSubmit={handleSubmit}
+          >
             <div>
               <label className="block text-gray-700">Email</label>
               <input
                 type="email"
-                name=""
-                id=""
+                name="email"
+                id="input-email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Ingrese su email"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                 autoFocus
-                autoComplete=""
+                autoComplete="on"
                 required
               />
             </div>
@@ -41,12 +73,13 @@ const Login = () => {
               <label className="block text-gray-700">Contraseña</label>
               <input
                 type="password"
-                name=""
-                id=""
+                name="password"
+                id="input-password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="Ingrese su contraseña"
-                minLength={6}
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
-				focus:bg-white focus:outline-none"
+								focus:bg-white focus:outline-none"
                 required
               />
             </div>
@@ -74,6 +107,11 @@ const Login = () => {
           <button
             type="button"
             className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "http://localhost:3000/feed",
+              })
+            }
           >
             <div className="flex items-center justify-center">
               <svg
@@ -91,19 +129,19 @@ const Login = () => {
                 <clipPath id="b">
                   <use xlinkHref="#a" overflow="visible" />
                 </clipPath>
-                <path clip-path="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
+                <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
                 <path
-                  clip-path="url(#b)"
+                  clipPath="url(#b)"
                   fill="#EA4335"
                   d="M0 11l17 13 7-6.1L48 14V0H0z"
                 />
                 <path
-                  clip-path="url(#b)"
+                  clipPath="url(#b)"
                   fill="#34A853"
                   d="M0 37l30-23 7.9 1L48 0v48H0z"
                 />
                 <path
-                  clip-path="url(#b)"
+                  clipPath="url(#b)"
                   fill="#4285F4"
                   d="M48 48L17 24l-4-3 35-10z"
                 />
@@ -118,6 +156,7 @@ const Login = () => {
               href="#"
               className="text-blue-500 hover:text-blue-700 font-semibold"
             >
+              {" "}
               Crear una cuenta
             </a>
           </p>

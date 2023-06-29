@@ -5,7 +5,6 @@ import Button from "@/common/Button";
 
 const ButtonSignin = () => {
   const { data: session, status } = useSession();
-  console.log(session, status);
 
   if (session && session.user) {
     return (

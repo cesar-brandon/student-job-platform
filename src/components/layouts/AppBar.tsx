@@ -16,11 +16,11 @@ const AppBar = () => {
             svg
           </a>
           <nav className="lg:flex grow gap-8 items-center justify-center pl-8">
-            <HeaderItem title="Inicio" href="" />
-            <HeaderItem title="Estudiantes" href="" />
-            <HeaderItem title="Empleos" href="" />
+            <HeaderItem title="Inicio" href="" underline />
+            <HeaderItem title="Estudiantes" href="" underline />
+            <HeaderItem title="Empleos" href="" underline />
             <span className="ml-auto"></span>
-            <SinginButton />
+            <HeaderItem title="Inicia sesión" href="login" />
             <Button
               text="Empresas"
               className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full"
