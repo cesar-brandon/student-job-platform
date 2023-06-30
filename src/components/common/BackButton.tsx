@@ -21,7 +21,7 @@ const BackButton = ({ type }: BackButtonProps) => {
       className="absolute top-0 text-white m-8 p-2 backdrop-blur bg-black bg-opacity-20 hover:bg-opacity-40 transition-all rounded-lg"
       onClick={() => router.back()}
     >
-      <ChevronLeftIcon className="w-10" strokeWidth={1.5} />
+      <ChevronLeftIcon className="w-8" strokeWidth={1.5} />
     </button>
   );
 };

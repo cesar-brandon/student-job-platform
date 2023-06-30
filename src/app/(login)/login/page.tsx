@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import coverImage from "@/public/cover/2.png";
 import BackButton from "@/components/common/BackButton";
 import Carousel from "@/components/layouts/Carousel";
 
@@ -25,7 +23,7 @@ const Login = () => {
     signIn("credentials", {
       email: formData.email,
       password: formData.password,
-      callbackUrl: "http://localhost:3000/feed",
+      callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/feed`,
     });
   };
 
@@ -103,7 +101,7 @@ const Login = () => {
             className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
             onClick={() =>
               signIn("google", {
-                callbackUrl: "http://localhost:3000/feed",
+                callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/feed`,
               })
             }
           >

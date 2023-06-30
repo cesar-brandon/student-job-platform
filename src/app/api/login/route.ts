@@ -1,5 +1,6 @@
 import prisma from "../../../lib/prisma";
 import * as bcrypt from "bcrypt";
+import { signToken } from "@/lib/jwt";
 
 interface RequestBody {
   username: string;
@@ -23,7 +24,12 @@ const POST = async (request: Request) => {
   }
 
   const { password, ...userWithoutPassword } = user;
-  return new Response(JSON.stringify(userWithoutPassword));
+  const accessToken = signToken(userWithoutPassword);
+  const result = {
+    ...userWithoutPassword,
+    accessToken,
+  };
+  return new Response(JSON.stringify(result));
 };
 
 export { POST };

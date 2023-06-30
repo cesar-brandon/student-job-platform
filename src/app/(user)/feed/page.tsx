@@ -1,9 +1,11 @@
 "use client";
 import Button from "@/components/common/Button";
+import Post from "@/components/common/Post";
 import { signOut, useSession } from "next-auth/react";
 
 const FeedPage = () => {
   const { data: session } = useSession();
+
   if (session && session.user) {
     return (
       <div>
@@ -17,6 +19,7 @@ const FeedPage = () => {
           text="Serrar Sesion"
           className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-full"
         />
+        <Post token={session.user.accessToken} />
       </div>
     );
   }
