@@ -1,6 +1,7 @@
 import AppBar from "@/layouts/AppBar";
 import Providers from "@/common/Providers";
 import "../globals.css";
+import Footer from "@/components/layouts/Footer";
 
 export const metadata = {
   title: "Home",
@@ -18,6 +19,7 @@ export default function RootLayout({
         <Providers>
           <AppBar />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>
