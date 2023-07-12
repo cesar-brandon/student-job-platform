@@ -1,14 +1,8 @@
+"use client";
 import GoogleIcon from "@/components/common/GoogleIcon";
 import RegisterForm from "@/components/layouts/RegisterForm";
-import { Metadata } from "next";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || ""),
-  title: "Sign Up",
-  description: "Sign up for an account",
-};
 
 const RegisterPage = () => {
   return (

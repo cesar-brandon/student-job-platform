@@ -1,13 +1,8 @@
+"use client";
 import GoogleIcon from "@/components/common/GoogleIcon";
 import LoginForm from "@/components/layouts/LoginForm";
-import { Metadata } from "next";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "Iniciar sesión",
-  description: "Inicie sesión en su cuenta",
-};
 
 const LoginPage = () => {
   return (
