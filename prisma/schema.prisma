@@ -18,11 +18,54 @@ model User {
     posts    Post[]
 }
 
-model Post {
+model Student {
+    id             Int           @id @default(autoincrement())
+    name           String?
+    lastname       String?
+    email          String        @unique
+    Career         Career?       @relation(fields: [id], references: [id])
+    GraduationYear Int?
+    password       String
+    image          String?
+    Postulacion    Postulacion[]
+}
+
+model Enterprise {
     id        Int     @id @default(autoincrement())
-    title     String
-    content   String?
-    published Boolean @default(false)
-    author    User    @relation(fields: [authorId], references: [id])
-    authorId  Int
+    name      String
+    email     String  @unique
+    password  String
+    image     String?
+    direction String?
+    phone     String?
+}
+
+model Career {
+    id       Int       @id @default(autoincrement())
+    name     String
+    students Student[]
+}
+
+model Post {
+    id          Int           @id @default(autoincrement())
+    title       String
+    content     String?
+    published   Boolean       @default(false)
+    author      User?         @relation(fields: [id], references: [id])
+    authorId    Int
+    Postulacion Postulacion[]
+}
+
+model Postulacion {
+    id        Int      @id @default(autoincrement())
+    student   Student? @relation(fields: [studentId], references: [id], map: "student")
+    post      Post?    @relation(fields: [postId], references: [id], map: "post")
+    accepted  Boolean  @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Clave foránea hacia Student
+    studentId Int?
+    // Clave foránea hacia Post
+    postId    Int?
 }

@@ -6,9 +6,8 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || ""),
-  title: "Login",
-  description: "Sign in to your account",
+  title: "Iniciar sesión",
+  description: "Inicie sesión en su cuenta",
 };
 
 const LoginPage = () => {
