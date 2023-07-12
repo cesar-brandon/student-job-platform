@@ -1,3 +1,4 @@
+"use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import PasswordInput from "../common/PasswordInput";
 

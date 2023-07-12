@@ -1,3 +1,4 @@
+"use client";
 import { signIn } from "next-auth/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import PasswordInput from "@/components/common/PasswordInput";
