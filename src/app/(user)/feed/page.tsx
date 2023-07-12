@@ -1,4 +1,3 @@
-"use client";
 import Button from "@/components/common/Button";
 import Post from "@/components/common/Post";
 import {
