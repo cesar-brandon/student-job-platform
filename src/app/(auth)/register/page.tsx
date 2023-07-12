@@ -1,4 +1,3 @@
-"use client";
 import GoogleIcon from "@/components/common/GoogleIcon";
 import RegisterForm from "@/components/layouts/RegisterForm";
 import { Metadata } from "next";
