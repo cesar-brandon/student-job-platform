@@ -1,3 +1,4 @@
+"use client";
 import GoogleIcon from "@/components/common/GoogleIcon";
 import LoginForm from "@/components/layouts/LoginForm";
 import { signIn } from "next-auth/react";

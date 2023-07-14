@@ -1,3 +1,4 @@
+"use client";
 import GoogleIcon from "@/components/common/GoogleIcon";
 import RegisterForm from "@/components/layouts/RegisterForm";
 import { signIn } from "next-auth/react";
@@ -16,11 +17,6 @@ const RegisterPage = () => {
       <button
         type="button"
         className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
-        onClick={() =>
-          signIn("google", {
-            callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/feed`,
-          })
-        }
       >
         <div className="flex items-center justify-center">
           <GoogleIcon />
