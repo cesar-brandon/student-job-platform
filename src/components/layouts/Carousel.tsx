@@ -7,11 +7,11 @@ import BackButton from "../common/BackButton";
 const Carousel = () => {
   const posts: Post[] = [
     {
-      imageUrl: "/cover/5.png",
+      imageUrl: "/cover/2.png",
       title: "1",
     },
     {
-      imageUrl: "/cover/2.png",
+      imageUrl: "/cover/7.png",
       title: "2",
     },
     {
