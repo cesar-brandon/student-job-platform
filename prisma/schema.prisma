@@ -11,11 +11,14 @@ datasource db {
 }
 
 model User {
-    id       Int     @id @default(autoincrement())
-    email    String  @unique
-    name     String?
-    password String
-    posts    Post[]
+    id         Int          @id @default(autoincrement())
+    email      String       @unique
+    name       String?      @unique
+    password   String
+    userType   String?
+    userTypeId Int?
+    Student    Student[]
+    Enterprise Enterprise[]
 }
 
 model Student {
@@ -23,21 +26,25 @@ model Student {
     name           String?
     lastname       String?
     email          String        @unique
-    Career         Career?       @relation(fields: [id], references: [id])
+    Career         Career?       @relation(fields: [careerId], references: [id])
+    careerId       Int?
     GraduationYear Int?
-    password       String
     image          String?
     Postulacion    Postulacion[]
+    User           User?         @relation(fields: [userId], references: [id])
+    userId         Int?
 }
 
 model Enterprise {
     id        Int     @id @default(autoincrement())
     name      String
     email     String  @unique
-    password  String
     image     String?
     direction String?
     phone     String?
+    posts     Post[]
+    User      User?   @relation(fields: [userId], references: [id])
+    userId    Int?
 }
 
 model Career {
@@ -47,25 +54,25 @@ model Career {
 }
 
 model Post {
-    id          Int           @id @default(autoincrement())
-    title       String
-    content     String?
-    published   Boolean       @default(false)
-    author      User?         @relation(fields: [id], references: [id])
-    authorId    Int
-    Postulacion Postulacion[]
+    id           Int           @id @default(autoincrement())
+    title        String
+    content      String?
+    published    Boolean       @default(false)
+    authorId     Int
+    Postulacion  Postulacion[]
+    Enterprise   Enterprise?   @relation(fields: [enterpriseId], references: [id])
+    enterpriseId Int?
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
 }
 
 model Postulacion {
     id        Int      @id @default(autoincrement())
     student   Student? @relation(fields: [studentId], references: [id], map: "student")
-    post      Post?    @relation(fields: [postId], references: [id], map: "post")
+    Post      Post?    @relation(fields: [postId], references: [id], map: "post")
     accepted  Boolean  @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    // Clave foránea hacia Student
     studentId Int?
-    // Clave foránea hacia Post
     postId    Int?
 }

@@ -2,22 +2,23 @@ import React from "react";
 import Button from "@/common/Button";
 import HeaderItem from "@/common/HeaderItem";
 import Link from "next/link";
+import { Bars2Icon, UserIcon } from "@heroicons/react/24/outline";
 
 const AppBar = () => {
   return (
     <header className="relative z-10">
-      <div className="xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16">
-        <section className="flex items-center justify-center min-h-[7.5rem]">
+      <div className="xl:w-[1440px] lg:w-[1024px] min-[0px]:w-[480px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16">
+        <section className="flex items-center justify-center min-[0px]:justify-between min-[0px]:min-h-[4rem] lg:min-h-[7.5rem]">
           <Link
-            className="relative grow max-w-[7.5rem]"
+            className="relative lg:grow lg:max-w-[7.5rem] min-[0px]:max-w-[5rem] lg:p-0 min-[0px]:p-5"
             href="/"
             aria-label="ifv"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="100"
               viewBox="0 0 381 155"
               fill="none"
+              className="w-[7rem] p-4 lg:w-[7.5rem] lg:p-0"
             >
               <path
                 d="M26.0455 30.9091V124H9.18182V30.9091H26.0455Z"
@@ -33,7 +34,7 @@ const AppBar = () => {
               />
             </svg>
           </Link>
-          <nav className="lg:flex grow gap-8 items-center justify-center pl-8">
+          <nav className="lg:flex min-[0px]:hidden grow gap-8 items-center justify-center pl-8">
             <HeaderItem title="Inicio" href="" underline />
             <HeaderItem title="Estudiantes" href="" underline />
             <HeaderItem title="Blog" href="blog" underline />
@@ -44,6 +45,10 @@ const AppBar = () => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full"
             />
           </nav>
+          <div className="lg:hidden min-[0px]:flex gap-4">
+            <UserIcon className="h-5 w-5 text-gray-700" />
+            <Bars2Icon className="h-5 w-5 text-gray-700" />
+          </div>
         </section>
       </div>
     </header>

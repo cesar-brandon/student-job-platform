@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -20,7 +20,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     signIn("credentials", {
-      email: formData.email,
+      username: formData.username,
       password: formData.password,
       callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/feed`,
     });
@@ -29,14 +29,14 @@ const LoginForm = () => {
   return (
     <form className="mt-6" action="#" method="POST" onSubmit={handleSubmit}>
       <div>
-        <label className="block text-gray-700">Email</label>
+        <label className="block text-gray-700">Nombre de Usuario</label>
         <input
-          type="email"
-          name="email"
-          id="input-email"
-          value={formData.email}
+          type="text"
+          name="username"
+          id="input-username"
+          value={formData.username}
           onChange={handleChange}
-          placeholder="Ingrese su email"
+          placeholder="Ingrese su nombre de usuario"
           className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
           autoFocus
           autoComplete="on"

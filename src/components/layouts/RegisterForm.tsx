@@ -1,4 +1,5 @@
 "use client";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ChangeEvent, FormEvent, useState } from "react";
 import PasswordInput from "../common/PasswordInput";
 
@@ -22,21 +23,27 @@ const RegisterForm = () => {
     <form className="mt-6" action="#" method="POST" onSubmit={handleSubmit}>
       <div>
         <label className="block text-gray-700">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="input-email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Ingrese su email"
-          className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-          autoFocus
-          autoComplete="on"
-          required
-        />
+        <div className="relative ">
+          <input
+            type="email"
+            name="email"
+            id="input-email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Ingrese su email"
+            className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+            autoFocus
+            autoComplete="on"
+            required
+          />
+          <button
+            type="button"
+            className="absolute right-0 top-0 h-full px-3 pt-2 hover:bg-transparent"
+          >
+            <MagnifyingGlassIcon className="w-6" />
+          </button>
+        </div>
       </div>
-
-      <PasswordInput value={formData.password} onChange={handleChange} />
 
       <button
         type="submit"

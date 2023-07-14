@@ -8,17 +8,17 @@ const StoryProgress = () => {
 
   return (
     <section
-      className="opacity-0 group-hover:opacity-100 absolute top-0 right-0 left-0 flex flex-wrap justify-between py-4 px-8 
-								 bg-gradient-to-b from-gray-400 via-gray-300 to-white transition-all duration-300 ease-in-out"
+      className="h-[8rem] opacity-40 group-hover:opacity-100 absolute top-0 right-0 left-0 py-4 px-8 
+			bg-gradient-to-b from-zinc-700 via-transparent to-transparent transition-all duration-300 ease-in-out z-10"
     >
-      <div className="flex gap-2 w-full">
+      <div className="flex gap-2 w-full h-[1rem]">
         <div className="flex-1 h-1 rounded-sm bg-gray-200"></div>
         <div className="flex-1 h-1 rounded-sm bg-gray-200"></div>
         <div className="flex-1 h-1 rounded-sm bg-gray-200"></div>
         <div className="flex-1 h-1 rounded-sm bg-gray-200"></div>
       </div>
       <button
-        className="z-[1] pt-2 text-white bg-transparent border-none"
+        className="z-[1] text-white bg-transparent border-none w-5 h-5"
         aria-label="Mutear"
         onClick={() => setMuted(!muted)}
       >
