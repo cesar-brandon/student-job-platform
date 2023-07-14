@@ -1,9 +1,0 @@
-POST {{BASE_URL}}/api/user
-
-{
-		"name": "blancaflor",
-		"email": "blancaabregugarcia@gmail.com",
-		"password": "sadmin"
-}
-
-
