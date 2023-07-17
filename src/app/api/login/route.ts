@@ -15,7 +15,6 @@ const POST = async (request: Request) => {
       name: body.username,
     },
   });
-  console.log(user);
 
   if (!user) {
     return new Response("User not found", { status: 404 });
