@@ -1,7 +1,6 @@
 "use client";
 import Button from "@/components/common/Button";
 import MiniProfile from "@/components/common/MiniProfile";
-import PostFilters from "@/components/common/PostFilters";
 import FeedPrincipal from "@/components/layouts/FeedPrincipal";
 import {
   ArrowRightOnRectangleIcon,

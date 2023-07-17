@@ -1,9 +1,18 @@
 "use client";
-import { SpeakerWaveIcon, SpeakerXMarkIcon } from "@heroicons/react/24/outline";
+import {
+  SpeakerWaveIcon,
+  SpeakerXMarkIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 
+interface StoryProgressProps {
+  closeStory?: () => void;
+  screen?: boolean;
+}
+
 // { story, progress, onProgressChange }
-const StoryProgress = () => {
+const StoryProgress = ({ closeStory, screen }: StoryProgressProps) => {
   const [muted, setMuted] = useState(false);
 
   return (
@@ -17,15 +26,24 @@ const StoryProgress = () => {
         <div className="flex-1 h-1 rounded-sm bg-gray-200"></div>
         <div className="flex-1 h-1 rounded-sm bg-gray-200"></div>
       </div>
-      <button
-        className="z-[1] text-white bg-transparent border-none w-5 h-5"
-        aria-label="Mutear"
-        onClick={() => setMuted(!muted)}
-      >
-        <span className="inline-flex items-center justify-center w-5 h-5">
-          {muted ? <SpeakerWaveIcon /> : <SpeakerXMarkIcon />}
-        </span>
-      </button>
+      <div className="w-full flex justify-between">
+        <button
+          className="z-[1] text-white bg-transparent border-none w-5 h-5"
+          aria-label="Mutear"
+          onClick={() => setMuted(!muted)}
+        >
+          <span className="inline-flex items-center justify-center w-5 h-5">
+            {muted ? <SpeakerWaveIcon /> : <SpeakerXMarkIcon />}
+          </span>
+        </button>
+        {screen && closeStory && (
+          <button className="text-white" onClick={() => closeStory()}>
+            <span className="inline-flex items-center justify-center w-5 h-5">
+              <XMarkIcon />
+            </span>
+          </button>
+        )}
+      </div>
     </section>
   );
 };
