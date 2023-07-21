@@ -18,7 +18,7 @@ function generateUsername(fullName: string): string {
 const MiniProfile = () => {
   const { data: session } = useSession();
   return (
-    <div className="min-h-[15rem] bg-yellow-300 flex flex-col px-8">
+    <div className="min-h-[15rem] bg-yellow-300 flex flex-col px-8 rounded-b-xl">
       <div className="py-4">
         <label htmlFor="table-search" className="sr-only">
           Search

@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/common/Button";
+import LoadingIcon from "@/components/common/LoadingIcon";
 import MiniProfile from "@/components/common/MiniProfile";
 import FeedPrincipal from "@/components/layouts/FeedPrincipal";
 import {
@@ -11,6 +12,7 @@ import { signOut, useSession } from "next-auth/react";
 
 const FeedPage = () => {
   const { data: session } = useSession();
+
   if (session && session.user) {
     const { user } = session;
     return (
@@ -25,27 +27,32 @@ const FeedPage = () => {
               />
               <p className="font-medium">Guardados</p>
             </div>
-            {user.userType === "enterprise" && (
+          </div>
+          <div className="absolute bottom-8 flex flex-col items-center gap-8">
+            {user.userTypeId === 2 && (
               <div>
                 <Button
                   icon={<PlusIcon className="h-6 w-6" aria-hidden="true" />}
                   text="Publicar oferta"
-                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold text-sm py-4 px-8 rounded-full flex items-center gap-4"
+                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold text-sm py-3 px-5 rounded-full flex items-center gap-4"
                 />
               </div>
             )}
-          </div>
-          <div className="absolute bottom-8 flex items-center">
-            <ArrowRightOnRectangleIcon className="h-6 w-6" aria-hidden="true" />
-            <Button
-              onClick={() =>
-                signOut({
-                  callbackUrl: "/",
-                })
-              }
-              text="Serrar Sesion"
-              className="text-gray-800 font-semibold py-2 px-4 rounded-full"
-            />
+            <div className="flex items-center">
+              <ArrowRightOnRectangleIcon
+                className="h-6 w-6"
+                aria-hidden="true"
+              />
+              <Button
+                onClick={() =>
+                  signOut({
+                    callbackUrl: "/",
+                  })
+                }
+                text="Serrar Sesion"
+                className="text-gray-800 font-semibold py-2 px-4 rounded-full"
+              />
+            </div>
           </div>
         </div>
         <FeedPrincipal />
@@ -58,8 +65,8 @@ const FeedPage = () => {
     );
   }
   return (
-    <div>
-      <h1>No se encuentra authenticado</h1>
+    <div className="w-screen h-screen flex items-center justify-center">
+      <LoadingIcon />
     </div>
   );
 };

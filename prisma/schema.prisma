@@ -15,10 +15,16 @@ model User {
     email      String       @unique
     name       String?      @unique
     password   String
-    userType   String?
-    userTypeId Int?
     Student    Student[]
     Enterprise Enterprise[]
+    UserType   UserType?    @relation(fields: [userTypeId], references: [id])
+    userTypeId Int?
+}
+
+model UserType {
+    id   Int     @id @default(autoincrement())
+    name String?
+    User User[]
 }
 
 model Student {

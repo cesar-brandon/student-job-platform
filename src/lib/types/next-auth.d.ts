@@ -8,7 +8,7 @@ declare module "next-auth" {
       email: string;
       accessToken: string;
       image: string;
-      userType: string;
+      userTypeId: number;
     };
   }
 }
