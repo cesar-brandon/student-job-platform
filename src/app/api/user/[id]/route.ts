@@ -11,7 +11,7 @@ const GET = async (
   }
 
   const userPosts = await prisma.post.findMany({
-    where: { enterpriseId: +params.id },
+    where: { authorId: +params.id },
   });
   return new Response(JSON.stringify(userPosts));
 };

@@ -4,7 +4,7 @@ import PostList from "../common/PostList";
 import StoryPlayer from "../common/StoryPlayer";
 import StoryPreview from "../common/StoryPreview";
 
-const FeedPrincipal = () => {
+const MainFeed = () => {
   const [openStory, setOpenStory] = useState(false);
   const stories: Story[] = [
     {
@@ -38,7 +38,7 @@ const FeedPrincipal = () => {
   };
 
   return (
-    <div className="w-[50%] p-10">
+    <div className="w-full md:w-[70%] lg:w-[50%] p-10">
       <div className="flex flex-col gap-4">
         <StoryPreview stories={stories} openStory={HandleOpenStory} />
         {openStory && (
@@ -51,4 +51,4 @@ const FeedPrincipal = () => {
   );
 };
 
-export default FeedPrincipal;
+export default MainFeed;

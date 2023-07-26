@@ -1,67 +1,22 @@
 "use client";
-import Button from "@/components/common/Button";
 import LoadingIcon from "@/components/common/LoadingIcon";
-import MiniProfile from "@/components/common/MiniProfile";
-import FeedPrincipal from "@/components/layouts/FeedPrincipal";
-import {
-  ArrowRightOnRectangleIcon,
-  BookmarkIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
-import { signOut, useSession } from "next-auth/react";
+import AsideFeed from "@/components/layouts/AsideFeed";
+import MainFeed from "@/components/layouts/MainFeed";
+import SidebarFeed from "@/components/layouts/SidebarFeed";
+import { useSession } from "next-auth/react";
 
 const FeedPage = () => {
   const { data: session } = useSession();
 
   if (session && session.user) {
     const { user } = session;
+    console.log(user);
     return (
-      <main className="xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16 flex">
-        <div className="w-[25%] h-screen relative">
-          <MiniProfile />
-          <div className="mt-8">
-            <div className="flex gap-4 items-center">
-              <BookmarkIcon
-                className="h-10 w-10 fill-indigo-600 stroke-none bg-white p-2 rounded-xl"
-                aria-hidden="true"
-              />
-              <p className="font-medium">Guardados</p>
-            </div>
-          </div>
-          <div className="absolute bottom-8 flex flex-col items-center gap-8">
-            {user.userTypeId === 2 && (
-              <div>
-                <Button
-                  icon={<PlusIcon className="h-6 w-6" aria-hidden="true" />}
-                  text="Publicar oferta"
-                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold text-sm py-3 px-5 rounded-full flex items-center gap-4"
-                />
-              </div>
-            )}
-            <div className="flex items-center">
-              <ArrowRightOnRectangleIcon
-                className="h-6 w-6"
-                aria-hidden="true"
-              />
-              <Button
-                onClick={() =>
-                  signOut({
-                    callbackUrl: "/",
-                  })
-                }
-                text="Serrar Sesion"
-                className="text-gray-800 font-semibold py-2 px-4 rounded-full"
-              />
-            </div>
-          </div>
-        </div>
-        <FeedPrincipal />
-        <div className="w-[25%] p-4">
-          <div className="bg-white min-h-[30rem] rounded-3xl drop-shadow-2xl p-6 font-semibold">
-            Añadir a tu feed
-          </div>
-        </div>
-      </main>
+      <>
+        <SidebarFeed user={user} />
+        <MainFeed />
+        <AsideFeed />
+      </>
     );
   }
   return (

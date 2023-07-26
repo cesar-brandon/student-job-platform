@@ -5,5 +5,11 @@ export default function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="bg-gray-100">{children}</div>;
+  return (
+    <div className="bg-gray-100 ">
+      <main className="xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16 flex">
+        {children}
+      </main>
+    </div>
+  );
 }
