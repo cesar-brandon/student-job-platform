@@ -9,7 +9,8 @@ interface Props {
 export default function Button(props: Props) {
   return (
     <button
-      className={`${props.className}`}
+      className={`${props.disabled && "grayscale cursor-not-allowed"}
+					${props.className}`}
       disabled={props.disabled}
       onClick={props.onClick}
     >
