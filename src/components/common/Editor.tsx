@@ -57,9 +57,21 @@ const Editor: React.FC<EditorProps> = (id) => {
           linkTool: {
             class: LinkTool,
             config: {
-              endpoint: "api/link",
+              endpoint: `${process.env.NEXT_PUBLIC_BASE_URL}/api/link`,
             },
           },
+          // image: {
+          //   class: ImageTool,
+          //   config: {
+          //     uploader: {
+          //       async uploadByFile(file: File) {},
+          //     },
+          //   },
+          // },
+          list: List,
+          inlineCode: InlineCode,
+          table: Table,
+          embed: Embed,
         },
       });
     }
