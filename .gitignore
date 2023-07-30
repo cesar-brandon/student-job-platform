@@ -39,4 +39,4 @@ next-env.d.ts
 /http
 
 # vercel
-/prisma/migrations
+#/prisma/migrations

@@ -1,10 +1,14 @@
+import { Button } from "@/components/ui/Button";
 import Editor from "@/components/common/Editor";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 interface pageProps {
   params: {
     slug: string;
   };
 }
+
+const queryClient = new QueryClient();
 
 const SubmitPage = async ({ params }: pageProps) => {
   return (
@@ -22,6 +26,11 @@ const SubmitPage = async ({ params }: pageProps) => {
 
       <div className="w-full flex justify-end">
         <Editor />
+        <div className="w-full flex justify-end">
+          <Button type="submit" className="w-full" form="enterprise-post-form">
+            Post
+          </Button>
+        </div>
       </div>
     </div>
   );

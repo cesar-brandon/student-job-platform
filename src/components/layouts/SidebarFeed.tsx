@@ -36,7 +36,7 @@ const SidebarFeed = ({ user }: SidebarProps) => {
         {user.userTypeId === 2 && (
           <div>
             <Link
-              href={`${user.name}/submit`}
+              href={`user/${user.name}/submit`}
               className="bg-blue-500 hover:bg-blue-400 text-white font-bold text-sm py-3 px-5 rounded-full flex items-center gap-4"
             >
               <PlusIcon className="h-6 w-6" aria-hidden="true" />
