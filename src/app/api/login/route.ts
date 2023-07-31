@@ -1,4 +1,4 @@
-import prisma from "../../../lib/prisma";
+import { db } from "../../../lib/prisma";
 import * as bcrypt from "bcrypt";
 import { signToken } from "@/lib/jwt";
 
@@ -10,7 +10,7 @@ interface RequestBody {
 const POST = async (request: Request) => {
   const body: RequestBody = await request.json();
 
-  const user = await prisma.user.findFirst({
+  const user = await db.user.findFirst({
     where: {
       name: body.username,
     },

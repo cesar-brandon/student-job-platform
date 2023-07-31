@@ -10,6 +10,7 @@ import { toast } from "../../hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { z } from "zod";
+import axios from "axios";
 
 type FormData = z.infer<typeof PostValidator>;
 
@@ -33,7 +34,6 @@ const Editor: React.FC<EditorProps> = (id) => {
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const _titleRef = useRef<HTMLTextAreaElement>(null);
-  const pathname = usePathname();
   const router = useRouter();
 
   const initializeEditor = useCallback(async () => {
@@ -140,13 +140,7 @@ const Editor: React.FC<EditorProps> = (id) => {
         title,
         content,
       };
-      const data = await fetch("/api/user/post", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const { data } = await axios.post("/api/user/post/create", payload);
       return data;
     },
     onError: () => {
@@ -158,7 +152,6 @@ const Editor: React.FC<EditorProps> = (id) => {
       });
     },
     onSuccess: () => {
-      // const newPathname = pathname.split("/").slice(0, -1).join("/");
       router.push("/feed");
 
       router.refresh();

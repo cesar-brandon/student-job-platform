@@ -44,7 +44,7 @@ const MiniProfile = () => {
             <div>
               <Image
                 className="rounded-2xl"
-                src={session.user.image}
+                src={session.user.image || "/profile-icon/gato.png"}
                 alt="Picture of the author"
                 width={70}
                 height={70}

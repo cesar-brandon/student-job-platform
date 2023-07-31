@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "@/common/Button";
-import HeaderItem from "@/common/HeaderItem";
 import Link from "next/link";
 import { Bars2Icon, UserIcon } from "@heroicons/react/24/outline";
+import HeaderItem from "../common/HeaderItem";
+import Button from "../common/Button";
 
 const AppBar = () => {
   return (

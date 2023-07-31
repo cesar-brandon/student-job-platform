@@ -29,7 +29,6 @@ const MainFeed = () => {
     },
   ];
   const HandleOpenStory = (id: number) => {
-    console.log(id);
     setOpenStory(true);
   };
 

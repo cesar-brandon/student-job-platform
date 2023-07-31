@@ -30,7 +30,6 @@ export default function Home() {
   ];
 
   const HandleOpenStory = (id: number) => {
-    console.log(id);
     setOpenStory(true);
   };
 

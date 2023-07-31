@@ -10,7 +10,6 @@ const FeedPage = () => {
 
   if (session && session.user) {
     const { user } = session;
-    console.log(user);
     return (
       <>
         <SidebarFeed user={user} />

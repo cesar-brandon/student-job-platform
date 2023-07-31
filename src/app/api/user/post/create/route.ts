@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/lib/auth";
 import { PostValidator } from "@/lib/validators/post";
 import { z } from "zod";
-import prisma from "@/lib/prisma";
+import { db } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    await prisma.post.create({
+    await db.post.create({
       data: {
         title,
         content,

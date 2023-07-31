@@ -25,7 +25,7 @@ const Post = ({ token }: Props) => {
         const jsonData = await res.json();
         setData(jsonData);
       } catch (error) {
-        console.error(error);
+        return error;
       }
     };
 

@@ -1,5 +1,5 @@
 import { verifyToken } from "@/lib/jwt";
-import prisma from "@/lib/prisma";
+import { db } from "@/lib/prisma";
 
 const GET = async (
   request: Request,
@@ -10,7 +10,7 @@ const GET = async (
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const userPosts = await prisma.post.findMany({
+  const userPosts = await db.post.findMany({
     where: { authorId: +params.id },
   });
   return new Response(JSON.stringify(userPosts));

@@ -21,7 +21,6 @@ export function verifyToken(token: string) {
   try {
     return verify(token, secret_key!) as JwtPayload;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }

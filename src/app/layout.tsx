@@ -1,4 +1,5 @@
 import Providers from "@/components/common/Providers";
+import { Toaster } from "@/components/ui/Toaster";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );

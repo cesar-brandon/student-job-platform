@@ -1,4 +1,4 @@
-import prisma from "../../../lib/prisma";
+import { db } from "../../../lib/prisma";
 import * as bcrypt from "bcrypt";
 
 interface RequestBody {
@@ -10,7 +10,7 @@ interface RequestBody {
 const POST = async (request: Request) => {
   const body: RequestBody = await request.json();
 
-  const user = await prisma.user.create({
+  const user = await db.user.create({
     data: {
       name: body.name,
       email: body.email,
