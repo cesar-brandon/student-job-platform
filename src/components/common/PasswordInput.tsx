@@ -10,7 +10,6 @@ const PasswordInput = ({ value, onChange }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <div className="relative mt-4">
-      <label className="block text-gray-700">Contraseña</label>
       <input
         type={showPassword ? "text" : "password"}
         name="password"
@@ -24,7 +23,7 @@ const PasswordInput = ({ value, onChange }: PasswordInputProps) => {
       />
       <button
         type="button"
-        className="absolute right-0 top-0 h-full px-3 pt-8 hover:bg-transparent"
+        className="absolute right-0 top-0 h-full px-3 pt-2 hover:bg-transparent"
         onClick={() => setShowPassword((prev) => !prev)}
         disabled={!value}
       >

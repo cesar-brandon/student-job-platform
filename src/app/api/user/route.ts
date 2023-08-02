@@ -1,25 +1,36 @@
-import { db } from "../../../lib/prisma";
-import * as bcrypt from "bcrypt";
+import { db } from "@/lib/prisma";
 
-interface RequestBody {
-  name: string;
-  email: string;
-  password: string;
-}
+const GET = async (request: Request) => {
+  if (!request.headers.get("identifier")) {
+    return new Response("Email or username is required", { status: 400 });
+  }
 
-const POST = async (request: Request) => {
-  const body: RequestBody = await request.json();
-
-  const user = await db.user.create({
-    data: {
-      name: body.name,
-      email: body.email,
-      password: await bcrypt.hash(body.password, 10),
+  const user = await db.user.findFirst({
+    where: {
+      OR: [
+        {
+          email: request.headers.get("identifier") as string,
+        },
+        {
+          name: request.headers.get("identifier") as string,
+        },
+      ],
+    },
+    select: {
+      createdAt: true,
+      name: true,
+      Student: {
+        select: {
+          name: true,
+          lastname: true,
+          image: true,
+        },
+      },
     },
   });
+  if (!user) return new Response("User not found", { status: 404 });
 
-  const { password, ...result } = user;
-  return new Response(JSON.stringify(result));
+  return new Response(JSON.stringify(user));
 };
 
-export { POST };
+export { GET };

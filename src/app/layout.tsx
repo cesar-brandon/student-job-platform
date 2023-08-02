@@ -1,5 +1,5 @@
 import Providers from "@/components/common/Providers";
-import { Toaster } from "@/components/ui/Toaster";
+import { Toaster } from "@/components/ui/toaster";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/Button";
 import Editor from "@/components/common/Editor";
+import { Button } from "@/components/ui/button";
 
 interface pageProps {
   params: {

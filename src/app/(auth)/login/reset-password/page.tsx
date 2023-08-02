@@ -26,7 +26,7 @@ const ResetPasswordPage = () => {
             />
           </label>
 
-          <button className="w-full py-3 font-medium text-white bg-blue-600 hover:bg-blue-500 rounded-lg border-blue-500 hover:shadow inline-flex space-x-2 items-center justify-center">
+          <button className="w-full py-3 font-medium text-white bg-blue-500 hover:bg-blue-400 rounded-lg border-blue-400 hover:shadow inline-flex space-x-2 items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -45,7 +45,7 @@ const ResetPasswordPage = () => {
             <span>Continuar</span>
           </button>
           <p className="text-center">
-            Aún no estas registrado?{" "}
+            ¿Aún no estas registrado?{" "}
             <Link
               href="/register"
               className="font-semibold text-blue-500 hover:text-blue-700 focus:text-blue-700"

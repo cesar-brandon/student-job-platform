@@ -2,7 +2,7 @@ const GoogleIcon = (props: any) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xlinkHref="http://www.w3.org/1999/xlink"
-    className="w-6 h-6"
+    className="mr-4 w-6 h-6"
     viewBox="0 0 48 48"
   >
     <defs>

@@ -1,7 +1,6 @@
 "use client";
 import GoogleIcon from "@/components/common/GoogleIcon";
 import RegisterForm from "@/components/layouts/RegisterForm";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 const RegisterPage = () => {

@@ -1,4 +1,6 @@
+import { simplifyName } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
@@ -17,6 +19,7 @@ function generateUsername(fullName: string): string {
 
 const MiniProfile = () => {
   const { data: session } = useSession();
+
   return (
     <div className="min-h-[15rem] bg-yellow-300 flex flex-col px-8 rounded-b-xl">
       <div className="py-4">
@@ -42,13 +45,14 @@ const MiniProfile = () => {
         {session && (
           <>
             <div>
-              <Image
-                className="rounded-2xl"
-                src={session.user.image || "/profile-icon/gato.png"}
-                alt="Picture of the author"
-                width={70}
-                height={70}
-              />
+              <Avatar>
+                <AvatarImage
+                  src={session.user.image || "./profile-icon/zorro.png"}
+                />
+                <AvatarFallback>
+                  {simplifyName(session.user.name)}
+                </AvatarFallback>
+              </Avatar>
             </div>
             <div>
               <h3 className="font-bold">
