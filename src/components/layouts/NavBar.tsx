@@ -53,7 +53,7 @@ const NavBar = () => {
 
   return (
     <div
-      className="p-3 fixed bottom-6 lg:bottom-10 left-[50%] -translate-x-1/2  bg-white rounded-full
+      className="z-10 p-3 fixed bottom-6 lg:bottom-10 left-[50%] -translate-x-1/2  bg-white rounded-full
 			flex items-center justify-center gap-8 shadow-md transform border border-gray-200"
     >
       {items.map((item, index) => (
