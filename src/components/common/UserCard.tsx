@@ -60,11 +60,11 @@ const UserCardFallback = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="flex items-center space-x-4 rounded-md border p-4">
+        <div className="w-full overflow-hidden flex items-center space-x-4 rounded-md border p-4">
           <Skeleton className="h-12 w-12 rounded-full" />
-          <div className="flex flex-col gap-2">
-            <Skeleton className="h-4 w-[250px]" />
-            <Skeleton className="h-4 w-[200px]" />
+          <div className="w-[70%] flex flex-col gap-2">
+            <Skeleton className="h-4 w-[200px] lg:w-[250px]" />
+            <Skeleton className="h-4 w-[150px] lg:w-[200px]" />
           </div>
         </div>
       </CardContent>

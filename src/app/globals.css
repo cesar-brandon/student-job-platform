@@ -82,3 +82,7 @@ input::-ms-reveal,
 input::-ms-clear {
 		display: none;
 }
+
+a {
+-webkit-tap-highlight-color: transparent;
+}

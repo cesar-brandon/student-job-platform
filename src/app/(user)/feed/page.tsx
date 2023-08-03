@@ -2,6 +2,7 @@
 import LoadingIcon from "@/components/common/LoadingIcon";
 import AsideFeed from "@/components/layouts/AsideFeed";
 import MainFeed from "@/components/layouts/MainFeed";
+import NavBar from "@/components/layouts/NavBar";
 import SidebarFeed from "@/components/layouts/SidebarFeed";
 import { useSession } from "next-auth/react";
 
@@ -15,6 +16,7 @@ const FeedPage = () => {
         <SidebarFeed user={user} />
         <MainFeed />
         <AsideFeed />
+        <NavBar />
       </>
     );
   }
