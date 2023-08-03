@@ -15,10 +15,13 @@ interface StoryProgressProps {
 const StoryProgress = ({ closeStory, screen }: StoryProgressProps) => {
   const [muted, setMuted] = useState(false);
 
+  let grandient = "";
+  if (screen) grandient = "md:from-transparent";
+
   return (
     <section
-      className="h-[8rem] opacity-40 group-hover:opacity-100 absolute top-0 right-0 left-0 py-4 px-8 
-			bg-gradient-to-b from-zinc-700 via-transparent to-transparent transition-all duration-300 ease-in-out z-10"
+      className={`z-[21] h-[8rem] opacity-40 group-hover:opacity-100 absolute top-0 right-0 left-0 py-4 px-8 
+				bg-gradient-to-b from-zinc-600 via-transparent to-transparent transition-all duration-300 ease-in-out ${grandient}`}
     >
       <div className="flex gap-2 w-full h-[1rem]">
         <div className="flex-1 h-1 rounded-sm bg-gray-200"></div>
