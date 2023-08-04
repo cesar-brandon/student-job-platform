@@ -27,6 +27,21 @@ const MainFeed = () => {
       image: "/enterprises/4.png",
       title: "leadership_school",
     },
+    {
+      id: 5,
+      image: "/enterprises/4.png",
+      title: "leadership_school",
+    },
+    {
+      id: 6,
+      image: "/enterprises/4.png",
+      title: "leadership_school",
+    },
+    {
+      id: 7,
+      image: "/enterprises/4.png",
+      title: "leadership_school",
+    },
   ];
   const HandleOpenStory = (id: number) => {
     setOpenStory(true);
@@ -37,9 +52,13 @@ const MainFeed = () => {
   };
 
   return (
-    <div className="w-full md:w-[70%] lg:w-[50%] p-10">
+    <div className="w-full md:w-[70%] lg:w-[50%] pt-6 sm:p-10 md:pr-0">
       <div className="flex flex-col gap-4">
-        <StoryPreview stories={stories} openStory={HandleOpenStory} />
+        <StoryPreview
+          stories={stories}
+          openStory={HandleOpenStory}
+          variant="feed"
+        />
         {openStory && (
           <StoryPlayer stories={stories} screen closeStory={HandleCloseStory} />
         )}

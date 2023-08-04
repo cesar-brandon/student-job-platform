@@ -3,11 +3,19 @@ import Image from "next/image";
 interface StoryPreviewProps {
   stories: Story[];
   openStory: (id: number) => void;
+  variant?: "landing" | "feed";
 }
 
-const StoryPreview = ({ stories, openStory }: StoryPreviewProps) => {
+const StoryPreview = ({
+  stories,
+  openStory,
+  variant = "landing",
+}: StoryPreviewProps) => {
+  const paddingStory = variant === "landing" ? "" : "pl-4";
   return (
-    <div className="flex gap-4 max-w-full mb-4 overflow-auto text-center">
+    <div
+      className={`flex gap-4 max-w-full mb-4 overflow-auto text-center ${paddingStory}`}
+    >
       {stories.map(({ id, image, title }: Story) => (
         <section key={id} className="flex flex-col items-center justify-center">
           <button

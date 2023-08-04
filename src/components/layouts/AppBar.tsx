@@ -7,10 +7,10 @@ import Button from "../common/Button";
 const AppBar = () => {
   return (
     <header className="relative z-10">
-      <div className="xl:w-[1440px] lg:w-[1024px] min-[0px]:w-[480px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16">
+      <div className="xl:w-[1440px] lg:w-[1024px] min-[0px]:w-[480px] max-w-full mr-auto ml-auto lg:px-8 xl:px-16 py-5 px-6">
         <section className="flex items-center justify-center min-[0px]:justify-between min-[0px]:min-h-[4rem] lg:min-h-[7.5rem]">
           <Link
-            className="relative lg:grow lg:max-w-[7.5rem] min-[0px]:max-w-[5rem] lg:p-0 min-[0px]:p-5"
+            className="relative lg:grow lg:max-w-[7.5rem] min-[0px]:max-w-[5rem] lg:p-0 "
             href="/"
             aria-label="ifv"
           >
@@ -18,7 +18,7 @@ const AppBar = () => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 381 155"
               fill="none"
-              className="w-[7rem] p-4 lg:w-[7.5rem] lg:p-0"
+              className="w-[5rem] lg:w-[7.5rem] lg:p-0"
             >
               <path
                 d="M26.0455 30.9091V124H9.18182V30.9091H26.0455Z"

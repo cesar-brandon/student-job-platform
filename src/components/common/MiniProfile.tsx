@@ -2,7 +2,6 @@ import { simplifyName } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 
 function getFirstTwoWords(fullName: string): string {
   const words = fullName.split(" ");
@@ -37,7 +36,7 @@ const MiniProfile = () => {
             type="text"
             id="table-search"
             className="bg-gray-50 border-none outline-none text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-            placeholder="Search for items"
+            placeholder="Puesto, empresa o palabra clave"
           />
         </div>
       </div>

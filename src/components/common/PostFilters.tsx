@@ -67,7 +67,7 @@ const PostFilters = () => {
   ];
 
   return (
-    <div className="flex items-center justify-between gap-4 cursor-default">
+    <div className="flex items-center justify-between gap-4 cursor-default px-4 sm:p-0">
       <div className="flex gap-2">
         <p className="text-gray-600 font-semibold text-sm hidden min-[500px]:block">
           Ordenar por:
