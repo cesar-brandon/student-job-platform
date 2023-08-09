@@ -1,6 +1,5 @@
 import { useState } from "react";
 import PostFilters from "../common/PostFilters";
-import PostList from "../common/PostList";
 import StoryPlayer from "../common/StoryPlayer";
 import StoryPreview from "../common/StoryPreview";
 
@@ -63,7 +62,6 @@ const MainFeed = () => {
           <StoryPlayer stories={stories} screen closeStory={HandleCloseStory} />
         )}
         <PostFilters />
-        <PostList />
       </div>
     </div>
   );

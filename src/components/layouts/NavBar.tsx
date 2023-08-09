@@ -33,7 +33,7 @@ const NavBar = () => {
       href: "#",
       icon: (
         <Avatar className="w-full h-full">
-          <AvatarImage src="/profile-icon/zorro.png" alt="avatar" />
+          <AvatarImage src="" alt="avatar" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ),

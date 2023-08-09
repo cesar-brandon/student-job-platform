@@ -45,9 +45,7 @@ const MiniProfile = () => {
           <>
             <div>
               <Avatar>
-                <AvatarImage
-                  src={session.user.image || "./profile-icon/zorro.png"}
-                />
+                <AvatarImage src={session.user.image || ""} />
                 <AvatarFallback>
                   {simplifyName(session.user.name)}
                 </AvatarFallback>

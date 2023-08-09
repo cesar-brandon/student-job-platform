@@ -1,4 +1,3 @@
-import NavBar from "@/components/layouts/NavBar";
 import "../globals.css";
 
 export default function UserLayout({

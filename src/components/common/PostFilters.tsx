@@ -12,10 +12,10 @@ import {
 import { Switch } from "../ui/switch";
 
 const PostFilters = () => {
-  const [isRecomendaciones, setIsRecomendaciones] = useState(true);
+  const [isRecommended, setIsRecommended] = useState(true);
 
   const handleBadgeToggle = () => {
-    setIsRecomendaciones(!isRecomendaciones);
+    setIsRecommended(!isRecommended);
   };
 
   const filters = [
@@ -74,13 +74,13 @@ const PostFilters = () => {
         </p>
         <Badge
           onClick={handleBadgeToggle}
-          variant={isRecomendaciones ? "blue" : "outline"}
+          variant={isRecommended ? "default" : "outline"}
         >
           Recomendaciones
         </Badge>
         <Badge
           onClick={handleBadgeToggle}
-          variant={!isRecomendaciones ? "blue" : "outline"}
+          variant={!isRecommended ? "default" : "outline"}
         >
           Recientes
         </Badge>

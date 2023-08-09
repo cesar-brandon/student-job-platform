@@ -11,10 +11,10 @@ const StoryPreview = ({
   openStory,
   variant = "landing",
 }: StoryPreviewProps) => {
-  const paddingStory = variant === "landing" ? "" : "pl-4";
+  const paddingStory = variant === "landing" ? "" : "pl-4 sm:pl-0";
   return (
     <div
-      className={`flex gap-4 max-w-full mb-4 overflow-auto text-center ${paddingStory}`}
+      className={`flex gap-4 max-w-full mb-4 overflow-auto text-center ${paddingStory} lg:overflow-x-hidden`}
     >
       {stories.map(({ id, image, title }: Story) => (
         <section key={id} className="flex flex-col items-center justify-center">

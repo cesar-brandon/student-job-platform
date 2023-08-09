@@ -8,7 +8,6 @@ import { useSession } from "next-auth/react";
 
 const FeedPage = () => {
   const { data: session } = useSession();
-  console.log(session);
 
   if (session && session.user) {
     const { user } = session;
