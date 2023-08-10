@@ -2,6 +2,7 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
 import HeaderFeed from "../common/HeaderFeed";
 import PostFeed from "../common/PostFeed";
+import { Separator } from "@radix-ui/react-separator";
 
 const MainFeed = async () => {
   const posts = await db.post.findMany({
