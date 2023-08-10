@@ -43,9 +43,12 @@ const MiniProfile = () => {
       <div className="flex mt-12 gap-4 items-center">
         {session && (
           <>
-            <div>
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
               <Avatar>
-                <AvatarImage src={session.user.image || ""} />
+                <AvatarImage
+                  src={session.user.image}
+                  alt={`@${session.user.name}`}
+                />
                 <AvatarFallback>
                   {simplifyName(session.user.name)}
                 </AvatarFallback>

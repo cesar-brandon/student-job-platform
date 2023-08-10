@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 import { Badge } from "../ui/badge";

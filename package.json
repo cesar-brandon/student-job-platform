@@ -44,6 +44,7 @@
     "bcrypt": "^5.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
     "editorjs-react-renderer": "^3.5.1",
     "embla-carousel-autoplay": "^8.0.0-rc07",
     "embla-carousel-react": "^8.0.0-rc07",

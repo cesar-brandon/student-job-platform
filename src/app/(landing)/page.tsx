@@ -9,7 +9,7 @@ export default function Home() {
   const stories: Story[] = [
     {
       id: 1,
-      image: "/stories/1.png",
+      image: "/stories/4.png",
       title: "DSI",
     },
     {
@@ -24,7 +24,7 @@ export default function Home() {
     },
     {
       id: 4,
-      image: "/stories/4.png",
+      image: "/stories/1.png",
       title: "Farmacia",
     },
   ];

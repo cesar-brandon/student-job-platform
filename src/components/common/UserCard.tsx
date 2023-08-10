@@ -32,16 +32,16 @@ const UserCard = ({ user, setUser }: Props) => {
           <Avatar>
             <AvatarImage
               className="object-cover"
-              src={user.Student[0].image}
+              src={user.Student[0]?.image}
               alt={user.name}
             />
             <AvatarFallback>
-              {simplifyName(user.Student[0].name)}
+              {simplifyName(user.Student[0]?.name)}
             </AvatarFallback>
           </Avatar>
           <div>
             <p className="text-sm font-medium leading-none">
-              {user.Student[0].name}
+              {user.Student[0]?.name}
             </p>
             <p className="text-sm text-muted-foreground">@{user.name}</p>
           </div>

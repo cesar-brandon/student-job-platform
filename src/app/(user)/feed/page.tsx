@@ -1,22 +1,22 @@
-"use client";
 import LoadingIcon from "@/components/common/LoadingIcon";
 import AsideFeed from "@/components/layouts/AsideFeed";
 import MainFeed from "@/components/layouts/MainFeed";
 import NavBar from "@/components/layouts/NavBar";
 import SidebarFeed from "@/components/layouts/SidebarFeed";
-import { useSession } from "next-auth/react";
+import { getAuthSession } from "@/lib/auth";
 
-const FeedPage = () => {
-  const { data: session } = useSession();
+const FeedPage = async () => {
+  const session = await getAuthSession();
 
   if (session && session.user) {
     const { user } = session;
     return (
       <>
+        <NavBar />
         <SidebarFeed user={user} />
+        {/* @ts-expect-error server component */}
         <MainFeed />
         <AsideFeed />
-        <NavBar />
       </>
     );
   }
