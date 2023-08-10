@@ -14,7 +14,6 @@ const FeedPage = async () => {
       <>
         <NavBar />
         <SidebarFeed user={user} />
-        {/* @ts-expect-error server component */}
         <MainFeed />
         <AsideFeed />
       </>
