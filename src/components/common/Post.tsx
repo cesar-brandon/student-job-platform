@@ -14,6 +14,7 @@ import { FC, useRef } from "react";
 import { Drawer } from "vaul";
 import EditorOutput from "./EditorOutput";
 import { Button } from "../ui/button";
+import PostVoteClient from "../post-vote/PostVoteClient";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -106,18 +107,23 @@ const Post: FC<PostProps> = ({
         </div>
       </div>
 
-      <div className="bg-gray-50 z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
+      <div className="bg-white sm:bg-gray-50 z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
         <div className="flex gap-6">
           <Link
             href={`@${authorName}/post/${post.id}`}
             className="w-fit flex items-center gap-2"
           >
-            <ChatBubbleBottomCenterIcon className="h-4 w-4" /> {commentAmt}{" "}
+            <ChatBubbleBottomCenterIcon className="h-5 w-5 mr-1" />
+            <p className="text-center py-2 font-medium text-sm text-zinc-900">
+              {commentAmt}
+            </p>{" "}
             comentarios
           </Link>
-          <div className="w-fit flex items-center gap-2">
-            <HandThumbUpIcon className="h-4 w-4" /> {_votesAmt} votos
-          </div>
+          <PostVoteClient
+            postId={`${post.id}`}
+            initialVotesAmt={_votesAmt}
+            initialVote={_currentVote?.type}
+          />
         </div>
         <div>
           <PaperAirplaneIcon className="h-4 w-4" />

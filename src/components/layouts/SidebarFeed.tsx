@@ -23,7 +23,7 @@ interface SidebarProps {
 
 const SidebarFeed = ({ user }: SidebarProps) => {
   return (
-    <div className="w-[25%] h-screen relative hidden md:block">
+    <div className="w-[25%] h-screen relative hidden lg:block">
       <div className="fixed h-full md:w-[14rem] lg:w-[15rem] xl:w-[20rem] hidden md:block">
         <MiniProfile />
         <div className="mt-8">

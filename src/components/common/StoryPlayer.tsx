@@ -22,12 +22,12 @@ const StoryPlayer = ({ screen, closeStory, stories }: StoryPlayerProps) => {
   );
 
   let containerSize = "w-[22rem] h-[40rem] rounded-[2rem]";
-  let imageClass = "w-full h-full object-cover bg-white";
+  let imageClass = "w-full h-full object-cover";
   let containerImage = "";
   if (screen) {
     containerSize = "w-screen h-screen fixed top-0 left-0 z-10 bg-gray-900";
-    imageClass = "w-full h-full md:w-[30rem] object-cover md:rounded-2xl";
-    containerImage = "items-center justify-center md:py-8 bg-gray-900";
+    imageClass = "w-full h-full lg:w-[30rem] object-cover lg:rounded-2xl";
+    containerImage = "items-center justify-center lg:py-8 bg-gray-900";
   }
 
   return (
@@ -46,7 +46,7 @@ const StoryPlayer = ({ screen, closeStory, stories }: StoryPlayerProps) => {
                   className={`flex flex-[0_0_100%]  min-w-0 relative ${containerImage}`}
                 >
                   <Image
-                    className={`${imageClass}`}
+                    className={`${imageClass} bg-white`}
                     src={image}
                     alt={image}
                     width="1920"

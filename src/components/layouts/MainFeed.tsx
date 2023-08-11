@@ -2,7 +2,6 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
 import HeaderFeed from "../common/HeaderFeed";
 import PostFeed from "../common/PostFeed";
-import { Separator } from "@radix-ui/react-separator";
 
 const MainFeed = async () => {
   const posts = await db.post.findMany({
@@ -18,7 +17,7 @@ const MainFeed = async () => {
   });
 
   return (
-    <div className="w-full md:w-[70%] lg:w-[50%] pt-6 sm:p-10 md:pr-0">
+    <div className="w-full lg:w-[50%] pt-6 sm:p-10">
       <div className="flex flex-col gap-4">
         <HeaderFeed />
         <PostFeed initialPosts={posts} />
