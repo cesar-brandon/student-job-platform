@@ -23,13 +23,13 @@ export async function PATCH(req: Request) {
     const existingVote = await db.vote.findFirst({
       where: {
         userId: session.user.id,
-        postId: parseInt(postId),
+        postId,
       },
     });
 
     const post = await db.post.findUnique({
       where: {
-        id: parseInt(postId),
+        id: postId,
       },
       include: {
         author: true,
@@ -47,7 +47,7 @@ export async function PATCH(req: Request) {
         await db.vote.delete({
           where: {
             userId_postId: {
-              postId: parseInt(postId),
+              postId,
               userId: session.user.id,
             },
           },
@@ -64,7 +64,7 @@ export async function PATCH(req: Request) {
           const cachePayload: CachedPost = {
             authorUsername: post.author.name ?? "",
             content: JSON.stringify(post.content),
-            id: `${post.id}`,
+            id: post.id,
             title: post.title,
             currentVote: null,
             createdAt: post.createdAt,
@@ -80,7 +80,7 @@ export async function PATCH(req: Request) {
       await db.vote.update({
         where: {
           userId_postId: {
-            postId: parseInt(postId),
+            postId,
             userId: session.user.id,
           },
         },
@@ -100,7 +100,7 @@ export async function PATCH(req: Request) {
         const cachePayload: CachedPost = {
           authorUsername: post.author.name ?? "",
           content: JSON.stringify(post.content),
-          id: `${post.id}`,
+          id: post.id,
           title: post.title,
           currentVote: voteType,
           createdAt: post.createdAt,
@@ -117,7 +117,7 @@ export async function PATCH(req: Request) {
       data: {
         type: voteType,
         userId: session.user.id,
-        postId: parseInt(postId),
+        postId,
       },
     });
 
@@ -132,7 +132,7 @@ export async function PATCH(req: Request) {
       const cachePayload: CachedPost = {
         authorUsername: post.author.name ?? "",
         content: JSON.stringify(post.content),
-        id: `${post.id}`,
+        id: post.id,
         title: post.title,
         currentVote: voteType,
         createdAt: post.createdAt,

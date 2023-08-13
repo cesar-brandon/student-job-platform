@@ -3,7 +3,7 @@ import { db } from "@/lib/prisma";
 
 const GET = async (
   request: Request,
-  { params }: { params: { id: number } }
+  { params }: { params: { id: string } }
 ) => {
   const accessToken = request.headers.get("Authorization");
   if (!accessToken || !verifyToken(accessToken)) {
@@ -11,7 +11,7 @@ const GET = async (
   }
 
   const userPosts = await db.post.findMany({
-    where: { authorId: +params.id },
+    where: { authorId: params.id },
   });
   return new Response(JSON.stringify(userPosts));
 };

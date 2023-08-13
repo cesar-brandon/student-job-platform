@@ -12,7 +12,7 @@ import MiniProfile from "../common/MiniProfile";
 
 interface SidebarProps {
   user: {
-    id: number;
+    id: string;
     name: string;
     email: string;
     accessToken: string;

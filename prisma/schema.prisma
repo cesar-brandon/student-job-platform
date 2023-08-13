@@ -13,7 +13,7 @@ datasource db {
 }
 
 model User {
-    id            Int            @id @default(autoincrement())
+    id            String         @id @default(cuid())
     name          String         @unique
     email         String         @unique
     emailVerified DateTime?
@@ -36,48 +36,48 @@ enum UserRole {
 }
 
 model Student {
-    id             Int           @id @default(autoincrement())
+    id             String        @id @default(cuid())
     name           String?
     lastname       String?
     email          String        @unique
     Career         Career?       @relation(fields: [careerId], references: [id])
-    careerId       Int?
+    careerId       String?
     GraduationYear Int?
     image          String?
     Postulacion    Postulacion[]
     User           User?         @relation(fields: [userId], references: [id])
-    userId         Int?
+    userId         String?
 }
 
 model Enterprise {
-    id          Int            @id @default(autoincrement())
+    id          String         @id @default(cuid())
     name        String         @unique
     email       String         @unique
     image       String?
     direction   String?
     phone       String?
     User        User?          @relation(fields: [userId], references: [id])
-    userId      Int?
+    userId      String?
     subscribers Subscription[]
 }
 
 model Subscription {
     user         User       @relation(fields: [userId], references: [id])
-    userId       Int
+    userId       String
     enterprise   Enterprise @relation(fields: [enterpriseId], references: [id])
-    enterpriseId Int
+    enterpriseId String
 
     @@id([userId, enterpriseId])
 }
 
 model Career {
-    id       Int       @id @default(autoincrement())
+    id       String    @id @default(cuid())
     name     String
     students Student[]
 }
 
 model Post {
-    id          Int           @id @default(autoincrement())
+    id          String        @id @default(cuid())
     title       String
     content     Json?
     published   Boolean       @default(false)
@@ -85,28 +85,28 @@ model Post {
     createdAt   DateTime      @default(now())
     updatedAt   DateTime      @updatedAt
 
-    author   User @relation(fields: [authorId], references: [id])
-    authorId Int
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
 
     comments Comment[]
     votes    Vote[]
 }
 
 model Comment {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     text      String
     createdAt DateTime @default(now())
     Post      Post?    @relation(fields: [postId], references: [id])
-    postId    Int?
+    postId    String?
     author    User?    @relation(fields: [authorId], references: [id])
-    authorId  Int?
+    authorId  String?
 
-    replyToId Int?      @map("replyTo")
+    replyToId String?   @map("replyTo")
     replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     replies   Comment[] @relation("ReplyTo")
 
     votes     CommentVote[]
-    commentId Int?
+    commentId String?
 }
 
 enum VoteType {
@@ -116,31 +116,31 @@ enum VoteType {
 
 model Vote {
     user   User     @relation(fields: [userId], references: [id])
-    userId Int
+    userId String
     post   Post     @relation(fields: [postId], references: [id])
-    postId Int
+    postId String
     type   VoteType
 
     @@id([userId, postId])
 }
 
 model CommentVote {
-    user      User?    @relation(fields: [userId], references: [id])
-    userId    Int
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
     comment   Comment  @relation(fields: [commentId], references: [id])
-    commentId Int
+    commentId String
     type      VoteType
 
     @@id([userId, commentId])
 }
 
 model Postulacion {
-    id        Int      @id @default(autoincrement())
-    student   Student? @relation(fields: [studentId], references: [id], map: "student")
-    Post      Post?    @relation(fields: [postId], references: [id], map: "post")
+    id        String   @id @default(cuid())
+    student   Student  @relation(fields: [studentId], references: [id], map: "student")
+    Post      Post     @relation(fields: [postId], references: [id], map: "post")
     accepted  Boolean  @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    studentId Int?
-    postId    Int?
+    studentId String
+    postId    String
 }
