@@ -1,6 +1,6 @@
 "use client";
 import GoogleIcon from "@/components/common/GoogleIcon";
-import LoaderIcon from "@/components/common/LoaderIcon";
+import { LoaderCircleIcon } from "@/components/common/Icons";
 import LoginForm from "@/components/layouts/LoginForm";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
@@ -45,7 +45,7 @@ const LoginPage = () => {
             disabled={isLoading}
           >
             {isLoading ? (
-              <LoaderIcon />
+              <LoaderCircleIcon />
             ) : (
               <>
                 <GoogleIcon /> Iniciar sesión con Google

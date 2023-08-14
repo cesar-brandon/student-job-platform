@@ -1,12 +1,18 @@
 import BackButton from "@/components/common/BackButton";
 import Carousel from "@/components/layouts/Carousel";
+import { getAuthSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import "../globals.css";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getAuthSession();
+
+  if (session && session.user) return redirect("/feed");
+
   return (
     <section className="flex flex-col md:flex-row h-screen items-center">
       <BackButton type="chevron" />

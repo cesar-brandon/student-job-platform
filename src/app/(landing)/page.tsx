@@ -72,7 +72,7 @@ export default function Home() {
           )}
         </div>
       </section>
-      <section className="mt-[11rem] w-full h-[40rem] bg-gray-700"></section>
+      <section className="mt-[11rem]"></section>
     </main>
   );
 }

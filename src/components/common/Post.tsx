@@ -4,7 +4,6 @@ import { formatTimeToNow } from "@/lib/utils";
 import {
   ChatBubbleBottomCenterIcon,
   ClockIcon,
-  HandThumbUpIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
 import { Post, User, Vote } from "@prisma/client";

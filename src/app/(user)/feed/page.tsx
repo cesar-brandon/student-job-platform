@@ -1,4 +1,4 @@
-import LoadingIcon from "@/components/common/LoadingIcon";
+import { LoaderIfvIcon } from "@/components/common/Icons";
 import AsideFeed from "@/components/layouts/AsideFeed";
 import MainFeed from "@/components/layouts/MainFeed";
 import NavBar from "@/components/layouts/NavBar";
@@ -21,7 +21,7 @@ const FeedPage = async () => {
   }
   return (
     <div className="w-screen h-screen flex items-center justify-center">
-      <LoadingIcon />
+      <LoaderIfvIcon />
     </div>
   );
 };

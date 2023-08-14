@@ -5,10 +5,10 @@ import PasswordInput from "@/components/common/PasswordInput";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import LoaderIcon from "@/components/common/LoaderIcon";
 import axios from "axios";
 import { UserCard, UserCardFallback } from "../common/UserCard";
 import { useRouter } from "next/navigation";
+import { LoaderCircleIcon } from "../common/Icons";
 
 interface Props {
   userDetails: null;
@@ -137,7 +137,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
         disabled={isLoading}
       >
         {isLoading ? (
-          <LoaderIcon />
+          <LoaderCircleIcon />
         ) : (
           <>{userDetails ? "Ingresar" : "Continuar"}</>
         )}
