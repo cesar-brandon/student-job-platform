@@ -12,6 +12,24 @@ datasource db {
     shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
+enum UserRole {
+    ENTERPRISE
+    STUDENT
+}
+
+enum VoteType {
+    UP
+    DOWN
+}
+
+enum Career {
+    ET
+    FT
+    AE
+    CF
+    DS
+}
+
 model User {
     id            String         @id @default(cuid())
     name          String         @unique
@@ -30,23 +48,21 @@ model User {
     updatedAt     DateTime       @updatedAt
 }
 
-enum UserRole {
-    ENTERPRISE
-    STUDENT
-}
-
 model Student {
-    id             String        @id @default(cuid())
-    name           String?
-    lastname       String?
-    email          String        @unique
-    Career         Career?       @relation(fields: [careerId], references: [id])
-    careerId       String?
-    GraduationYear Int?
-    image          String?
-    Postulacion    Postulacion[]
-    User           User?         @relation(fields: [userId], references: [id])
-    userId         String?
+    id          String        @id @default(cuid())
+    name        String
+    lastname    String
+    email       String?       @unique
+    dni         Int?          @unique
+    state       String?
+    code        Int?          @unique
+    image       String?
+    age         Int?
+    phoneNumber Int?          @unique
+    career      Career?
+    User        User?         @relation(fields: [userId], references: [id])
+    userId      String?
+    Postulacion Postulacion[]
 }
 
 model Enterprise {
@@ -68,12 +84,6 @@ model Subscription {
     enterpriseId String
 
     @@id([userId, enterpriseId])
-}
-
-model Career {
-    id       String    @id @default(cuid())
-    name     String
-    students Student[]
 }
 
 model Post {
@@ -107,11 +117,6 @@ model Comment {
 
     votes     CommentVote[]
     commentId String?
-}
-
-enum VoteType {
-    UP
-    DOWN
 }
 
 model Vote {

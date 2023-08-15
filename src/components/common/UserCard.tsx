@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 
-interface Props {
+interface UserCardProps {
   user: {
     name: string;
     lastName: string;
@@ -14,8 +14,25 @@ interface Props {
   setUser: (user: any) => void;
 }
 
-const UserCard = ({ user, setUser }: Props) => {
+interface StudentCardProps {
+  user: {
+    name: string;
+    lastname: string;
+    email: string;
+    image: string;
+    career: string;
+    phoneNumber: number;
+    age: number;
+    state: string;
+    code: number;
+    dni: number;
+  };
+  setUser: (user: any) => void;
+}
+
+const UserCard = ({ user, setUser }: UserCardProps) => {
   if (!user) return null;
+
   return (
     <Card>
       <CardHeader>
@@ -72,4 +89,49 @@ const UserCardFallback = () => {
   );
 };
 
-export { UserCard, UserCardFallback };
+const careerNames: { [key: string]: string } = {
+  ET: "Enfermería Técnica",
+  FT: "Farmacia Técnica",
+  AE: "Administración Empresas",
+  CF: "Contabilidad con Mención en Finanzas",
+  DS: "Desarrollo de Sistemas de Información",
+};
+
+const StudentCard = ({ user, setUser }: StudentCardProps) => {
+  if (!user) return null;
+  const userCareerName = careerNames[user.career];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardDescription className="flex justify-between">
+          <p>Estudiante de {userCareerName}</p>
+          <XMarkIcon
+            className="w-5 h-5 text-gray-400 hover:text-gray-900"
+            onClick={() => setUser(null)}
+          />
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <div className="flex items-center space-x-4 rounded-md border p-4">
+          <Avatar>
+            <AvatarImage
+              className="object-cover"
+              src={user.image}
+              alt={user.name}
+            />
+            <AvatarFallback>{simplifyName(user.name)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <p className="text-sm font-medium leading-none">
+              {user.name} {user.lastname}
+            </p>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export { UserCard, UserCardFallback, StudentCard };
