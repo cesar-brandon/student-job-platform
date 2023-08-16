@@ -1,4 +1,5 @@
-import { formatDate, simplifyName } from "@/lib/utils";
+import { careerData, formatDate, simplifyName } from "@/lib/utils";
+import { Student } from "@/types/db";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
@@ -15,18 +16,7 @@ interface UserCardProps {
 }
 
 interface StudentCardProps {
-  user: {
-    name: string;
-    lastname: string;
-    email: string;
-    image: string;
-    career: string;
-    phoneNumber: number;
-    age: number;
-    state: string;
-    code: number;
-    dni: number;
-  };
+  user: Student;
   setUser: (user: any) => void;
 }
 
@@ -89,17 +79,9 @@ const UserCardFallback = () => {
   );
 };
 
-const careerNames: { [key: string]: string } = {
-  ET: "Enfermería Técnica",
-  FT: "Farmacia Técnica",
-  AE: "Administración Empresas",
-  CF: "Contabilidad con Mención en Finanzas",
-  DS: "Desarrollo de Sistemas de Información",
-};
-
 const StudentCard = ({ user, setUser }: StudentCardProps) => {
   if (!user) return null;
-  const userCareerName = careerNames[user.career];
+  const userCareerName = careerData[user.career].name;
 
   return (
     <Card>
@@ -117,7 +99,7 @@ const StudentCard = ({ user, setUser }: StudentCardProps) => {
           <Avatar>
             <AvatarImage
               className="object-cover"
-              src={user.image}
+              src={user.image || ""}
               alt={user.name}
             />
             <AvatarFallback>{simplifyName(user.name)}</AvatarFallback>

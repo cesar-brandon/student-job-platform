@@ -7,10 +7,11 @@ import { toast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { Student } from "@/types/db";
 
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState<Student>();
 
   const loginWithGoogle = async () => {
     setIsLoading(true);

@@ -2,8 +2,16 @@ import { db } from "@/lib/prisma";
 
 const GET = async (request: Request) => {
   if (!request.headers.get("identifier")) {
-    return new Response("Email or username is required", { status: 400 });
+    return new Response("Email or code is required", { status: 400 });
   }
+  // const identifier = request.headers.get("identifier");
+  // let codeFilter = null;
+  //
+  // if (identifier) {
+  //   if (!isNaN(identifier)) {
+  //     codeFilter = parseInt(identifier);
+  //   }
+  // }
 
   const student = await db.student.findFirst({
     where: {
@@ -17,7 +25,7 @@ const GET = async (request: Request) => {
       ],
     },
   });
-  if (!student) return new Response("User not found", { status: 404 });
+  if (!student) return new Response("Student not found", { status: 404 });
 
   return new Response(JSON.stringify(student));
 };

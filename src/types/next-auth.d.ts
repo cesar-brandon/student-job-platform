@@ -10,6 +10,7 @@ declare module "next-auth" {
       accessToken: string;
       image: string;
       role: UserRole;
+      additionalInfo: string;
     };
   }
 }

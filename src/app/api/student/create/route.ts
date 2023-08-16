@@ -1,20 +1,8 @@
 import { db } from "@/lib/prisma";
-import { Career } from "@prisma/client";
-
-interface RequestBody {
-  name: string;
-  lastname: string;
-  email: string;
-  career: Career;
-  phoneNumber: number;
-  age: number;
-  state: string;
-  code: number;
-  dni: number;
-}
+import { Student } from "@prisma/client";
 
 const POST = async (request: Request) => {
-  const body: RequestBody[] = await request.json();
+  const body: Student[] = await request.json();
 
   const studentsData = body.map((student) => ({
     name: student.name,

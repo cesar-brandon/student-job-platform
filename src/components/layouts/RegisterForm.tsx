@@ -1,16 +1,16 @@
 "use client";
 import { toast } from "@/hooks/use-toast";
+import { Student } from "@/types/db";
 import axios from "axios";
-import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { LoaderCircleIcon } from "../common/Icons";
-import PasswordInput from "../common/PasswordInput";
+import OtpInput from "../common/OtpInput";
 import { StudentCard, UserCardFallback } from "../common/UserCard";
 import { Button } from "../ui/button";
 
 interface Props {
-  userDetails: null;
-  setUserDetails: (userDetails: null) => void;
+  userDetails: Student;
+  setUserDetails: (userDetails: Student) => void;
 }
 
 const RegisterForm = ({ userDetails, setUserDetails }: Props) => {
@@ -27,6 +27,7 @@ const RegisterForm = ({ userDetails, setUserDetails }: Props) => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     userDetails ? loginWithCredentials() : getStudent();
@@ -86,18 +87,18 @@ const RegisterForm = ({ userDetails, setUserDetails }: Props) => {
       {userDetails && (
         <>
           <StudentCard user={userDetails} setUser={setUserDetails} />
-          <PasswordInput value={formData.password} onChange={handleChange} />
+          <OtpInput user={userDetails} />
         </>
       )}
       <Button
         type="submit"
-        className="w-full bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-base mt-6"
-        disabled={isLoading}
+        className="w-full mt-6"
+        disabled={userDetails || isLoading}
       >
         {isLoading ? (
           <LoaderCircleIcon />
         ) : (
-          <>{userDetails ? "Confirmar" : "Continuar"}</>
+          <>{userDetails ? "Ingresar" : "Continuar"}</>
         )}
       </Button>
     </form>
