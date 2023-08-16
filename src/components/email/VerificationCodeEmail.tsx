@@ -31,8 +31,8 @@ const VerificationCodeEmail: React.FC<Props> = ({ name, career, code }) => {
         <Container>
           <Section style={logo}>
             <Img
-              width={60}
-              src="https://raw.githubusercontent.com/cesar-brandon/job-platform/main/public/enterprises/2.png"
+              width={150}
+              src="https://raw.githubusercontent.com/cesar-brandon/job-platform/02645347daa88442ec177baad50076ad29243cc0/public/logo/logo-ifv.png"
             />
           </Section>
 
