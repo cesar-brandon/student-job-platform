@@ -1,6 +1,7 @@
 import { toast } from "@/hooks/use-toast";
 import { sendEmail } from "@/lib/resend";
 import { careerData, generateCode } from "@/lib/utils";
+import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
 import { LoaderCircleIcon } from "./Icons";
@@ -27,11 +28,19 @@ const OtpInput: React.FC<OtpInputProps> = ({ user }) => {
     try {
       const code = generateCode(6);
       setRandomCode(code);
-      await sendEmail(code, user.name, career, user.email);
-      toast({
-        title: "Código enviado",
-        description: "Se ha enviado el código a su correo electrónico",
-      });
+      await axios
+        .post("/api/send", {
+          code,
+          name: user.name,
+          career,
+          email: user.email,
+        })
+        .then(() => {
+          toast({
+            title: "Código enviado",
+            description: "Se ha enviado el código a su correo electrónico",
+          });
+        });
     } catch (error) {
       toast({
         title: "Algo salió mal",
