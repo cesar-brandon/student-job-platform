@@ -26,13 +26,13 @@ const VerificationCodeEmail: React.FC<Props> = ({ name, career, code }) => {
   return (
     <Html>
       <Head />
-      <Preview>Yelp recent login</Preview>
+      <Preview>codigo de verificacion</Preview>
       <Body style={main}>
         <Container>
           <Section style={logo}>
             <Img
-              width={60}
-              src="https://raw.githubusercontent.com/cesar-brandon/job-platform/main/public/enterprises/2.png"
+              width={130}
+              src="https://raw.githubusercontent.com/cesar-brandon/job-platform/02645347daa88442ec177baad50076ad29243cc0/public/logo/logo-ifv.png"
             />
           </Section>
 
