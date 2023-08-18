@@ -4,23 +4,24 @@ const GET = async (request: Request) => {
   if (!request.headers.get("identifier")) {
     return new Response("Email or code is required", { status: 400 });
   }
-  // const identifier = request.headers.get("identifier");
-  // let codeFilter = null;
-  //
-  // if (identifier) {
-  //   if (!isNaN(identifier)) {
-  //     codeFilter = parseInt(identifier);
-  //   }
-  // }
+  const identifier = request.headers.get("identifier");
+  let codeFilter = null;
+
+  if (identifier) {
+    const parsedValue = parseInt(identifier);
+    if (!Number.isNaN(parsedValue)) {
+      codeFilter = parsedValue;
+    }
+  }
 
   const student = await db.student.findFirst({
     where: {
       OR: [
         {
-          email: request.headers.get("identifier") as string,
+          email: identifier as string,
         },
         {
-          code: parseInt(request.headers.get("identifier") as string),
+          code: codeFilter,
         },
       ],
     },

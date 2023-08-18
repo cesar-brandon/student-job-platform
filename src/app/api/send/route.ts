@@ -25,7 +25,7 @@ export async function POST(request: Request) {
         code: body.code,
         name: body.name,
         career: body.career,
-      }),
+      }) as React.ReactElement,
     });
 
     return NextResponse.json(data);
