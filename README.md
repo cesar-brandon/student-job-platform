@@ -1,5 +1,16 @@
-<h1 align="center">Job Platform</h1>
+<h1 align="center"><a href="https://ifvempleos.vercel.app/">Job Platform</a></h1>
 
-<p align="center">
-		<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=F38A0B&center=true&repeat=false&width=435&lines=Getting+Started+%F0%9F%8E%89" alt="Typing SVG" />
-</p>
+<p align="center">An online student job platform that connects students with part-time jobs, internships, and entry-level positions.</p>
+
+[![Job Platform](./public/screenshot/shot-landing.png)](https://ifvempleos.vercel.app/)
+
+
+
+## Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com)
+- **ORM:** [Prisma ORM](https://www.prisma.io/)
+- **UI Components:** [shadcn/ui](https://ui.shadcn.com)
+- **Email:** [React Email](https://react.email)
+- **File Uploads:** [uploadthing](https://uploadthing.com)
