@@ -26,13 +26,13 @@ const UserCard = ({ user, setUser }: UserCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardDescription className="flex justify-between">
+        <div className="text-sm text-muted-foreground flex justify-between">
           <p>Creado el {formatDate(user.createdAt)}</p>
           <XMarkIcon
             className="w-5 h-5 text-gray-400 hover:text-gray-900"
             onClick={() => setUser(null)}
           />
-        </CardDescription>
+        </div>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="flex items-center space-x-4 rounded-md border p-4">
@@ -62,9 +62,7 @@ const UserCardFallback = () => {
   return (
     <Card>
       <CardHeader>
-        <CardDescription>
-          <Skeleton className="h-4 w-[250px]" />
-        </CardDescription>
+        <Skeleton className="h-4 w-[250px]" />
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="w-full overflow-hidden flex items-center space-x-4 rounded-md border p-4">
@@ -86,16 +84,16 @@ const StudentCard = ({ user, setUser }: StudentCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardDescription className="flex justify-between">
+        <div className="text-sm text-muted-foreground flex justify-between">
           <p>Estudiante de {userCareerName}</p>
           <XMarkIcon
             className="w-5 h-5 text-gray-400 hover:text-gray-900"
             onClick={() => setUser(null)}
           />
-        </CardDescription>
+        </div>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="flex items-center space-x-4 rounded-md border p-4">
+        <div className="flex items-center space-x-4 rounded-md border p-4 overflow-hidden">
           <Avatar>
             <AvatarImage
               className="object-cover"
@@ -108,7 +106,9 @@ const StudentCard = ({ user, setUser }: StudentCardProps) => {
             <p className="text-sm font-medium leading-none">
               {user.name} {user.lastname}
             </p>
-            <p className="text-sm text-muted-foreground">{user.email}</p>
+            <p className="text-sm text-muted-foreground max-w-[10rem] overflow-hidden whitespace-nowrap text-ellipsis">
+              {user.email}
+            </p>
           </div>
         </div>
       </CardContent>

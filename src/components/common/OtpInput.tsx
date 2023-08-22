@@ -1,5 +1,4 @@
 import { toast } from "@/hooks/use-toast";
-import { sendEmail } from "@/lib/resend";
 import { careerData, generateCode } from "@/lib/utils";
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
@@ -12,9 +11,15 @@ interface OtpInputProps {
     career: string;
     email: string;
   };
+  setIsVerified: (value: boolean) => void;
+  setTitle: (title: string) => void;
 }
 
-const OtpInput: React.FC<OtpInputProps> = ({ user }) => {
+const OtpInput: React.FC<OtpInputProps> = ({
+  user,
+  setIsVerified,
+  setTitle,
+}) => {
   const [randomCode, setRandomCode] = useState<string>("");
   const [isSending, setIsSending] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
@@ -36,10 +41,7 @@ const OtpInput: React.FC<OtpInputProps> = ({ user }) => {
           email: user.email,
         })
         .then(() => {
-          toast({
-            title: "Código enviado",
-            description: "Se ha enviado el código a su correo electrónico",
-          });
+          toast({ title: "Código enviado" });
         });
     } catch (error) {
       toast({
@@ -55,17 +57,19 @@ const OtpInput: React.FC<OtpInputProps> = ({ user }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCode(e.target.value);
-    const enteredCode = e.target.value;
+    const enteredCode = e.target.value.toUpperCase();
     if (enteredCode.length === 6) {
       if (enteredCode === randomCode) {
         toast({
           title: "Código correcto",
           description: "Se ha verificado su identidad",
         });
+
+        setTitle("Termina tu registro");
+        return setIsVerified(true);
       } else {
         toast({
           title: "Código incorrecto",
-          description: "El código ingresado es incorrecto",
           variant: "destructive",
         });
       }
@@ -73,7 +77,7 @@ const OtpInput: React.FC<OtpInputProps> = ({ user }) => {
   };
 
   return (
-    <form className="flex flex-col gap-4 mt-4">
+    <div className="flex flex-col gap-4 mt-4">
       <label className="text-gray-499">
         El código sera enviado a su correo electrónico
       </label>
@@ -90,14 +94,14 @@ const OtpInput: React.FC<OtpInputProps> = ({ user }) => {
 								focus:bg-white focus:outline-none"
         />
         <Button
-          className="w-20"
+          className="w-24"
           onClick={sendCode}
           disabled={isSending || isDisabled}
         >
           {isSending ? <LoaderCircleIcon /> : "Enviar"}
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
 

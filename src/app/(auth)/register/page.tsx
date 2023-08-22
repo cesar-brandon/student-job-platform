@@ -12,6 +12,9 @@ import { Student } from "@/types/db";
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<Student>();
+  const [title, setTitle] = useState<string>("Únete");
+
+  const registerProps = { userDetails, setUserDetails, setTitle };
 
   const loginWithGoogle = async () => {
     setIsLoading(true);
@@ -33,10 +36,10 @@ const RegisterPage = () => {
   return (
     <div className="w-full h-100">
       <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
-        {userDetails ? "Confirma tu identidad" : "Únete"}
+        {title}
       </h1>
 
-      <RegisterForm userDetails={userDetails} setUserDetails={setUserDetails} />
+      <RegisterForm {...registerProps} />
 
       {!userDetails && (
         <>

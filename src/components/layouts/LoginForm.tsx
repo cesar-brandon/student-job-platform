@@ -100,20 +100,18 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
   return (
     <form className="mt-6" method="POST" onSubmit={handleSubmit}>
       {!isLoading && !userDetails && (
-        <>
-          <input
-            type="text"
-            name="identifier"
-            id="input-identifier"
-            value={formData.identifier}
-            onChange={handleChange}
-            placeholder="Ingrese su nombre de usuario o correo"
-            className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-            autoFocus
-            autoComplete="on"
-            required
-          />
-        </>
+        <input
+          type="text"
+          name="identifier"
+          id="input-identifier"
+          value={formData.identifier}
+          onChange={handleChange}
+          placeholder="Ingrese su nombre de usuario o correo"
+          className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+          autoFocus
+          autoComplete="on"
+          required
+        />
       )}
       {isLoadingCard && <UserCardFallback />}
       {userDetails && (

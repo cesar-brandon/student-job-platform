@@ -4,9 +4,14 @@ import { useState } from "react";
 interface PasswordInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
 }
 
-const PasswordInput = ({ value, onChange }: PasswordInputProps) => {
+const PasswordInput = ({
+  value,
+  onChange,
+  placeholder = "Ingrese su contraseña",
+}: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <div className="relative mt-4">
@@ -16,7 +21,7 @@ const PasswordInput = ({ value, onChange }: PasswordInputProps) => {
         id="input-password"
         value={value}
         onChange={onChange}
-        placeholder="Ingrese su contraseña"
+        placeholder={placeholder}
         className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
 								focus:bg-white focus:outline-none"
         required

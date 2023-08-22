@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const data = await resend.emails.send({
       from: "ifvempleos <onboarding@resend.dev>",
       to: body.email,
-      subject: "Bienvenido a IFV Empleos",
+      subject: `${body.code} es tu código de verificación`,
       react: VerificationCodeEmail({
         code: body.code,
         name: body.name,

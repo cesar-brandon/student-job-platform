@@ -26,7 +26,9 @@ const VerificationCodeEmail: React.FC<Props> = ({ name, career, code }) => {
   return (
     <Html>
       <Head />
-      <Preview>codigo de verificacion</Preview>
+      <Preview>
+        Bienvenido a la plataforma de empleos del Instituto Federico Villarreal
+      </Preview>
       <Body style={main}>
         <Container>
           <Section style={logo}>
