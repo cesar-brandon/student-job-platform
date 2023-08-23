@@ -1,7 +1,9 @@
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
-import HeaderFeed from "../common/HeaderFeed";
-import PostFeed from "../common/PostFeed";
+import HeaderFeed from "@/components/common/HeaderFeed";
+import PostFeed from "@/components/common/PostFeed";
+import PostFilters from "@/components/common/PostFilters";
+import { Separator } from "../ui/separator";
 
 const MainFeed = async () => {
   const posts = await db.post.findMany({
@@ -17,9 +19,11 @@ const MainFeed = async () => {
   });
 
   return (
-    <div className="w-full lg:w-[50%] pt-6 sm:p-10">
+    <div className="w-full lg:w-[50%] pt-4 lg:pt-6 sm:p-10">
       <div className="flex flex-col gap-4">
         <HeaderFeed />
+        <Separator />
+        <PostFilters />
         <PostFeed initialPosts={posts} />
       </div>
     </div>

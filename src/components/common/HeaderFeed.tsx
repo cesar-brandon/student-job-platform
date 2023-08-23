@@ -1,70 +1,27 @@
-"use client";
-
-import PostFilters from "@/components/common/PostFilters";
-import StoryPlayer from "@/components/common/StoryPlayer";
-import StoryPreview from "@/components/common/StoryPreview";
-import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { BellIcon } from "@heroicons/react/24/outline";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 const HeaderFeed: React.FC = () => {
-  const [openStory, setOpenStory] = useState(false);
-
-  const stories: Story[] = [
-    {
-      id: 1,
-      image: "/enterprises/1.png",
-      title: "baby_leaders",
-    },
-    {
-      id: 2,
-      image: "/enterprises/2.png",
-      title: "ifv_chincha",
-    },
-    {
-      id: 3,
-      image: "/enterprises/3.png",
-      title: "little_leaders",
-    },
-    {
-      id: 4,
-      image: "/enterprises/4.png",
-      title: "leadership_school",
-    },
-    {
-      id: 5,
-      image: "/enterprises/4.png",
-      title: "leadership_school",
-    },
-    {
-      id: 6,
-      image: "/enterprises/4.png",
-      title: "leadership_school",
-    },
-    {
-      id: 7,
-      image: "/enterprises/4.png",
-      title: "leadership_school",
-    },
-  ];
-  const HandleOpenStory = (id: number) => {
-    setOpenStory(true);
-  };
-
-  const HandleCloseStory = () => {
-    setOpenStory(false);
-  };
-
   return (
-    <>
-      <StoryPreview
-        stories={stories}
-        openStory={HandleOpenStory}
-        variant="feed"
-      />
-      {openStory && (
-        <StoryPlayer stories={stories} screen closeStory={HandleCloseStory} />
-      )}
-      <PostFilters />
-    </>
+    <div className="w-full px-4 flex flex-col gap-4">
+      <div className="flex items-center justify-between ">
+        <Avatar>
+          <AvatarImage src="" alt="avatar" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <BellIcon className="w-6 h-6" />
+      </div>
+      <Tabs defaultValue="recommended" className="w-full">
+        <TabsList className="w-full">
+          <TabsTrigger value="recommended">Recomendados</TabsTrigger>
+          <TabsTrigger value="recent">Recientes</TabsTrigger>
+        </TabsList>
+        <TabsContent value="recommended">
+        </TabsContent>
+        <TabsContent value="recent"></TabsContent>
+      </Tabs>
+    </div>
   );
 };
 

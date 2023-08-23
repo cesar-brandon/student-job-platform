@@ -9,6 +9,14 @@ export const PostValidator = z.object({
     .max(128, {
       message: "El título debe tener menos de 128 caracteres",
     }),
+  description: z
+  .string()
+  .min(100, {
+    message: "La descripción debe ser mas larga",
+  })
+  .max(208, {
+    message: "El título debe tener menos de 128 caracteres",
+  }),
   id: z.string(),
   content: z.any(),
 });

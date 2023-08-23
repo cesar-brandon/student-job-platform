@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
+import {
+  AdjustmentsHorizontalIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { Badge } from "../ui/badge";
 import { Drawer } from "vaul";
 import { Separator } from "@/components/ui/separator";
@@ -13,12 +16,6 @@ import {
 import { Switch } from "../ui/switch";
 
 const PostFilters = () => {
-  const [isRecommended, setIsRecommended] = useState(true);
-
-  const handleBadgeToggle = () => {
-    setIsRecommended(!isRecommended);
-  };
-
   const filters = [
     {
       title: "Fecha de publicación",
@@ -67,24 +64,21 @@ const PostFilters = () => {
     },
   ];
 
+  const topics = ["Desarrollador", "Backend", "Fullstack", "Devops"];
+
   return (
     <div className="flex items-center justify-between gap-4 cursor-default px-4 sm:p-0">
-      <div className="flex gap-2">
-        <p className="text-gray-600 font-semibold text-sm hidden min-[500px]:block">
-          Ordenar por:
-        </p>
-        <Badge
-          onClick={handleBadgeToggle}
-          variant={isRecommended ? "default" : "outline"}
-        >
-          Recomendaciones
-        </Badge>
-        <Badge
-          onClick={handleBadgeToggle}
-          variant={!isRecommended ? "default" : "outline"}
-        >
-          Recientes
-        </Badge>
+      <div className="flex gap-4 overflow-x-scroll">
+        {topics.map((topic, index) => (
+          <Badge
+            key={index}
+            className="rounded-md flex items-center p-1 gap-1"
+            variant="secondary"
+          >
+            {topic}
+            <XMarkIcon className="w-4 h-4 text-gray-500" />
+          </Badge>
+        ))}
       </div>
       <Drawer.Root shouldScaleBackground>
         <Drawer.Trigger asChild>
