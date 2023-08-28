@@ -72,7 +72,9 @@ export function formatTimeToNow(date: Date): string {
   });
 }
 
-export const careerData: { [key: string]: { name: string; color: string } } = {
+export const careerData: {
+  [key: string]: { name: string; color: string };
+} = {
   ET: {
     name: "Enfermería Técnica",
     color: "bg-emerald-500",

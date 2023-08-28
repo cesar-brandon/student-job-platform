@@ -1,4 +1,4 @@
-import CareerCard from "@/components/common/CareerCard";
+import CareerCard from "@/components/survey/CareerCard";
 
 const Page = () => {
   const careers = ["ET", "FT", "AE", "CF", "DS"];
@@ -12,7 +12,7 @@ const Page = () => {
           <strong className="font-bold bg-purple-200 text-purple-600 rounded-xl px-2">
             Idea
           </strong>{" "}
-          de la{" "}
+          de una{" "}
           <strong className="font-bold bg-purple-200 text-purple-600 rounded-xl px-2">
             Plataforma
           </strong>{" "}

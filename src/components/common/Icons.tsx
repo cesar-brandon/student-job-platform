@@ -1,3 +1,9 @@
+import { cn } from "@/lib/utils";
+
+interface IconProps {
+  className?: string;
+}
+
 export const LoaderCircleIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -240,5 +246,88 @@ export const EnterpriseIcon = () => (
     <path d="M10 10h4" />
     <path d="M10 14h4" />
     <path d="M10 18h4" />
+  </svg>
+);
+
+export const ETIcon = (props: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={256}
+    height={256}
+    fill="#fff"
+    viewBox="-2.4 -2.4 28.8 28.8"
+    className={cn("w-6 h-6", props.className)}
+  >
+    <path d="M14 2h-4a3 3 0 0 0-3 3v1H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2V5a3 3 0 0 0-3-3ZM9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H9Zm11 4v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1Zm-7 4h2v2h-2v2h-2v-2H9v-2h2v-2h2Z" />
+  </svg>
+);
+
+export const AEIcon = (props: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className={cn("w-6 h-6", props.className)}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"
+    />
+  </svg>
+);
+
+export const FTIcon = (props: IconProps) => (
+  <svg
+    fill="none"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    viewBox="0 0 24 24"
+    className={cn("w-6 h-6", props.className)}
+  >
+    <path d="M10.5 20.5l10-10a4.95 4.95 0 10-7-7l-10 10a4.95 4.95 0 107 7zM8.5 8.5l7 7" />
+  </svg>
+);
+
+export const CFIcon = (props: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className={cn("w-6 h-6", props.className)}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
+    />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
+    />
+  </svg>
+);
+
+export const DSIcon = (props: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className={cn("w-6 h-6", props.className)}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+    />
   </svg>
 );
