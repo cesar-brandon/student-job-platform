@@ -1,12 +1,15 @@
+"use client";
 import { Progress } from "@/components/ui/progress";
-import { careerData } from "@/lib/utils";
+import { useQuestionStore } from "@/store/question";
 
-const Page = () => {
+const Page = async ({ params }: { params: { slug: string } }) => {
+  const questions = useQuestionStore((state) => state.questions);
+
   return (
     <div className="w-full flex flex-col items-center gap-8">
       <div className="flex flex-col gap-4">
         <p className="text-center">Encuesta</p>
-        <Progress value={10} className="h-2 rounded-full first:bg-green-200" />
+        <Progress value={10} className={`career-${params.slug} h-2 rounded-full`} />
         <section className="flex flex-col gap-8">
           <p className="text-center text-3xl">
             ¿Estás al tanto de la idea de la plataforma de empleo y prácticas?

@@ -1,44 +1,46 @@
-export const questions = [
+import { Question } from "@/types/question";
+
+export const questions: Question[] = [
   {
-    pregunta:
+    question:
       "¿Estás al tanto de la idea de la plataforma de empleo y prácticas?",
-    opciones: ["Sí", "No"],
-    respuesta: null,
+    options: ["Sí", "No"],
+    answer: null,
   },
   {
-    pregunta: "¿Qué opinas sobre la idea de tener esta plataforma?",
-    opciones: [
+    question: "¿Qué opinas sobre la idea de tener esta plataforma?",
+    options: [
       "Excelente idea",
       "Buena, pero necesito más detalles",
       "No me parece relevante",
       "No estoy seguro/a",
     ],
-    respuesta: null,
+    answer: null,
   },
   {
-    pregunta: "¿Crees que sería beneficiosa para tu desarrollo profesional?",
-    opciones: [
+    question: "¿Crees que sería beneficiosa para tu desarrollo profesional?",
+    options: [
       "Sí, definitivamente",
       "Sí, en cierta medida",
       "No, no lo creo",
       "No estoy seguro/a",
     ],
-    respuesta: null,
+    answer: null,
   },
   {
-    pregunta: "¿Estarías interesado/a en utilizarla si estuviera disponible?",
-    opciones: [
+    question: "¿Estarías interesado/a en utilizarla si estuviera disponible?",
+    options: [
       "Sí, definitivamente",
       "Sí, podría considerarlo",
       "No, probablemente no",
       "No estoy seguro/a",
     ],
-    respuesta: null,
+    answer: null,
   },
   {
-    pregunta:
+    question:
       "¿Qué características te parecen más importantes? (Selecciona todas las que correspondan)",
-    opciones: [
+    options: [
       "Búsqueda de ofertas de empleo y prácticas",
       "Postulación a oportunidades",
       "Notificaciones por correo electrónico",
@@ -46,10 +48,10 @@ export const questions = [
       "Interacción con empleadores",
       "Otra (especifica): ________",
     ],
-    respuesta: [],
+    answer: [],
   },
   {
-    pregunta: "¿Algún comentario adicional o sugerencia?",
-    respuesta: "",
+    question: "¿Algún comentario adicional o sugerencia?",
+    answer: "",
   },
 ];
