@@ -1,12 +1,13 @@
 import { Progress } from "@/components/ui/progress";
+import { careerData } from "@/lib/utils";
 
 const Page = () => {
   return (
     <div className="w-full flex flex-col items-center gap-8">
-      <div>
+      <div className="flex flex-col gap-4">
         <p className="text-center">Encuesta</p>
-        <Progress value={10} className="flex-1 h-2 m-4 rounded-full " />
-        <section>
+        <Progress value={10} className="h-2 rounded-full first:bg-green-200" />
+        <section className="flex flex-col gap-8">
           <p className="text-center text-3xl">
             ¿Estás al tanto de la idea de la plataforma de empleo y prácticas?
           </p>

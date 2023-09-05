@@ -4,9 +4,10 @@ import { ChevronLeftIcon, ArrowUpRightIcon } from "@heroicons/react/24/outline";
 
 interface BackButtonProps {
   type: "arrow" | "chevron";
+  route?: "home" | "back";
 }
 
-const BackButton = ({ type }: BackButtonProps) => {
+const BackButton = ({ type, route = "home" }: BackButtonProps) => {
   const router = useRouter();
   return type === "arrow" ? (
     <button
@@ -20,7 +21,9 @@ const BackButton = ({ type }: BackButtonProps) => {
     <button
       type="button"
       className="absolute top-0 text-white m-8 p-2 backdrop-blur bg-black bg-opacity-20 hover:bg-opacity-40 transition-all rounded-lg"
-      onClick={() => router.push("/")}
+      onClick={() => {
+        route === "home" ? router.push("/") : router.back();
+      }}
     >
       <ChevronLeftIcon className="w-8" strokeWidth={1.5} />
     </button>
