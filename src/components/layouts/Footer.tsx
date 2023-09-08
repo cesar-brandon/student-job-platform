@@ -12,6 +12,10 @@ const Footer = () => {
       href: "/register",
     },
     {
+      title: "Encuestas",
+      href: "/encuesta",
+    },
+    {
       title: "Términos",
       href: "#",
     },

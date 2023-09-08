@@ -2,6 +2,7 @@
 import HeaderItem from "@/components/common/HeaderItem";
 import StoryPlayer from "@/components/common/StoryPlayer";
 import StoryPreview from "@/components/common/StoryPreview";
+import { OPTIONS } from "@/config";
 import { useState } from "react";
 
 export default function Home() {
@@ -61,13 +62,14 @@ export default function Home() {
             </div>
           </div>
           <div className="hidden lg:flex w-full justify-center">
-            <StoryPlayer stories={stories} />
+            <StoryPlayer stories={stories} options={OPTIONS} />
           </div>
           {openStory && (
             <StoryPlayer
               stories={stories}
               screen
               closeStory={HandleCloseStory}
+              options={OPTIONS}
             />
           )}
         </div>
