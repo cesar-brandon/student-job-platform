@@ -9,7 +9,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     <div className="w-full flex flex-col items-center gap-8">
       <div className="flex flex-col gap-4">
         <p className="text-center">Encuesta</p>
-        <Progress value={10} className={`career-${params.slug} h-2 rounded-full`} />
+        <Progress value={50} className={`career-${params.slug} h-2 rounded-full`} />
         <section className="flex flex-col gap-8">
           <p className="text-center text-3xl">
             ¿Estás al tanto de la idea de la plataforma de empleo y prácticas?
