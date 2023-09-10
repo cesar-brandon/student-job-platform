@@ -1,6 +1,4 @@
-"use client";
-import { careerData } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { careerData, cn } from "@/lib/utils";
 import {
   FTIcon,
   AEIcon,
@@ -8,19 +6,17 @@ import {
   DSIcon,
   ETIcon,
 } from "@/components/common/Icons";
-import { useQuestionStore } from "@/store/question";
 
 interface CareerCardProps {
   career: string;
+  children?: React.ReactNode;
+  handleClick?: () => void;
+  className?: string;
+  classNameIcon?: string;
 }
 
-const CareerCard = ({ career }: CareerCardProps) => {
-  const name = careerData[career].name;
+const CareerCard: React.FC<CareerCardProps> = ({ career, children, handleClick, className, classNameIcon }) => {
   const color = careerData[career].color;
-
-  const router = useRouter();
-
-  const getQuestions = useQuestionStore((state) => state.getQuestions);
 
 
   const careerIcons: {
@@ -33,24 +29,13 @@ const CareerCard = ({ career }: CareerCardProps) => {
     DS: <DSIcon className="w-full h-full stroke-white" />,
   };
 
-  const handleClick = () => {
-    getQuestions()
-    router.push(`/encuesta/${career}`)
-  }
-
   return (
     <div
-      className={`group relative flex flex-col justify-between items-center w-36 h-40 rounded-xl ${color} overflow-hidden p-4`}
+      className={cn(`group relative flex flex-col justify-between items-center w-36 h-40 rounded-xl ${color} overflow-hidden p-4`, className)}
       onClick={handleClick}
     >
-      <div className="w-full h-full top-0 left-0 rounded-xl z-10">
-        <p className="text-sm text-white">Total de votos</p>
-        <p className="text-5xl font-bold text-white">0</p>
-      </div>
-
-      <p className="text-sm font-semibold z-10">{name}</p>
-
-      <span className="absolute left-[-3rem] opacity-20 group-hover:left-0  transition-all duration-300">
+      {children}
+      <span className={cn("absolute opacity-20 transition-all duration-300", classNameIcon)}>
         {careerIcons[career]}
       </span>
     </div>

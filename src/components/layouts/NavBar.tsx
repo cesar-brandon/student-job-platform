@@ -10,23 +10,22 @@ import NavBarItem from "../common/NavBarItem";
 import { useState, useEffect } from "react";
 
 const NavBar = () => {
-  const [isFocus, setIsFocus] = useState(false);
   const [items, setItems] = useState([
     {
       content: "Inicio",
-      href: "#",
+      href: "home",
       icon: <HomeIcon />,
       isFocus: true,
     },
     {
       content: "Explorar",
-      href: "#",
-      icon: <MagnifyingGlassIcon className="stroke-zinc-600" />,
+      href: "explore",
+      icon: <MagnifyingGlassIcon className="stroke-gray-500" />,
       isFocus: false,
     },
     {
       content: "Chat",
-      href: "#",
+      href: "messages",
       icon: <ChatBubbleOvalLeftEllipsisIcon />,
       isFocus: false,
     },

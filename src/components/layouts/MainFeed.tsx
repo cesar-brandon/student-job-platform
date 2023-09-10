@@ -19,13 +19,11 @@ const MainFeed = async () => {
   });
 
   return (
-    <div className="w-full lg:w-[50%] pt-4 lg:pt-6 sm:p-10">
-      <div className="flex flex-col gap-4">
-        <HeaderFeed />
-        <Separator />
-        <PostFilters />
-        <PostFeed initialPosts={posts} />
-      </div>
+    <div className="flex flex-col gap-4">
+      <HeaderFeed />
+      <Separator />
+      <PostFilters />
+      <PostFeed initialPosts={posts} />
     </div>
   );
 };

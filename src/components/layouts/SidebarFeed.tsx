@@ -2,13 +2,13 @@
 
 import {
   ArrowRightOnRectangleIcon,
-  BookmarkIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Button from "../common/Button";
 import MiniProfile from "../common/MiniProfile";
+import SidebarNav from "../common/SidebarNav";
 
 interface SidebarProps {
   user: {
@@ -26,15 +26,7 @@ const SidebarFeed = ({ user }: SidebarProps) => {
     <div className="w-[25%] h-screen relative hidden lg:block">
       <div className="fixed h-full md:w-[14rem] lg:w-[15rem] xl:w-[20rem] hidden md:block">
         <MiniProfile />
-        <div className="mt-8">
-          <div className="flex gap-4 items-center">
-            <BookmarkIcon
-              className="h-10 w-10 fill-indigo-600 stroke-none bg-white p-2 rounded-xl"
-              aria-hidden="true"
-            />
-            <p className="font-medium">Guardados</p>
-          </div>
-        </div>
+        <SidebarNav />
         <div className="absolute bottom-8 flex flex-col items-center gap-8">
           {user.role === "ENTERPRISE" && (
             <div>

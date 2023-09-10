@@ -13,7 +13,7 @@ export default async function AuthLayout({
   const session = await getAuthSession();
 
   if (session && session.user) {
-    return redirect("/feed");
+    return redirect("/home");
     // return (
     //   <div className="w-screen h-screen flex items-center justify-center">
     //     <LoaderIfvIcon />

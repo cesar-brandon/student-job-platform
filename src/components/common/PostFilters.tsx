@@ -64,11 +64,11 @@ const PostFilters = () => {
     },
   ];
 
-  const topics = ["Desarrollador", "Backend", "Fullstack", "Devops"];
+  const topics = ["Desarrollador", "Backend", "Fullstack", "Devops", "Devops", "Devops", "Devops", "Devops", "Devops"];
 
   return (
     <div className="flex items-center justify-between gap-4 cursor-default px-4 sm:p-0">
-      <div className="flex gap-4 overflow-x-scroll">
+      <div className="flex gap-4 overflow-x-scroll lg:overflow-hidden">
         {topics.map((topic, index) => (
           <Badge
             key={index}
@@ -82,7 +82,9 @@ const PostFilters = () => {
       </div>
       <Drawer.Root shouldScaleBackground>
         <Drawer.Trigger asChild>
-          <AdjustmentsHorizontalIcon className="w-6 h-6" />
+          <div className="w-20">
+            <AdjustmentsHorizontalIcon className="w-6 stroke-gray-800" />
+          </div>
         </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/40" />

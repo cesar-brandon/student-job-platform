@@ -16,7 +16,7 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       await signIn("google", {
-        callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/feed`,
+        callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/home`,
       });
     } catch (error) {
       return toast({

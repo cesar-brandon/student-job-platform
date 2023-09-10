@@ -1,4 +1,4 @@
-import CareerCard from "@/components/survey/CareerCard";
+import SurveyCareer from "@/components/survey/SurveyCareer";
 
 const Page = () => {
   const careers = ["ET", "FT", "AE", "CF", "DS"];
@@ -23,7 +23,7 @@ const Page = () => {
       <section className="w-full grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-4 place-items-center">
         {
           careers.map((career, index) => (
-            <CareerCard key={index} career={career} />
+            <SurveyCareer key={index} career={career} />
           ))
         }
       </section>
