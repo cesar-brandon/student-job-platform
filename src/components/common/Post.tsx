@@ -39,7 +39,6 @@ const Post: FC<PostProps> = ({
   commentAmt,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null);
-  console.log(post);
   return (
     <div className="overflow-hidden bg-white shadow border-b-[1px] sm:rounded-xl sm:border-none">
       <div className="px-6 py-4 flex justify-between">

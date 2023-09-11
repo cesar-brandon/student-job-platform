@@ -152,7 +152,7 @@ const Editor: React.FC<EditorProps> = (id) => {
       });
     },
     onSuccess: () => {
-      router.push("/feed");
+      router.push("/home");
 
       router.refresh();
 

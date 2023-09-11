@@ -20,7 +20,8 @@ const HeaderFeed: React.FC = () => {
         </TabsList>
         <TabsContent value="recommended">
         </TabsContent>
-        <TabsContent value="recent"></TabsContent>
+        <TabsContent value="recent">
+        </TabsContent>
       </Tabs>
     </div>
   );

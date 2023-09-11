@@ -51,7 +51,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
           description: "Inicio de sesión exitoso.",
           variant: "default",
         });
-        router.push("/feed");
+        router.push("/home");
       }
     } catch (error) {
       toast({

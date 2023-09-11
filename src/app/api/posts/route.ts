@@ -24,13 +24,13 @@ export async function GET(req: Request) {
 
     if (authorName) {
       whereClause = {
-        user: {
+        author: {
           name: authorName,
         },
       }
     } else if (session) {
       whereClause = {
-        user: {
+        author: {
           id: {
             in: session.user.id,
           },
@@ -54,6 +54,8 @@ export async function GET(req: Request) {
 
     return new Response(JSON.stringify(posts))
   } catch (error) {
+    console.log(error);
+
     return new Response('Could not fetch posts', { status: 500 })
   }
 }
