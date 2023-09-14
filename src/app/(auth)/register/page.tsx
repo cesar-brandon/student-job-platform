@@ -19,9 +19,7 @@ const RegisterPage = () => {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      await signIn("google", {
-        callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/feed`,
-      });
+      await signIn("google");
     } catch (error) {
       return toast({
         title: "Algo salió mal",

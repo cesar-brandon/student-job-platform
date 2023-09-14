@@ -16,8 +16,12 @@ const POST = async (request: Request) => {
     dni: student.dni,
   }));
 
+  const filteredStudentsData = studentsData.filter(
+    (student) => student.state === "Asistiendo" || student.state === "Promovido"
+  );
+
   const students = await db.student.createMany({
-    data: studentsData,
+    data: filteredStudentsData,
   });
 
   return new Response(JSON.stringify(students));

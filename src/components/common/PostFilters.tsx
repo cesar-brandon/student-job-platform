@@ -82,7 +82,7 @@ const PostFilters = () => {
       </div>
       <Drawer.Root shouldScaleBackground>
         <Drawer.Trigger asChild>
-          <div className="w-20">
+          <div className="w-20 flex justify-end">
             <AdjustmentsHorizontalIcon className="w-6 stroke-gray-800" />
           </div>
         </Drawer.Trigger>

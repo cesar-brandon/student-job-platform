@@ -8,7 +8,7 @@ interface Props {
 const SearchInput: React.FC<Props> = ({ placeholder }) => {
   return (
 
-    <div className="py-4 z-10">
+    <div className="pb-4 z-10">
       <label htmlFor="table-search" className="sr-only">
         Search
       </label>

@@ -4,6 +4,7 @@ import AsideFeed from "@/components/layouts/AsideFeed";
 import NavBar from "@/components/layouts/NavBar";
 import SidebarFeed from "@/components/layouts/SidebarFeed";
 import { getAuthSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 
 export default async function UserLayout({
@@ -15,7 +16,6 @@ export default async function UserLayout({
 
   if (session && session.user) {
     const { user } = session;
-
 
     return (
       <div className="bg-black lg:bg-gray-100">
@@ -32,11 +32,7 @@ export default async function UserLayout({
         </main>
       </div>
     );
+  } else {
+    return redirect("/login");
   }
-
-  return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <LoaderIfvIcon />
-    </div>
-  );
 }

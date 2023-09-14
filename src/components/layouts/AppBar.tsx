@@ -20,10 +20,12 @@ const AppBar = () => {
           <nav className="lg:flex min-[0px]:hidden grow gap-8 items-center justify-center pl-8">
             <span className="ml-auto"></span>
             <HeaderItem title="Inicia sesión" href="login" />
-            <Button
-              text="Empresas"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full"
-            />
+            <Link href="/login-enterprise" aria-label="empresas-login">
+              <Button
+                text="Empresas"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full"
+              />
+            </Link>
           </nav>
           <div className="lg:hidden min-[0px]:flex gap-4">
             <UserIcon className="h-5 w-5 text-gray-700" />

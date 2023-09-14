@@ -86,7 +86,7 @@ const StoryPlayer = ({ screen, closeStory, stories, options }: StoryPlayerProps)
               </span>
             </button>
             {screen && closeStory && (
-              <button className="text-white" onClick={() => closeStory()}>
+              <button className="text-white z-10" onClick={() => closeStory()}>
                 <span className="inline-flex items-center justify-center w-5 h-5">
                   <XMarkIcon />
                 </span>

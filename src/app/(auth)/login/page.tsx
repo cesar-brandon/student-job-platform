@@ -15,9 +15,7 @@ const LoginPage = () => {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      await signIn("google", {
-        callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/home`,
-      });
+      await signIn('google');
     } catch (error) {
       return toast({
         title: "Algo salió mal",
