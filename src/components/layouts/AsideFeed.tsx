@@ -37,7 +37,7 @@ const AsideFeed = async () => {
                   <h4 className="text-sm font-semibold">{enterprise.name}
                   </h4>
                   <span className="text-xs text-muted-foreground">
-                    @{enterprise.Enterprise[0].name}
+                    @{enterprise.Enterprise[0]?.name}
                   </span>
                 </div>
               </div>

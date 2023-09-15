@@ -53,22 +53,23 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ token, session, user }) {
-      if (user) {
-        const email = user.email;
-        const enterprise = await db.enterprise.findUnique({
-          where: { email },
-        });
-
-        if (enterprise) {
-          // Si se encuentra un registro en la tabla enterprise, actualiza el rol
-          await db.user.update({
-            where: { id: user.id }, // Ajusta esto según tu modelo de datos
-            data: { role: "ENTERPRISE" },
-          });
-          // Actualiza la sesión del usuario con el nuevo rol
-          session.user.role = "ENTERPRISE";
-        }
-      }
+      // if (user) {
+      //   const email = user.email;
+      //   const enterprise = await db.enterprise.findUnique({
+      //     where: { email },
+      //   });
+      //
+      //   if (enterprise) {
+      //     // Si se encuentra un registro en la tabla enterprise, actualiza el rol
+      //     await db.user.update({
+      //       where: { id: user.id }, // Ajusta esto según tu modelo de datos
+      //       data: { role: "ENTERPRISE" },
+      //     });
+      //     // Actualiza la sesión del usuario con el nuevo rol
+      //     session.user.role = "ENTERPRISE";
+      //   }
+      // }
+      session.user = token as any;
       return session;
     },
 
