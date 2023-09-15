@@ -8,7 +8,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NavBarItem from "../common/NavBarItem";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { simplifyName } from "@/lib/utils";
 
 interface Props {
   user: {
@@ -22,23 +22,22 @@ interface Props {
 }
 
 const NavBar: React.FC<Props> = async ({ user }) => {
-  const { data: session } = useSession();
   const [items, setItems] = useState([
     {
       content: "Inicio",
-      href: "/home",
+      href: "home",
       icon: <HomeIcon />,
       isFocus: true,
     },
     {
       content: "Explorar",
-      href: "/explore",
+      href: "explore",
       icon: <MagnifyingGlassIcon className="stroke-gray-500" />,
       isFocus: false,
     },
     {
       content: "Chat",
-      href: "/messages",
+      href: "messages",
       icon: <ChatBubbleOvalLeftEllipsisIcon />,
       isFocus: false,
     },
@@ -47,8 +46,10 @@ const NavBar: React.FC<Props> = async ({ user }) => {
       href: "#",
       icon: (
         <Avatar className="w-full h-full">
-          <AvatarImage src={session?.user.image} alt="avatar" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src={user.image} alt="avatar" />
+          <AvatarFallback>
+            {simplifyName(user.name.toUpperCase())}
+          </AvatarFallback>
         </Avatar>
       ),
       isFocus: false,

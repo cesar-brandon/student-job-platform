@@ -46,7 +46,6 @@ export const authOptions: NextAuthOptions = {
         const email = user.email as string
         const isVerified = await verifyGoogleEmail(email);
         if (!isVerified) {
-          console.log('not verified')
           return false;
         }
       }
@@ -99,8 +98,6 @@ export const getAuthSession = () => getServerSession(authOptions);
 
 export const verifyGoogleEmail = async (email: string) => {
   try {
-    console.log(email)
-
     const existingUser = await db.student.findUnique({
       where: {
         email,

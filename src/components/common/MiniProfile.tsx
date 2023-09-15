@@ -34,7 +34,7 @@ const MiniProfile = () => {
                   alt={`@${session.user.name}`}
                 />
                 <AvatarFallback>
-                  {simplifyName(session.user.name)}
+                  {simplifyName(session.user.name.toUpperCase())}
                 </AvatarFallback>
               </Avatar>
             </div>

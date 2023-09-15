@@ -61,7 +61,6 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
       if (result?.error) return router.push("/login");
       return router.push("/home");
     } catch (error) {
-      console.error(error)
       toast({ title: "Error al crear la cuenta", variant: "destructive" });
     } finally {
       setIsLoading(false);

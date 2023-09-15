@@ -1,10 +1,9 @@
 import { db } from "@/lib/prisma";
-import SearchInput from "../common/SearchInput";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { CalendarDaysIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { formatDate, simplifyName } from "@/lib/utils";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { simplifyName } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { LoaderCircleIcon } from "../common/Icons";
+import AsideFeedHeader from "../common/AsideFeedHeader";
 
 const AsideFeed = async () => {
   const enterprises = await db.user.findMany({
@@ -20,10 +19,11 @@ const AsideFeed = async () => {
     }
   });
 
+
   return (
     <div className="w-[25%] p-4 hidden xl:block">
-      <SearchInput placeholder="Empresas" />
-      <div className="bg-white min-h-[30rem] rounded-xl p-6 font-semibold">
+      <AsideFeedHeader />
+      <div className="bg-white min-h-[30rem] rounded-xl p-6 mt-2 font-semibold">
         <p className="text-lg">Empresas</p>
         {
           enterprises ? enterprises.map((enterprise) => (
@@ -41,7 +41,7 @@ const AsideFeed = async () => {
                   </span>
                 </div>
               </div>
-              <Button className="w-8 h-8 bg-gray-700 hover:bg-gray-600">
+              <Button className="w-8 h-8 bg-gray-400 hover:bg-gray-300">
                 <PlusIcon className="h-full" aria-hidden="true" />
               </Button>
             </div>
