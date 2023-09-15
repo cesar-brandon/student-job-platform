@@ -25,8 +25,16 @@ const GET = async (request: Request) => {
         },
       ],
     },
+    include: {
+      User: {
+        select: {
+          image: true,
+        }
+      }
+    }
   });
   if (!student) return new Response("Student not found", { status: 404 });
+
 
   return new Response(JSON.stringify(student));
 };

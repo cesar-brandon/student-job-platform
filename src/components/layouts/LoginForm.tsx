@@ -54,6 +54,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
         router.push("/home");
       }
     } catch (error) {
+      console.log(error)
       toast({
         title: "Algo salió mal",
         description: "Error al iniciar sesión. Inténtalo de nuevo más tarde.",

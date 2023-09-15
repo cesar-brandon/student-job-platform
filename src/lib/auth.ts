@@ -2,10 +2,9 @@ import { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./prisma";
-import { PrismaAdapter } from '@auth/prisma-adapter'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
   pages: {
     signIn: "/login",
   },
@@ -54,17 +53,45 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async session({ token, session }) {
-      session.user = token as any;
+    async session({ token, session, user }) {
+      if (user) {
+        const email = user.email;
+        const enterprise = await db.enterprise.findUnique({
+          where: { email },
+        });
+
+        if (enterprise) {
+          // Si se encuentra un registro en la tabla enterprise, actualiza el rol
+          await db.user.update({
+            where: { id: user.id }, // Ajusta esto según tu modelo de datos
+            data: { role: "ENTERPRISE" },
+          });
+          // Actualiza la sesión del usuario con el nuevo rol
+          session.user.role = "ENTERPRISE";
+        }
+      }
       return session;
     },
 
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
-    redirect() {
-      return '/home'
-    },
+
+    async redirect({ url, baseUrl }) {
+      if (url === "/login") {
+        return "/home";
+      }
+      if (url === "/login-enterprise") {
+        return "/home";
+      }
+
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      } else if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+      return baseUrl;
+    }
   },
 };
 
@@ -72,6 +99,7 @@ export const getAuthSession = () => getServerSession(authOptions);
 
 export const verifyGoogleEmail = async (email: string) => {
   try {
+    console.log(email)
 
     const existingUser = await db.student.findUnique({
       where: {

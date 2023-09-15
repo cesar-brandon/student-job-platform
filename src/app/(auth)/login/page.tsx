@@ -12,10 +12,12 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState(null);
 
+
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
       await signIn('google');
+
     } catch (error) {
       return toast({
         title: "Algo salió mal",

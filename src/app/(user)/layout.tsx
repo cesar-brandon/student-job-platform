@@ -21,9 +21,9 @@ export default async function UserLayout({
       <div className="bg-black lg:bg-gray-100">
         <main
           vaul-drawer-wrapper=""
-          className="bg-white sm:bg-gray-100 xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16 flex justify-center"
+          className="bg-white sm:bg-gray-100 xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16 flex justify-center z-10"
         >
-          <NavBar />
+          <NavBar user={user} />
           <SidebarFeed user={user} />
           <div className="w-full lg:w-[75%] xl:w-[50%] lg:pr-0 xl:pr-4 pt-4 lg:pt-6 sm:p-10">
             {children}

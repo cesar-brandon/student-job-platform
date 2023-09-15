@@ -1,6 +1,10 @@
+import SearchBar from "@/components/common/SearchBar";
+
 const ExplorePage = () => {
   return (
-    <div><h3 className="font-bold">Explorar</h3></div>
+    <div className="flex flex-col">
+      <SearchBar />
+    </div>
   )
 }
 

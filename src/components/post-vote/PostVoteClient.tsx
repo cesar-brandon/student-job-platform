@@ -68,13 +68,10 @@ const PostVoteClient = ({
         // User is voting the same way again, so remove their vote
         setCurrentVote(undefined);
         if (type === "UP") setVotesAmt((prev) => prev - 1);
-        else if (type === "DOWN") setVotesAmt((prev) => prev + 1);
       } else {
         // User is voting in the opposite direction, so subtract 2
         setCurrentVote(type);
         if (type === "UP") setVotesAmt((prev) => prev + (currentVote ? 2 : 1));
-        else if (type === "DOWN")
-          setVotesAmt((prev) => prev - (currentVote ? 2 : 1));
       }
     },
   });

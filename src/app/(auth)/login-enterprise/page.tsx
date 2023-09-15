@@ -5,32 +5,14 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const router = useRouter();
 
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      const result = await signIn('google', {
-        redirect: false,
-      });
-      if (result?.error) {
-        toast({
-          title: "Error",
-          description: "Ocurrió un error al iniciar sesión con Google.",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Éxito",
-          description: "Inicio de sesión exitoso.",
-          variant: "default",
-        });
-        router.push("/home");
-      }
+      await signIn('google')
     } catch (error) {
       return toast({
         title: "Algo salió mal",

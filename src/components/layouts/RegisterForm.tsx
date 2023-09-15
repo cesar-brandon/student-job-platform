@@ -50,6 +50,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
         name: formData.username.toLowerCase(),
         email: userDetails.email,
         password: formData.password,
+        userId: userDetails.userId
       });
       toast({ title: "Cuenta creada exitosamente", variant: "default" });
       const result = await signIn("credentials", {
@@ -60,6 +61,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
       if (result?.error) return router.push("/login");
       return router.push("/home");
     } catch (error) {
+      console.error(error)
       toast({ title: "Error al crear la cuenta", variant: "destructive" });
     } finally {
       setIsLoading(false);

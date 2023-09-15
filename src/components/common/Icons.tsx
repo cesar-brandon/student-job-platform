@@ -4,7 +4,7 @@ interface IconProps {
   className?: string;
 }
 
-export const LoaderCircleIcon = () => (
+export const LoaderCircleIcon: React.FC<IconProps> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -15,7 +15,7 @@ export const LoaderCircleIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="h-4 w-4 animate-spin"
+    className={cn("h-4 w-4 animate-spin", className)}
   >
     <path d="M21 12a9 9 0 1 1-6.219-8.56" />
   </svg>

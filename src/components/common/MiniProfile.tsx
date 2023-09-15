@@ -1,8 +1,6 @@
 import { simplifyName } from "@/lib/utils";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useSession } from "next-auth/react";
-import SearchInput from "./SearchInput";
 import CareerCard from "../survey/CareerCard";
 
 function getFirstTwoWords(fullName: string): string {
