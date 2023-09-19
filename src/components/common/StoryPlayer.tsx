@@ -7,8 +7,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from "embla-carousel-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
-import StoryProgress from "./StoryProgress";
+import { useCallback, useState } from "react";
 import { DotButton, useDotButton } from "./StoryDotButton";
 import { NextButton, PrevButton, usePrevNextButtons } from "./StoryArrowButton";
 import { cn } from "@/lib/utils";

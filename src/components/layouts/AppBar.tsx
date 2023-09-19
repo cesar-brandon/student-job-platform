@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Bars2Icon, UserIcon } from "@heroicons/react/24/outline";
 import HeaderItem from "../common/HeaderItem";
-import Button from "../common/Button";
 import { IfvLoveIcon } from "../common/Icons";
+import Button from "../common/Button";
 
 const AppBar = () => {
   return (
@@ -23,7 +23,7 @@ const AppBar = () => {
             <Link href="/login-enterprise" aria-label="empresas-login">
               <Button
                 text="Empresas"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full"
+                className="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-full"
               />
             </Link>
           </nav>

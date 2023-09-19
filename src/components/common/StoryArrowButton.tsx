@@ -68,6 +68,7 @@ export const PrevButton: React.FC<PropType> = (props) => {
       className="absolute w-2/4 h-full flex items-center justify-center
 								   left-0 top-1/2 transform -translate-y-1/2"
       {...restProps}
+      title='prev button'
     >
       {children}
     </button>
@@ -82,6 +83,7 @@ export const NextButton: React.FC<PropType> = (props) => {
       className="absolute w-2/4 h-full flex items-center justify-center
 								   right-0 top-1/2 transform -translate-y-1/2"
       type="button"
+      title='next button'
       {...restProps}
     >
       {children}

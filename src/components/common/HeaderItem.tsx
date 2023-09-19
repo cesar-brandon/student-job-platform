@@ -14,7 +14,7 @@ const HeaderItem = ({ title, href, underline, button }: Props) => {
       href={`/${href}`}
       className={
         button
-          ? "bg-orange-500 hover:bg-orange-400 text-white font-bold text-lg py-4 px-8 rounded-full"
+          ? "bg-orange hover:bg-orange/90 text-white font-bold text-lg py-4 px-8 rounded-full"
           : `text-zinc-900 text-base font-medium ${decoration} hover:decoration-2 hover:underline-offset-4`
       }
     >

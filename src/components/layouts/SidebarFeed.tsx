@@ -6,9 +6,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import Button from "../common/Button";
-import MiniProfile from "../common/MiniProfile";
-import SidebarNav from "../common/SidebarNav";
+import Button from "@/components/common/Button";
+import MiniProfile from "@/components/common/MiniProfile";
+import SidebarNav from "@/components/common/SidebarNav";
+import { ThemeToggle } from "@/components/common/theme-toggle";
 
 interface SidebarProps {
   user: {
@@ -39,6 +40,7 @@ const SidebarFeed = ({ user }: SidebarProps) => {
               </Link>
             </div>
           )}
+          <ThemeToggle />
           <div className="flex items-center">
             <ArrowRightOnRectangleIcon className="h-6 w-6" aria-hidden="true" />
             <Button

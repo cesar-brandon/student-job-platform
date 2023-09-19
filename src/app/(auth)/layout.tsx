@@ -1,9 +1,13 @@
 import BackButton from "@/components/common/BackButton";
-import { LoaderIfvIcon } from "@/components/common/Icons";
 import Carousel from "@/components/layouts/Carousel";
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import "../globals.css";
+
+export const metadata = {
+  title: "Inicia sesión",
+  description: "Iniciar session en la plataforma de empleo de IFV",
+};
 
 export default async function AuthLayout({
   children,

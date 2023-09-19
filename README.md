@@ -2,7 +2,7 @@
 
 <p align="center">An online student job platform that connects students with part-time jobs, internships, and entry-level positions.</p>
 
-[![Job Platform](./public/screenshot/shot-landing.png)](https://ifvempleos.vercel.app/)
+[![Job Platform](./src/app/opengraph-image.png)](https://ifvempleos.vercel.app/)
 
 
 
