@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://ifvempleos.vercel.app/'),
   title: {
     default: 'IFV',
     template: `%s - IFV`
@@ -19,6 +20,12 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png'
+  },
+  openGraph: {
+    images: "./opengraph-image.png"
+  },
+  twitter: {
+    images: "./twitter-image.png"
   }
 }
 

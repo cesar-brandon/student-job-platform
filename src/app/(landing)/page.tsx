@@ -56,7 +56,7 @@ export default function Home() {
             <div className="mt-12 lg:block flex justify-center">
               <HeaderItem
                 title="Accede a las oportunidades"
-                href="login"
+                href="home"
                 button
               />
             </div>

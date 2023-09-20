@@ -17,7 +17,6 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       await signIn('google');
-
     } catch (error) {
       return toast({
         title: "Algo salió mal",

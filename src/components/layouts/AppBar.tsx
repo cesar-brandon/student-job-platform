@@ -19,7 +19,7 @@ const AppBar = () => {
           </Link>
           <nav className="lg:flex min-[0px]:hidden grow gap-8 items-center justify-center pl-8">
             <span className="ml-auto"></span>
-            <HeaderItem title="Inicia sesión" href="login" />
+            <HeaderItem title="Inicia sesión" href="home" />
             <Link href="/login-enterprise" aria-label="empresas-login">
               <Button
                 text="Empresas"

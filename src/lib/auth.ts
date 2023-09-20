@@ -5,9 +5,7 @@ import { db } from "./prisma";
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 export const authOptions: NextAuthOptions = {
-  pages: {
-    signIn: "/login",
-  },
+  adapter: PrismaAdapter(db),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -40,6 +38,13 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/login",
+    error: "/login/error"
+  },
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account?.provider === "google") {
@@ -52,23 +57,20 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async session({ token, session, user }) {
-      // if (user) {
-      //   const email = user.email;
-      //   const enterprise = await db.enterprise.findUnique({
-      //     where: { email },
-      //   });
-      //
-      //   if (enterprise) {
-      //     // Si se encuentra un registro en la tabla enterprise, actualiza el rol
-      //     await db.user.update({
-      //       where: { id: user.id }, // Ajusta esto según tu modelo de datos
-      //       data: { role: "ENTERPRISE" },
-      //     });
-      //     // Actualiza la sesión del usuario con el nuevo rol
-      //     session.user.role = "ENTERPRISE";
-      //   }
-      // }
+    async session({ token, session }) {
+      if (token) {
+        const enterprise = await db.enterprise.findUnique({
+          where: { email: token.email as string },
+        });
+
+        if (enterprise) {
+          await db.user.update({
+            where: { id: token.id as string },
+            data: { role: "ENTERPRISE" },
+          });
+          session.user.role = "ENTERPRISE";
+        }
+      }
       session.user = token as any;
       return session;
     },
@@ -76,22 +78,6 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
-
-    async redirect({ url, baseUrl }) {
-      if (url === "/login") {
-        return "/home";
-      }
-      if (url === "/login-enterprise") {
-        return "/home";
-      }
-
-      if (url.startsWith("/")) {
-        return `${baseUrl}${url}`;
-      } else if (new URL(url).origin === baseUrl) {
-        return url;
-      }
-      return baseUrl;
-    }
   },
 };
 

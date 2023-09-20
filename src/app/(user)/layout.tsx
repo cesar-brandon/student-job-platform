@@ -1,11 +1,9 @@
 import "../globals.css";
-import { LoaderIfvIcon } from "@/components/common/Icons";
 import AsideFeed from "@/components/layouts/AsideFeed";
 import NavBar from "@/components/layouts/NavBar";
 import SidebarFeed from "@/components/layouts/SidebarFeed";
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
-
 
 export default async function UserLayout({
   children,
@@ -32,7 +30,6 @@ export default async function UserLayout({
         </main>
       </div>
     );
-  } else {
-    return redirect("/login");
   }
+  return redirect("/");
 }

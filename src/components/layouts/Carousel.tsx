@@ -3,6 +3,7 @@ import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import BackButton from "../common/BackButton";
+import BlurImage from "../common/blur-image";
 
 const Carousel = () => {
   const posts: Post[] = [
@@ -41,7 +42,7 @@ const Carousel = () => {
         <div className="flex touch-pan-y flex-row h-full">
           {posts.map((post: Post) => (
             <div key={post.title} className="flex-[0_0_100%] min-w-0 relative">
-              <Image
+              <BlurImage
                 className="block w-full h-full object-cover"
                 src={post.imageUrl}
                 alt={post.title}

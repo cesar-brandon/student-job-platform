@@ -43,7 +43,7 @@ const NavBar: React.FC<Props> = async ({ user }) => {
     },
     {
       content: "Perfil",
-      href: "#",
+      href: user.name,
       icon: (
         <Avatar className="w-full h-full">
           <AvatarImage src={user.image} alt="avatar" />
@@ -92,14 +92,13 @@ const NavBar: React.FC<Props> = async ({ user }) => {
 
   return (
     <div
-      className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-white rounded-full flex items-center justify-center gap-8 shadow-md transform border border-gray-200 transition-all duration-300 ${isHidden ? "translate-y-20" : "translate-y-0"
-        }`}
-    >
+      className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-white
+                  rounded-full flex items-center justify-center gap-8 shadow-md transform
+                  border border-gray-200 transition-all duration-300 ${isHidden ? "translate-y-20" : "translate-y-0"}`}>
       {items.map((item, index) => (
         <NavBarItem
           key={item.content}
           {...item}
-          onClick={() => handleItemClick(index)}
         />
       ))}
     </div>

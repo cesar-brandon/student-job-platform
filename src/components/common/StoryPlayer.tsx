@@ -6,11 +6,11 @@ import {
 } from "@heroicons/react/24/outline";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from "embla-carousel-react";
-import Image from "next/image";
 import { useCallback, useState } from "react";
 import { DotButton, useDotButton } from "./StoryDotButton";
 import { NextButton, PrevButton, usePrevNextButtons } from "./StoryArrowButton";
 import { cn } from "@/lib/utils";
+import BlurImage from "./blur-image";
 
 interface StoryPlayerProps {
   stories: Story[];
@@ -96,17 +96,17 @@ const StoryPlayer = ({ screen, closeStory, stories, options }: StoryPlayerProps)
         <div className="relative w-full h-full">
           <div ref={emblaRef} className="overflow-hidden h-full">
             <div className="flex touch-pan-y flex-row h-full">
-              {stories.map(({ id, image }: Story) => (
+              {stories.map(({ id, image, title }: Story) => (
                 <div
                   key={id}
                   className={`flex flex-[0_0_100%]  min-w-0 relative ${containerImage}`}
                 >
-                  <Image
-                    className={`${imageClass} bg-white`}
-                    src={image}
-                    alt={image}
+                  <BlurImage
+                    alt={`Story ${title}`}
                     width="1920"
                     height="1080"
+                    className={`${imageClass} bg-white`}
+                    src={image}
                   />
                 </div>
               ))}
