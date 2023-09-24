@@ -1,9 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { Bars2Icon, UserIcon } from "@heroicons/react/24/outline";
-import HeaderItem from "../common/HeaderItem";
+import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import { IfvLoveIcon } from "../common/Icons";
-import Button from "../common/Button";
+import ButtonLink from "../common/button-link";
 
 const AppBar = () => {
   return (
@@ -17,20 +16,13 @@ const AppBar = () => {
           >
             <IfvLoveIcon />
           </Link>
-          <nav className="lg:flex min-[0px]:hidden grow gap-8 items-center justify-center pl-8">
+          <nav className="hidden lg:flex grow gap-3 items-center justify-center pl-8">
             <span className="ml-auto"></span>
-            <HeaderItem title="Inicia sesión" href="home" />
-            <Link href="/login-enterprise" aria-label="empresas-login">
-              <Button
-                text="Empresas"
-                className="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-full"
-              />
-            </Link>
+            <ButtonLink href="/home" text="Inicia sesión" ariaLabel="Mi cuenta" variant="outline" className="hover:border-primary" />
+            <ButtonLink href="/login-enterprise" text="Empresas" ariaLabel="Login empresas"
+              className="group"
+              icon={<ArrowLongRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-all duration-300" />} />
           </nav>
-          <div className="lg:hidden min-[0px]:flex gap-4">
-            <UserIcon className="h-5 w-5 text-gray-700" />
-            <Bars2Icon className="h-5 w-5 text-gray-700" />
-          </div>
         </section>
       </div>
     </header>

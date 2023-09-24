@@ -5,7 +5,6 @@ import { useTheme } from 'next-themes'
 
 import { Button } from '@/components/ui/button'
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
-import { LoaderCircleIcon } from './Icons'
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme()

@@ -1,8 +1,9 @@
 "use client";
-import HeaderItem from "@/components/common/HeaderItem";
 import StoryPlayer from "@/components/common/StoryPlayer";
 import StoryPreview from "@/components/common/StoryPreview";
+import ButtonLink from "@/components/common/button-link";
 import { OPTIONS } from "@/config";
+import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 export default function Home() {
@@ -41,7 +42,7 @@ export default function Home() {
     <main>
       <section
         className="xl:w-[1440px] lg:w-[1024px] w-[480px] max-w-full
-								   mr-auto ml-auto py-0 lg:px-8 xl:px-16"
+								   px-6 sm:px-0 mr-auto ml-auto py-0 lg:px-8 xl:px-16"
         aria-labelledby="home-title"
       >
         <div className="flex items-center lg:flex-row flex-col justify-between">
@@ -53,12 +54,12 @@ export default function Home() {
               Descubre tu potencial, encuentra tu empleo ideal_
             </h1>
 
-            <div className="mt-12 lg:block flex justify-center">
-              <HeaderItem
-                title="Accede a las oportunidades"
-                href="home"
-                button
-              />
+            <div className="mt-12 lg:block flex xs:flex-col justify-center gap-3">
+              <ButtonLink href="/home" text="Accede a las oportunidades" ariaLabel="Explora"
+                className="bg-orange hover:bg-orange/90 lg:font-bold lg:text-lg lg:py-7 lg:px-8" />
+              <ButtonLink href="/login-enterprise" text="Empresas" ariaLabel="Login empresas"
+                className="group lg:hidden"
+                icon={<ArrowLongRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-all duration-300" />} />
             </div>
           </div>
           <div className="hidden lg:flex w-full justify-center">

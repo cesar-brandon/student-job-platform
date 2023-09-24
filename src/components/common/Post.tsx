@@ -40,15 +40,15 @@ const Post: FC<PostProps> = ({
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null);
   return (
-    <div className="overflow-hidden bg-white shadow border-b-[1px] sm:rounded-xl sm:border-none">
+    <div className="overflow-hidden bg-white dark:bg-transparent shadow border-b-[1px] sm:border-[1px] sm:rounded-xl dark:border-slate-800">
       <div className="px-6 py-4 flex justify-between">
         <div className="w-full flex gap-4">
-          <Avatar className="bg-gray-200 flex items-center justify-center">
+          <Avatar className="bg-slate-200 flex items-center justify-center">
             <AvatarImage src="" alt="avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div>
-            <div className="max-h-40 mt-1 text-xs text-gray-500">
+            <div className="max-h-40 mt-1 text-xs text-slate-500">
               {authorName ? (
                 <>
                   <a
@@ -79,7 +79,7 @@ const Post: FC<PostProps> = ({
                       <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent"></div>
                     ) : null}
                   </div>
-                  <div className="flex flex-col gap-1 text-sm text-gray-500 mt-2">
+                  <div className="flex flex-col gap-1 text-sm text-slate-500 mt-2">
                     <div className="flex items-center gap-2">
                       <MapPinIcon className="h-4 w-4" />
                       Direccion de ejemplo
@@ -101,7 +101,7 @@ const Post: FC<PostProps> = ({
                         Oferta {post.title}
                       </Drawer.Title>
                       <div>
-                        <p className="text-gray-500 text-sm flex gap-4">
+                        <p className="text-slate-500 text-sm flex gap-4">
                           <ClockIcon className="h-4 w-4 inline-block" />{" "}
                           Publicado hace{" "}
                           {formatTimeToNow(new Date(post.createdAt))}{" "}
@@ -124,7 +124,7 @@ const Post: FC<PostProps> = ({
         </div>
       </div>
 
-      <div className="bg-white sm:bg-gray-50 z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
+      <div className="bg-white dark:bg-transparent sm:bg-slate-50 z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
         <div className="flex gap-6">
           <Link
             href={`@${authorName}/post/${post.id}`}

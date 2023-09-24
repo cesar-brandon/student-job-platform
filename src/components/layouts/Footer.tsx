@@ -44,7 +44,7 @@ const Footer = () => {
   ];
 
   return (
-    <section className="bg-white">
+    <section >
       <div className="max-w-screen-xl px-4 py-12 mx-auto overflow-hidden sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-8">
         <nav className="flex flex-wrap justify-center -mx-5 -my-2 items-center">
           {items.map(({ title, href }, index) => (
