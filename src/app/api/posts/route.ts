@@ -49,7 +49,6 @@ export async function GET(req: Request) {
         author: true,
         comments: true,
       },
-      where: whereClause,
     })
 
     return new Response(JSON.stringify(posts))

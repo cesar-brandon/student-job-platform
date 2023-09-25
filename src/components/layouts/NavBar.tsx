@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   ChatBubbleOvalLeftEllipsisIcon,
@@ -9,19 +9,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NavBarItem from "../common/NavBarItem";
 import { useState, useEffect } from "react";
 import { simplifyName } from "@/lib/utils";
+import { user } from "@/types/next-auth";
 
 interface Props {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    accessToken: string;
-    image: string;
-    role: string;
-  };
+  user: user
 }
 
-const NavBar: React.FC<Props> = async ({ user }) => {
+const NavBar: React.FC<Props> = ({ user }) => {
   const [items, setItems] = useState([
     {
       content: "Inicio",
@@ -55,7 +49,6 @@ const NavBar: React.FC<Props> = async ({ user }) => {
       isFocus: false,
     },
   ]);
-
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
@@ -65,9 +58,9 @@ const NavBar: React.FC<Props> = async ({ user }) => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > prevScrollY) {
-        setIsHidden(true);
+        setIsHidden(true)
       } else {
-        setIsHidden(false);
+        setIsHidden(false)
       }
 
       prevScrollY = currentScrollY;
@@ -80,22 +73,12 @@ const NavBar: React.FC<Props> = async ({ user }) => {
     };
   }, []);
 
-  const handleItemClick = (index: number) => {
-    const updatedItems = items.map((item, i) => {
-      if (i === index) {
-        return { ...item, isFocus: !item.isFocus };
-      }
-      return { ...item, isFocus: false };
-    });
-    setItems(updatedItems);
-  };
-
   return (
     <div
       className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800
                   rounded-full flex items-center justify-center gap-8 shadow-md transform
-                  border border-gray-200 dark:border-slate-700 transition-all duration-300 ${isHidden ? "translate-y-20" : "translate-y-0"}`}>
-      {items.map((item, index) => (
+                  border border-gray-200 dark:border-slate-700 transition-all duration-300 ${isHidden ? "translate-y-24" : "translate-y-0"}`}>
+      {items.map((item) => (
         <NavBarItem
           key={item.content}
           {...item}

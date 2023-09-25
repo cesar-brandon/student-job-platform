@@ -69,6 +69,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
                 post={post}
                 commentAmt={post.comments.length}
                 authorName={post.author.name}
+                authorImage={post.author.image}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
               />
@@ -81,6 +82,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
               post={post}
               commentAmt={post.comments.length}
               authorName={post.author.name}
+              authorImage={post.author.image}
               votesAmt={votesAmt}
               currentVote={currentVote}
             />

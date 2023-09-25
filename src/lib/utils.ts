@@ -8,9 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 
 export const simplifyName = (fullName: string): string => {
   const words = fullName.split(" ");
-
-  const simplifiedName = words.map((word) => word.charAt(0)).join("");
-
+  let simplifiedName = "";
+  if (words.length >= 2) {
+    simplifiedName = words.slice(0, 2).map((word) => word.charAt(0)).join("");
+  } else {
+    simplifiedName = words[0].charAt(0);
+  }
   return simplifiedName;
 };
 

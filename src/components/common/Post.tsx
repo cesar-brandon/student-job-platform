@@ -1,6 +1,6 @@
 "use client";
 
-import { formatTimeToNow } from "@/lib/utils";
+import { formatTimeToNow, simplifyName } from "@/lib/utils";
 import {
   ChatBubbleBottomCenterIcon,
   ClockIcon,
@@ -15,8 +15,7 @@ import { Drawer } from "vaul";
 import EditorOutput from "./EditorOutput";
 import { Button } from "../ui/button";
 import PostVoteClient from "../post-vote/PostVoteClient";
-import { Avatar } from "../ui/avatar";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -27,6 +26,7 @@ interface PostProps {
   };
   votesAmt: number;
   authorName: string;
+  authorImage: string;
   currentVote?: PartialVote;
   commentAmt: number;
 }
@@ -36,6 +36,7 @@ const Post: FC<PostProps> = ({
   votesAmt: _votesAmt,
   currentVote: _currentVote,
   authorName,
+  authorImage,
   commentAmt,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null);
@@ -44,8 +45,10 @@ const Post: FC<PostProps> = ({
       <div className="px-6 py-4 flex justify-between">
         <div className="w-full flex gap-4">
           <Avatar className="bg-slate-200 flex items-center justify-center">
-            <AvatarImage src="" alt="avatar" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={authorImage} alt="avatar" />
+            <AvatarFallback>
+              {simplifyName(authorName.toUpperCase())}
+            </AvatarFallback>
           </Avatar>
           <div>
             <div className="max-h-40 mt-1 text-xs text-slate-500">
@@ -127,7 +130,7 @@ const Post: FC<PostProps> = ({
       <div className="bg-white dark:bg-transparent sm:bg-slate-50 z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
         <div className="flex gap-6">
           <Link
-            href={`@${authorName}/post/${post.id}`}
+            href={`${authorName}/post/${post.id}`}
             className="w-fit flex items-center gap-2"
           >
             <ChatBubbleBottomCenterIcon className="h-5 w-5 mr-1" />

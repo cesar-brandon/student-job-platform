@@ -7,13 +7,19 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
         port: '',
-        pathname: '/.*',
+        pathname: '/*',
       },
       {
         protocol: 'https',
         hostname: 'uploadthing.com',
         port: '',
-        pathname: '/.*',
+        pathname: '/f/*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com',
+        port: '',
+        pathname: '/564x/42/dc/3d/*',
       }
     ]
   },
