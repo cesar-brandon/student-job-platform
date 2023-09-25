@@ -13,7 +13,7 @@ export function ThemeToggle() {
   return (
     <Button
       variant="ghost"
-      size="icon"
+      className='rounded-full px-6 py-4 hover:bg-gray-200 dark:hover:bg-slate-800 justify-start'
       onClick={() => {
         startTransition(() => {
           setTheme(theme === 'light' ? 'dark' : 'light')
@@ -21,13 +21,14 @@ export function ThemeToggle() {
       }}
     >
       {!theme ? (
-        <SunIcon className="transition-all" />
+        <SunIcon className="transition-all w-6 h-6 mr-4" />
       ) : theme === 'dark' ? (
-        <MoonIcon className="transition-all" />
+        <MoonIcon className="transition-all w-6 h-6 mr-4" />
       ) : (
-        <SunIcon className="transition-all" />
+        <SunIcon className="transition-all w-6 h-6 mr-4" />
       )}
-      <span className="sr-only">Toggle theme</span>
+      Tema
+      <span className="sr-only">Alternar tema</span>
     </Button>
   )
 }

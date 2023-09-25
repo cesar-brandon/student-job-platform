@@ -8,7 +8,7 @@ export interface user {
   accessToken: string;
   image: string;
   role: UserRole;
-  additionalInfo: string;
+  additionalInfo?: string;
 }
 
 

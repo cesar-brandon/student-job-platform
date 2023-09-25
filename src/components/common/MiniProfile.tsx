@@ -1,7 +1,7 @@
 import { simplifyName } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useSession } from "next-auth/react";
 import CareerCard from "../survey/CareerCard";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 function getFirstTwoWords(fullName: string): string {
   const words = fullName.split(" ");
