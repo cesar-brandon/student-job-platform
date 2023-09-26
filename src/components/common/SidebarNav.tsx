@@ -27,10 +27,10 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
             Más opciones
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="rounded-xl w-[20rem] p-0">
+        <DropdownMenuContent className="rounded-xl w-[15rem] xl:w-[20rem] p-0">
           <DropdownMenuItem
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="text-sm font-medium text-red-500 focus:text-red-500 focus:bg-red-50 px-6 py-4">
+            className="text-sm font-medium text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-slate-800 px-6 py-4">
             <ArrowRightOnRectangleIcon className="mr-4 h-6 w-6" />
             <span>Serrar Sesion</span>
           </DropdownMenuItem>
@@ -38,7 +38,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
       </DropdownMenu>
 
       {user.role === "ENTERPRISE" && (
-        <ButtonLink href={`/${"cesar"}/submit`} text="Publicar oferta" ariaLabel="Publicar oferta" className="mt-8" />
+        <ButtonLink href={`/${user.name}/submit`} text="Publicar oferta" ariaLabel="Publicar oferta" className="mt-8" />
       )}
     </div>
   )

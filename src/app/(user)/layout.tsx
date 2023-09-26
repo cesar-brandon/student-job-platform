@@ -16,10 +16,10 @@ export default async function UserLayout({
     const { user } = session;
 
     return (
-      <div className="bg-black lg:bg-gray-100 dark:lg:bg-gray-950">
+      <div className="bg-black lg:bg-slate-50 dark:lg:bg-black">
         <main
           vaul-drawer-wrapper=""
-          className="bg-white sm:bg-gray-100 dark:sm:bg-gray-950 xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16 flex justify-center z-10"
+          className="bg-white dark:bg-black sm:bg-slate-50 dark:sm:bg-black xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16 flex justify-center z-10"
         >
           <NavBar user={user} />
           <SidebarFeed user={user} />
