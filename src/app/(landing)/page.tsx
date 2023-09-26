@@ -55,7 +55,7 @@ export default function Home() {
             </h1>
 
             <div className="mt-12 lg:block flex xs:flex-col justify-center gap-3">
-              <ButtonLink href="/home" text="Accede a las oportunidades" ariaLabel="Explora"
+              <ButtonLink href="/login" text="Accede a las oportunidades" ariaLabel="Explora"
                 className="bg-orange hover:bg-orange/90 lg:font-bold lg:text-lg lg:py-7 lg:px-8" />
               <ButtonLink href="/login-enterprise" text="Empresas" ariaLabel="Login empresas"
                 className="group lg:hidden"

@@ -18,7 +18,7 @@ const AppBar = () => {
           </Link>
           <nav className="hidden lg:flex grow gap-3 items-center justify-center pl-8">
             <span className="ml-auto"></span>
-            <ButtonLink href="/home" text="Inicia sesión" ariaLabel="Mi cuenta" variant="outline" className="hover:border-primary" />
+            <ButtonLink href="/login" text="Inicia sesión" ariaLabel="Mi cuenta" variant="outline" className="hover:border-primary" />
             <ButtonLink href="/login-enterprise" text="Empresas" ariaLabel="Login empresas"
               className="group"
               icon={<ArrowLongRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-all duration-300" />} />
