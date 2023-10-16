@@ -27,7 +27,7 @@ const MiniProfile = () => {
       <div className="flex mt-12 gap-4 items-center z-10">
         {session && (
           <>
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center overflow-hidden">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
               <Avatar>
                 <AvatarImage
                   src={session.user.image}

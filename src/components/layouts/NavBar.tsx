@@ -75,9 +75,9 @@ const NavBar: React.FC<Props> = ({ user }) => {
 
   return (
     <div
-      className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800
-                  rounded-full flex items-center justify-center gap-8 shadow-md transform
-                  border border-gray-200 dark:border-slate-700 transition-all duration-300 ${isHidden ? "translate-y-24" : "translate-y-0"}`}>
+      className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-background 
+                  rounded-full flex items-center justify-center gap-8 shadow-md
+                  border transition-all duration-300 ${isHidden ? "translate-y-24" : "translate-y-0"}`}>
       {items.map((item) => (
         <NavBarItem
           key={item.content}

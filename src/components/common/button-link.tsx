@@ -4,7 +4,7 @@ import Link from "next/link"
 
 interface Props {
   href: string
-  text: string
+  text?: string
   ariaLabel: string
   variant?: "default" | "destructive" | "outline" | "subtle" | "secondary" | "ghost" | "link"
   className?: string

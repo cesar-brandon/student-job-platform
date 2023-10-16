@@ -23,7 +23,7 @@ const AsideFeed = async () => {
   return (
     <div className="w-[25%] p-4 hidden xl:block">
       <AsideFeedHeader />
-      <div className="bg-white dark:bg-slate-800 min-h-[30rem] rounded-xl p-6 mt-2 font-semibold">
+      <div className="bg-card min-h-[30rem] rounded-xl p-6 mt-2 font-semibold">
         <p className="text-lg">Empresas</p>
         {
           enterprises ? enterprises.map((enterprise) => (

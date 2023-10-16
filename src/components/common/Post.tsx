@@ -16,6 +16,7 @@ import EditorOutput from "./EditorOutput";
 import { Button } from "../ui/button";
 import PostVoteClient from "../post-vote/PostVoteClient";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { HistoryIcon } from "./Icons";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -41,63 +42,57 @@ const Post: FC<PostProps> = ({
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null);
   return (
-    <div className="overflow-hidden bg-white dark:bg-transparent shadow border-b-[1px] sm:border-[1px] sm:rounded-xl dark:border-slate-800">
-      <div className="px-6 py-4 flex justify-between">
+    <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
+      <div className="px-6 pt-6 pb-4 flex justify-between">
         <div className="w-full flex gap-4">
-          <Avatar className="bg-slate-200 flex items-center justify-center">
+          <Avatar className="flex items-center justify-center">
             <AvatarImage src={authorImage} alt="avatar" />
             <AvatarFallback>
               {simplifyName(authorName.toUpperCase())}
             </AvatarFallback>
           </Avatar>
           <div>
-            <div className="max-h-40 mt-1 text-xs text-slate-500">
+            <div className="max-h-40">
+              <h1 className="text-2xl text-primary font-semibold leading-none tracking-tight">
+                {post.title}
+              </h1>
               {authorName ? (
-                <>
-                  <a
-                    className="underline text-zinc-900 text-sm underline-offset-2"
-                    href={`/user/${authorName}`}
-                  >
-                    @{authorName}
-                  </a>
-                  <span className="px-1">•</span>
-                </>
+                <a
+                  className="hover:underline underline-offset-2"
+                  href={`/user/${authorName}`}>
+                  {authorName}
+                </a>
               ) : null}
-              <span>
-                Publicado hace {formatTimeToNow(new Date(post.createdAt))}{" "}
-              </span>
             </div>
             <Drawer.Root shouldScaleBackground>
               <Drawer.Trigger asChild>
                 <div>
-                  <h1 className="text-lg font-semibold py-2 leading-6 text-blue-700">
-                    {post.title}
-                  </h1>
+                  <div className="flex gap-2 text-sm text-muted-foreground my-2">
+                    <div className="flex items-center gap-2 rounded-full border py-1 px-2">
+                      <MapPinIcon className="h-4 w-4" />
+                      Direccion de ejemplo
+                    </div>
+                    <div className="flex items-center gap-2 rounded-full border py-1 px-2">
+                      <ClockIcon className="h-4 w-4" />
+                      Full Time
+                    </div>
+                  </div>
+
                   <div
                     className="relative text-sm max-h-32 w-full overflow-clip"
                     ref={pRef}
                   >
                     <EditorOutput content={post.content} />
                     {pRef.current?.clientHeight === 128 ? (
-                      <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent"></div>
+                      <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white dark:from-zinc-950 to-transparent"></div>
                     ) : null}
-                  </div>
-                  <div className="flex flex-col gap-1 text-sm text-slate-500 mt-2">
-                    <div className="flex items-center gap-2">
-                      <MapPinIcon className="h-4 w-4" />
-                      Direccion de ejemplo
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <ClockIcon className="h-4 w-4" />
-                      Full Time
-                    </div>
                   </div>
                 </div>
               </Drawer.Trigger>
               <Drawer.Portal>
                 <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-                <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0">
-                  <div className="p-4 bg-white rounded-t-[10px] flex-1">
+                <Drawer.Content className="bg-background flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0">
+                  <div className="p-4 rounded-t-[10px] flex-1">
                     <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
                     <div className="max-w-md mx-auto">
                       <Drawer.Title className="font-medium text-xl mb-4">
@@ -127,24 +122,8 @@ const Post: FC<PostProps> = ({
         </div>
       </div>
 
-      <div className="bg-white dark:bg-transparent sm:bg-slate-50 z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
-        <div className="flex gap-6">
-          <Link
-            href={`${authorName}/post/${post.id}`}
-            className="w-fit flex items-center gap-2"
-          >
-            <ChatBubbleBottomCenterIcon className="h-5 w-5 mr-1" />
-            <p className="text-center py-2 font-medium text-sm text-zinc-900">
-              {commentAmt}
-            </p>{" "}
-            comentarios
-          </Link>
-          <PostVoteClient
-            postId={`${post.id}`}
-            initialVotesAmt={_votesAmt}
-            initialVote={_currentVote?.type}
-          />
-        </div>
+      <div className="z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
+        <p className="flex items-center gap-2"><HistoryIcon className="w-4 h-4" /> Publicado hace {formatTimeToNow(new Date(post.createdAt))}</p>
         <div className="flex items-center justify-center">
           <PaperAirplaneIcon className="h-4 w-4" />
         </div>

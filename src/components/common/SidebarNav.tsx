@@ -14,15 +14,15 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
   return (
     <div className="mt-8 flex flex-col">
       <ButtonLink href="/bookmarks" text="Guardados" ariaLabel="Guardados" variant="ghost"
-        className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start " icon={<BookmarkIcon className="w-6 h-6 order-first mr-4" />} />
+        className="bg-background justify-start " icon={<BookmarkIcon className="w-6 h-6 order-first mr-4" />} />
       <ButtonLink href="/notifications" text="Notificaciones" ariaLabel="Notificaciones" variant="ghost"
-        className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start " icon={<BellIcon className="w-6 h-6 order-first mr-4" />} />
+        className="bg-background justify-start " icon={<BellIcon className="w-6 h-6 order-first mr-4" />} />
       <ThemeToggle />
       <ButtonLink href="/settings" text="Configuración" ariaLabel="Configuración" variant="ghost"
-        className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start" icon={<Cog8ToothIcon className="w-6 h-6 order-first mr-4" />} />
+        className="bg-background justify-start" icon={<Cog8ToothIcon className="w-6 h-6 order-first mr-4" />} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button className="rounded-full px-6 py-4 hover:bg-gray-200 dark:hover:bg-slate-800 justify-start" variant="ghost">
+          <Button className="rounded-full px-6 py-4 bg-background justify-start" variant="ghost">
             <EllipsisHorizontalCircleIcon className="w-6 h-6 order-first mr-4" />
             Más opciones
           </Button>
@@ -30,7 +30,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
         <DropdownMenuContent className="rounded-xl w-[15rem] xl:w-[20rem] p-0">
           <DropdownMenuItem
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="text-sm font-medium text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-slate-800 px-6 py-4">
+            className="text-sm font-medium text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-accent px-6 py-4">
             <ArrowRightOnRectangleIcon className="mr-4 h-6 w-6" />
             <span>Serrar Sesion</span>
           </DropdownMenuItem>

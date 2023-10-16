@@ -131,7 +131,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
       )}
       <Button
         type="submit"
-        className="w-full bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-base mt-6"
+        className="w-full text-base mt-6"
         disabled={isLoading}
       >
         {isLoading ? (

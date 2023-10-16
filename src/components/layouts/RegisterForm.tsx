@@ -10,6 +10,7 @@ import OtpInput from "../common/OtpInput";
 import PasswordInput from "../common/PasswordInput";
 import { StudentCard, UserCardFallback } from "../common/UserCard";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface Props {
   userDetails: Student;
@@ -113,14 +114,12 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
       {isLoadingCard && <UserCardFallback />}
       {userDetails && (
         <>
-          {!isVerified ? (
+          {userDetails.userId ? (
+            <p className="text-center">Ya existe una cuenta con este correo, <Link className="text-primary" href="/login">inicia sesión</Link></p>
+          ) : !isVerified ? (
             <>
               <StudentCard user={userDetails} setUser={setUserDetails} />
-              <OtpInput
-                user={userDetails}
-                setIsVerified={setIsVerified}
-                setTitle={setTitle}
-              />
+              <OtpInput user={userDetails} setIsVerified={setIsVerified} setTitle={setTitle} />
             </>
           ) : (
             <>
@@ -147,8 +146,9 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
       )}
       <Button
         type="submit"
-        className="w-full mt-6"
+        className="w-full text-base mt-6"
         disabled={(userDetails || isLoading) && !isVerified}
+        style={{ display: userDetails && userDetails.userId && 'none' }}
       >
         {isLoading ? (
           <LoaderCircleIcon />
@@ -156,7 +156,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
           <>{userDetails ? "Crea una cuenta" : "Continuar"}</>
         )}
       </Button>
-    </form>
+    </form >
   );
 };
 

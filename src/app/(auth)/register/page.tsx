@@ -33,7 +33,7 @@ const RegisterPage = () => {
 
   return (
     <div className="w-full h-100">
-      <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
+      <h1 className={`text-xl md:text-2xl font-bold leading-tight mt-12 ${userDetails && userDetails.userId && "hidden"}`}>
         {title}
       </h1>
 

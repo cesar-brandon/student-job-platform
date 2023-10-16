@@ -76,20 +76,20 @@ const PostFilters = () => {
             variant="secondary"
           >
             {topic}
-            <XMarkIcon className="w-4 h-4 text-gray-500" />
+            <XMarkIcon className="w-4 h-4 text-zinc-500" />
           </Badge>
         ))}
       </div>
       <Drawer.Root shouldScaleBackground>
         <Drawer.Trigger asChild>
           <div className="w-20 flex justify-end">
-            <AdjustmentsHorizontalIcon className="w-6 stroke-gray-800" />
+            <AdjustmentsHorizontalIcon className="w-6 stroke-zinc-800 dark:stroke-zinc-300" />
           </div>
         </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-          <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0">
-            <div className="p-4 bg-white rounded-t-[10px] flex-1">
+          <Drawer.Content className="bg-background flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0">
+            <div className="p-4 bg-background rounded-t-[10px] flex-1">
               <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
               <div className="max-w-md mx-auto">
                 <Drawer.Title className="font-medium mb-4">
