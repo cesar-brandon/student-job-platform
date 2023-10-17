@@ -1,25 +1,33 @@
+"use client"
+
 import { ArrowRightOnRectangleIcon, BellIcon, BookmarkIcon, Cog8ToothIcon, EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline"
+import { Cog8ToothIcon as Cog8ToothIconSolid, BellIcon as BellIconSolid } from "@heroicons/react/24/solid"
 import ButtonLink from "./button-link"
 import { user } from "@/types/next-auth";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
+import { usePathname } from 'next/navigation'
 
 interface Props {
   user: user
 }
 
 const SidebarNav: React.FC<Props> = ({ user }) => {
+  const pathname = usePathname()
   return (
     <div className="mt-8 flex flex-col">
       <ButtonLink href="/bookmarks" text="Guardados" ariaLabel="Guardados" variant="ghost"
-        className="bg-background justify-start " icon={<BookmarkIcon className="w-6 h-6 order-first mr-4" />} />
+        className={`bg-background justify-start ${pathname === "/bookmarks" && "font-bold"}`}
+        icon={<BookmarkIcon className={`w-6 h-6 order-first mr-4 ${pathname === "/bookmarks" && "fill-accent-foreground"}`} />} />
       <ButtonLink href="/notifications" text="Notificaciones" ariaLabel="Notificaciones" variant="ghost"
-        className="bg-background justify-start " icon={<BellIcon className="w-6 h-6 order-first mr-4" />} />
+        className={`bg-background justify-start ${pathname === "/notifications" && "font-bold"}`}
+        icon={pathname === "/notifications" ? <BellIconSolid className="w-6 h-6 order-first mr-4" /> : <BellIcon className="w-6 h-6 order-first mr-4" />} />
       <ThemeToggle />
       <ButtonLink href="/settings" text="Configuración" ariaLabel="Configuración" variant="ghost"
-        className="bg-background justify-start" icon={<Cog8ToothIcon className="w-6 h-6 order-first mr-4" />} />
+        className={`bg-background justify-start ${pathname === "/settings" && "font-bold"}`}
+        icon={pathname === "/settings" ? <Cog8ToothIconSolid className="w-6 h-6 order-first mr-4" /> : <Cog8ToothIcon className="w-6 h-6 order-first mr-4" />} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button className="rounded-full px-6 py-4 bg-background justify-start" variant="ghost">

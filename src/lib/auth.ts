@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./prisma";
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { nanoid } from "nanoid";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -59,6 +60,13 @@ export const authOptions: NextAuthOptions = {
 
     async session({ token, session }) {
       if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.username = token.username;
+        session.user.email = token.email;
+        session.user.image = token.image;
+        session.user.role = token.role;
+
         const enterprise = await db.enterprise.findUnique({
           where: { email: token.email as string },
         });
@@ -71,12 +79,36 @@ export const authOptions: NextAuthOptions = {
           session.user.role = "ENTERPRISE";
         }
       }
-      session.user = token as any;
       return session;
     },
 
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      const dbUser = await db.user.findFirst({
+        where: {
+          email: token.email as string
+        }
+      })
+
+      if (!dbUser) {
+        token.id = user.id;
+        return token
+      }
+
+      if (!dbUser.username) {
+        await db.user.update({
+          where: { id: dbUser.id },
+          data: { username: nanoid(10) }
+        })
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        username: dbUser.username,
+        email: dbUser.email,
+        image: dbUser.image,
+        role: dbUser.role
+      }
     },
   },
 };

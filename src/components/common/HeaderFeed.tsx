@@ -13,7 +13,9 @@ const HeaderFeed: React.FC = async () => {
 
   return (
     <div className="w-full px-4 sm:p-0 flex flex-col gap-4">
-      <div className="hidden lg:block"><h3 className="font-bold">Inicio</h3></div>
+      <div className="hidden lg:block">
+        <h1 className="font-bold text-xl">Inicio</h1>
+      </div>
       <div className="flex items-center justify-between lg:hidden">
         <Sheet>
           <SheetTrigger asChild>

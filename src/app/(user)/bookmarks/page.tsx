@@ -1,6 +1,13 @@
+export const metadata = {
+  title: "Guardados",
+  description: "Guardados",
+}
+
 const BookmarksPage = () => {
   return (
-    <div><h3 className="font-bold">Guardados</h3></div>
+    <div>
+      <h1 className="font-bold text-xl">Guardados</h1>
+    </div>
   )
 }
 

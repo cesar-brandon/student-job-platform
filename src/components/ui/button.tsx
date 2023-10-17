@@ -50,7 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={isLoading}
         {...props}>
-        {isLoading ? <LoaderCircleIcon /> : null}
+        {isLoading ? <LoaderCircleIcon className="mr-2" /> : null}
         {children}
       </button>
     )

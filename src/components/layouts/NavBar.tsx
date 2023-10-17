@@ -16,28 +16,25 @@ interface Props {
 }
 
 const NavBar: React.FC<Props> = ({ user }) => {
-  const [items, setItems] = useState([
+  const items = [
     {
       content: "Inicio",
-      href: "home",
+      href: "/home",
       icon: <HomeIcon />,
-      isFocus: true,
     },
     {
       content: "Explorar",
-      href: "explore",
-      icon: <MagnifyingGlassIcon className="stroke-gray-500" />,
-      isFocus: false,
+      href: "/explore",
+      icon: <MagnifyingGlassIcon className="stroke-current" />,
     },
     {
       content: "Chat",
-      href: "messages",
+      href: "/messages",
       icon: <ChatBubbleOvalLeftEllipsisIcon />,
-      isFocus: false,
     },
     {
       content: "Perfil",
-      href: user.name,
+      href: `/${user.username}`,
       icon: (
         <Avatar className="w-full h-full">
           <AvatarImage src={user.image} alt="avatar" />
@@ -46,9 +43,8 @@ const NavBar: React.FC<Props> = ({ user }) => {
           </AvatarFallback>
         </Avatar>
       ),
-      isFocus: false,
     },
-  ]);
+  ];
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {

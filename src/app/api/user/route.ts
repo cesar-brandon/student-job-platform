@@ -12,13 +12,14 @@ const GET = async (request: Request) => {
             email: request.headers.get("identifier") as string,
           },
           {
-            name: request.headers.get("identifier") as string,
+            username: request.headers.get("identifier") as string,
           },
         ],
       },
       select: {
         createdAt: true,
         name: true,
+        username: true,
         image: true,
         Student: {
           select: {

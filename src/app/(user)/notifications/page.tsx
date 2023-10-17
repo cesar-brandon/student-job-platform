@@ -1,6 +1,13 @@
+export const metadata = {
+  title: "Notificaciones",
+  description: "Notificaciones de empleo",
+}
+
 const NotificationsPage = () => {
   return (
-    <div><h3 className="font-bold">Notificaciones</h3></div>
+    <div>
+      <h1 className="font-bold text-xl">Notificaciones</h1>
+    </div>
   )
 }
 

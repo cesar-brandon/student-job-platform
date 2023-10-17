@@ -13,8 +13,8 @@ interface Props {
 
 const ButtonLink: React.FC<Props> = ({ href, text, className, icon, ariaLabel, variant }) => {
   return (
-    <Button className={cn("rounded-full px-6 py-4", className)} variant={variant}>
-      <Link href={href} aria-label={ariaLabel} className="flex items-center">{text}{icon}</Link>
+    <Button className={cn("rounded-full p-0", className)} variant={variant}>
+      <Link href={href} aria-label={ariaLabel} className="w-full h-full px-6 py-4 flex items-center">{text}{icon}</Link>
     </Button>
   )
 }

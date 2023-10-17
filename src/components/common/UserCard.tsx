@@ -8,6 +8,7 @@ import { Skeleton } from "../ui/skeleton";
 interface UserCardProps {
   user: {
     name: string;
+    username: string;
     lastName: string;
     createdAt: string;
     image: string;
@@ -23,6 +24,7 @@ interface StudentCardProps {
 
 const UserCard = ({ user, setUser }: UserCardProps) => {
   if (!user) return null;
+  console.log(user)
   return (
     <Card>
       <CardHeader>
@@ -43,14 +45,14 @@ const UserCard = ({ user, setUser }: UserCardProps) => {
               alt={user.name}
             />
             <AvatarFallback>
-              {simplifyName(user.Student[0].name)}
+              {simplifyName(user.name)}
             </AvatarFallback>
           </Avatar>
           <div>
             <p className="text-sm font-medium leading-none">
-              {user.Student[0].name}{" "}{user.Student[0].lastname}
+              {user.name}
             </p>
-            <p className="text-sm text-muted-foreground">@{user.name}</p>
+            <p className="text-sm text-muted-foreground">@{user.username}</p>
           </div>
         </div>
       </CardContent>

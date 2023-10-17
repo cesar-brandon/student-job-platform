@@ -1,6 +1,8 @@
 const MessagesPage = () => {
   return (
-    <div><h3 className="font-bold">Mensajes</h3></div>
+    <div>
+      <h1 className="font-semibold text-xl">Mensajes</h1>
+    </div>
   )
 }
 
