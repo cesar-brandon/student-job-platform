@@ -10,13 +10,6 @@ const AsideFeed = async () => {
     where: {
       role: "ENTERPRISE",
     },
-    include: {
-      Enterprise: {
-        select: {
-          name: true
-        }
-      }
-    }
   });
 
 
@@ -34,10 +27,9 @@ const AsideFeed = async () => {
                   <AvatarFallback>{simplifyName(enterprise.name)}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
-                  <h4 className="text-sm font-semibold">{enterprise.name}
-                  </h4>
+                  <h4 className="text-sm font-semibold">{enterprise.name}</h4>
                   <span className="text-xs text-muted-foreground">
-                    @{enterprise.Enterprise[0]?.name}
+                    @{enterprise.username}
                   </span>
                 </div>
               </div>

@@ -20,6 +20,7 @@ interface Props {
 
 const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isCreatedUser, setIsCreatedUser] = useState<boolean>(false);
   const [isLoadingCard, setIsLoadingCard] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     identifier: "",
@@ -43,28 +44,30 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
   };
 
   const createAccount = async () => {
-    setIsLoading(true);
+    setIsCreatedUser(true);
     !isVerified &&
       toast({ title: "Tu correo no esta verificado", variant: "destructive" });
     try {
       await axios.post("/api/user/create/", {
-        name: formData.username.toLowerCase(),
+        name: `${userDetails.name} ${userDetails.lastname}`,
+        username: formData.username.toLowerCase(),
         email: userDetails.email,
         password: formData.password,
         userId: userDetails.userId
       });
-      toast({ title: "Cuenta creada exitosamente", variant: "default" });
       const result = await signIn("credentials", {
         username: formData.username.toLowerCase(),
         password: formData.password,
         redirect: false,
       });
+      console.log(result)
       if (result?.error) return router.push("/login");
+      toast({ title: "Cuenta creada exitosamente", variant: "default" });
       return router.push("/home");
     } catch (error) {
       toast({ title: "Error al crear la cuenta", variant: "destructive" });
     } finally {
-      setIsLoading(false);
+      setIsCreatedUser(false);
     }
   };
 
@@ -147,10 +150,10 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
       <Button
         type="submit"
         className="w-full text-base mt-6"
-        disabled={(userDetails || isLoading) && !isVerified}
-        style={{ display: userDetails && userDetails.userId && 'none' }}
+        disabled={(userDetails || isLoading) || isCreatedUser}
+        style={{ display: userDetails && (userDetails.userId || !isVerified) && 'none' }}
       >
-        {isLoading ? (
+        {isLoading || isCreatedUser ? (
           <LoaderCircleIcon />
         ) : (
           <>{userDetails ? "Crea una cuenta" : "Continuar"}</>

@@ -4,6 +4,7 @@ import * as bcrypt from "bcrypt";
 
 interface RequestBody {
   name: string;
+  username: string;
   email: string;
   password: string;
   role?: UserRole;
@@ -29,6 +30,7 @@ const POST = async (request: Request) => {
       const user = await db.user.create({
         data: {
           name: body.name,
+          username: body.username,
           email: body.email,
           password: await bcrypt.hash(body.password, 10),
           role: body.role,
@@ -44,7 +46,7 @@ const POST = async (request: Request) => {
         id: body.userId
       },
       data: {
-        name: body.name,
+        name: body.username,
         password: await bcrypt.hash(body.password, 10),
       },
     });

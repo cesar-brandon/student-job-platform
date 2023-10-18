@@ -46,7 +46,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
       </DropdownMenu>
 
       {user.role === "ENTERPRISE" && (
-        <ButtonLink href={`/${user.name}/submit`} text="Publicar oferta" ariaLabel="Publicar oferta" className="mt-8" />
+        <ButtonLink href={`/${user.username}/submit`} text="Publicar oferta" ariaLabel="Publicar oferta" className="mt-8 child:flex child:justify-center" />
       )}
     </div>
   )

@@ -14,6 +14,7 @@ export default async function UserLayout({
 
   if (session && session.user) {
     const { user } = session;
+    console.log(user)
 
     return (
       <div className="bg-background">
