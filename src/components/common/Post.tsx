@@ -59,7 +59,7 @@ const Post: FC<PostProps> = ({
               {authorName ? (
                 <a
                   className="hover:underline underline-offset-2"
-                  href={`/user/${authorName}`}>
+                  href={`/${post.author.username}`}>
                   {authorName}
                 </a>
               ) : null}

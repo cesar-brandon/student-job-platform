@@ -60,7 +60,6 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
         password: formData.password,
         redirect: false,
       });
-      console.log(result)
       if (result?.error) return router.push("/login");
       toast({ title: "Cuenta creada exitosamente", variant: "default" });
       return router.push("/home");
@@ -150,7 +149,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
       <Button
         type="submit"
         className="w-full text-base mt-6"
-        disabled={(userDetails || isLoading) || isCreatedUser}
+        disabled={isLoading || isCreatedUser}
         style={{ display: userDetails && (userDetails.userId || !isVerified) && 'none' }}
       >
         {isLoading || isCreatedUser ? (

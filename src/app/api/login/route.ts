@@ -13,7 +13,7 @@ const POST = async (request: Request) => {
   try {
     const user = await db.user.findFirst({
       where: {
-        name: body.username,
+        username: body.username,
       },
     });
 
