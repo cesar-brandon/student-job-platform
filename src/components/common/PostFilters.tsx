@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
-  AdjustmentsHorizontalIcon,
+  FunnelIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Badge } from "../ui/badge";
@@ -64,7 +64,7 @@ const PostFilters = () => {
     },
   ];
 
-  const topics = ["Desarrollador", "Backend", "Fullstack", "Devops", "Devops", "Devops", "Devops", "Devops", "Devops"];
+  const topics = ["Practicas", "Remoto", "Sin experiencia", "Full time"]
 
   return (
     <div className="flex items-center justify-between gap-4 cursor-default px-4 sm:p-0">
@@ -73,17 +73,18 @@ const PostFilters = () => {
           <Badge
             key={index}
             className="rounded-md flex items-center p-1 gap-1"
-            variant="secondary"
+            variant="outline"
           >
             {topic}
-            <XMarkIcon className="w-4 h-4 text-zinc-500" />
+            <XMarkIcon className="w-4 h-4 text-muted-foreground" />
           </Badge>
         ))}
       </div>
       <Drawer.Root shouldScaleBackground>
         <Drawer.Trigger asChild>
-          <div className="w-20 flex justify-end">
-            <AdjustmentsHorizontalIcon className="w-6 text-muted-foreground" />
+          <div className="group w-20 flex gap-2 border rounded-full px-2 py-1 transition-all duration-300 hover:border-primary">
+            <FunnelIcon className="w-4 group-hover:stroke-primary group-hover:fill-primary" />
+            <p className="text-sm group-hover:text-primary">Filtrar</p>
           </div>
         </Drawer.Trigger>
         <Drawer.Portal>
@@ -92,10 +93,9 @@ const PostFilters = () => {
             <div className="p-4 bg-background rounded-t-[10px] flex-1">
               <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-accent mb-8" />
               <div className="max-w-md mx-auto">
-                <Drawer.Title className="font-medium mb-4">
+                <Drawer.Title className="font-bold mb-4">
                   Filtros
                 </Drawer.Title>
-                <Separator className="mb-2" />
                 <Accordion type="single" collapsible className="w-full">
                   {filters.map((filter, index) => (
                     <AccordionItem value={`item-${index}`} key={index}>
@@ -123,7 +123,7 @@ const PostFilters = () => {
           </Drawer.Content>
         </Drawer.Portal>
       </Drawer.Root>
-    </div>
+    </div >
   );
 };
 

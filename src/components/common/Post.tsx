@@ -1,7 +1,9 @@
 "use client";
 
 import { formatTimeToNow, simplifyName } from "@/lib/utils";
+import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
 import {
+  BookmarkIcon,
   ChatBubbleBottomCenterIcon,
   ClockIcon,
   MapPinIcon,
@@ -10,7 +12,7 @@ import {
 import { Post, User, Vote } from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import { Drawer } from "vaul";
 import EditorOutput from "./EditorOutput";
 import { Button } from "../ui/button";
@@ -40,7 +42,13 @@ const Post: FC<PostProps> = ({
   authorImage,
   commentAmt,
 }) => {
+  const [isChecked, setIsChecked] = useState(false);
+
   const pRef = useRef<HTMLParagraphElement>(null);
+
+  const handleBookMarkClick = () => {
+    setIsChecked(!isChecked);
+  };
   return (
     <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
       <div className="px-6 pt-6 pb-4 flex justify-between">
@@ -52,10 +60,13 @@ const Post: FC<PostProps> = ({
             </AvatarFallback>
           </Avatar>
           <div>
-            <div className="max-h-40">
-              <h1 className="text-2xl text-primary font-semibold leading-none tracking-tight">
-                {post.title}
-              </h1>
+            <div className="max-h-40 relative">
+              <Link
+                href={`/${post.author.username}/post/${post.id}`}>
+                <h1 className="text-2xl text-primary font-semibold leading-none tracking-tight hover:underline">
+                  {post.title}
+                </h1>
+              </Link>
               {authorName ? (
                 <a
                   className="hover:underline underline-offset-2"
@@ -63,6 +74,20 @@ const Post: FC<PostProps> = ({
                   {authorName}
                 </a>
               ) : null}
+              <div className="absolute top-0 right-0 w-6 h-6 cursor-pointer transition-all duration-300" onClick={handleBookMarkClick}>
+                <div className={`group w-full h-full relative flex items-center justify-center ${isChecked && 'text-amber-400'}`}>
+                  <BookmarkIcon className="absolute" />
+                  <BookmarkIconSolid className={`absolute ${isChecked ? "animate-svg-filled" : "hidden"}`} />
+                  <svg className={`absolute ${isChecked ? "animate-svg-celebrate" : "hidden"} opacity-0`} width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon className="stroke-amber-500" points="10,10 20,20"></polygon>
+                    <polygon className="stroke-amber-500" points="10,50 20,50"></polygon>
+                    <polygon className="stroke-amber-500" points="20,80 30,70"></polygon>
+                    <polygon className="stroke-amber-500" points="90,10 80,20"></polygon>
+                    <polygon className="stroke-amber-500" points="90,50 80,50"></polygon>
+                    <polygon className="stroke-amber-500" points="80,80 70,70"></polygon>
+                  </svg>
+                </div>
+              </div>
             </div>
             <Drawer.Root shouldScaleBackground>
               <Drawer.Trigger asChild>
@@ -83,9 +108,9 @@ const Post: FC<PostProps> = ({
                     ref={pRef}
                   >
                     <EditorOutput content={post.content} />
-                    {pRef.current?.clientHeight === 128 ? (
-                      <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white dark:from-zinc-950 to-transparent"></div>
-                    ) : null}
+                    {/* {pRef.current?.clientHeight === 128 ? ( */}
+                    <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white dark:from-zinc-950 to-transparent"></div>
+                    {/* ) : null} */}
                   </div>
                 </div>
               </Drawer.Trigger>
@@ -119,8 +144,8 @@ const Post: FC<PostProps> = ({
               </Drawer.Portal>
             </Drawer.Root>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
 
       <div className="z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
         <p className="flex items-center gap-2"><HistoryIcon className="w-4 h-4" /> Publicado hace {formatTimeToNow(new Date(post.createdAt))}</p>
@@ -128,7 +153,7 @@ const Post: FC<PostProps> = ({
           <PaperAirplaneIcon className="h-4 w-4" />
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default Post;

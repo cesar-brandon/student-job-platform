@@ -33,8 +33,8 @@ const AsideFeed = async () => {
                   </span>
                 </div>
               </div>
-              <Button className="w-8 h-8 bg-gray-400 hover:bg-gray-300">
-                <PlusIcon className="h-full" aria-hidden="true" />
+              <Button className="bg-primary h-8 p-4 rounded-full">
+                <p className="text-sm font-semibold text-white">Seguir</p>
               </Button>
             </div>
           ))

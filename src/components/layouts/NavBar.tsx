@@ -38,7 +38,7 @@ const NavBar: React.FC<Props> = ({ user }) => {
       icon: (
         <Avatar className="w-full h-full">
           <AvatarImage src={user.image} alt="avatar" />
-          <AvatarFallback>
+          <AvatarFallback >
             {simplifyName(user.name.toUpperCase())}
           </AvatarFallback>
         </Avatar>

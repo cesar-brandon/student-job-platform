@@ -8,6 +8,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef } from "react";
 import Post from "./Post";
+import { Skeleton } from "../ui/skeleton";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -49,6 +50,8 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 
+  if (!posts) return <p>No hay ofertas</p>;
+
   return (
     <ul className="flex flex-col col-span-2 space-y-0 sm:space-y-6 ">
       {posts.map((post, index) => {
@@ -89,6 +92,11 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
           );
         }
       })}
+      {isFetchingNextPage && (
+        <li className='flex justify-center'>
+          <Skeleton className="w-full h-[10rem] rounded-xl" />
+        </li>
+      )}
     </ul>
   );
 };

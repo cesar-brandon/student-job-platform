@@ -3,9 +3,6 @@ import { db } from "@/lib/prisma";
 import HeaderFeed from "@/components/common/HeaderFeed";
 import PostFeed from "@/components/common/PostFeed";
 import PostFilters from "@/components/common/PostFilters";
-import { Separator } from "@/components/ui/separator";
-import { Suspense } from "react";
-import Loading from "./loading";
 
 export const metadata = {
   title: "Home",
@@ -28,11 +25,8 @@ const HomePage = async () => {
   return (
     <div className="flex flex-col gap-4">
       <HeaderFeed />
-      <Separator />
       <PostFilters />
-      <Suspense fallback={<Loading />}>
-        <PostFeed initialPosts={posts} />
-      </Suspense>
+      <PostFeed initialPosts={posts} />
     </div>
   );
 }

@@ -24,7 +24,7 @@ const SubmitPage = async ({ params }: pageProps) => {
       <div className="w-full flex flex-col justify-end gap-4">
         <Editor />
         <div className="w-full flex justify-end">
-          <Button type="submit" className="w-full " form="enterprise-post-form">
+          <Button type="submit" className="w-full" form="enterprise-post-form">
             Publicar
           </Button>
         </div>

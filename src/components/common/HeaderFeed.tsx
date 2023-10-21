@@ -67,16 +67,6 @@ const HeaderFeed: React.FC = async () => {
         </Sheet>
         <BellIcon className="w-6 h-6" />
       </div>
-      <Tabs defaultValue="recommended" className="w-full">
-        <TabsList className="w-full flex  justify-around">
-          <TabsTrigger className="w-full" value="recommended">Recomendados</TabsTrigger>
-          <TabsTrigger className="w-full" value="recent">Recientes</TabsTrigger>
-        </TabsList>
-        <TabsContent value="recommended">
-        </TabsContent>
-        <TabsContent value="recent">
-        </TabsContent>
-      </Tabs>
     </div>
   );
 };
