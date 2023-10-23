@@ -37,6 +37,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      allowDangerousEmailAccountLinking: true
     }),
   ],
   session: {
@@ -47,7 +48,7 @@ export const authOptions: NextAuthOptions = {
     error: "/login/error"
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       if (account?.provider === "google") {
         const email = user.email as string
         const isVerified = await verifyGoogleEmail(email);
