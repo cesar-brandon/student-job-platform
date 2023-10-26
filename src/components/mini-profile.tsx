@@ -1,6 +1,6 @@
 import { simplifyName } from "@/lib/utils";
-import CareerCard from "../survey/CareerCard";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import CareerCard from "./common/career-card";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { user } from "@/types/next-auth";
 
 const MiniProfile = ({ user }: { user: user }) => {

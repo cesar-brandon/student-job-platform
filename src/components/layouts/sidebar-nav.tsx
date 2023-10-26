@@ -2,9 +2,9 @@
 
 import { ArrowRightOnRectangleIcon, BellIcon, BookmarkIcon, Cog8ToothIcon, EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline"
 import { Cog8ToothIcon as Cog8ToothIconSolid, BellIcon as BellIconSolid } from "@heroicons/react/24/solid"
-import ButtonLink from "./button-link"
+import ButtonLink from "../common/button-link"
 import { user } from "@/types/next-auth";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeToggle } from "../common/theme-toggle";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";

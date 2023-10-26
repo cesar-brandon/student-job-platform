@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import VerificationCodeEmail from "@/components/email/VerificationCodeEmail";
+import VerificationCodeEmail from "@/components/email-verification-code";
 
 interface RequestBody {
   code: string;

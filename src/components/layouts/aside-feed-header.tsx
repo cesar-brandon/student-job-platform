@@ -1,5 +1,5 @@
 "use client"
-import SearchBar from "./SearchBar"
+import SearchBar from "../common/search-bar"
 import { usePathname } from 'next/navigation'
 
 const AsideFeedHeader = () => {

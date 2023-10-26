@@ -1,8 +1,8 @@
 import { getAuthSession } from '@/lib/auth'
 import { db } from '@/lib/prisma'
 import { Comment, CommentVote, User } from '@prisma/client'
-import CreateComment from './CreateComment'
-import PostComment from '../comments/PostComment'
+import CreateComment from '@/components/post/create-comment'
+import PostComment from '@/components/post/post-comment'
 
 type ExtendedComment = Comment & {
   votes: CommentVote[]

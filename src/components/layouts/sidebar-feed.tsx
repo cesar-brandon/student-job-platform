@@ -1,6 +1,6 @@
 "use client"
-import MiniProfile from "@/components/common/MiniProfile";
-import SidebarNav from "@/components/common/SidebarNav";
+import MiniProfile from "@/components/mini-profile";
+import SidebarNav from "@/components/layouts/sidebar-nav";
 import { user } from "@/types/next-auth";
 
 export interface SidebarProps {

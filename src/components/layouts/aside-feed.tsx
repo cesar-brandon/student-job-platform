@@ -1,9 +1,8 @@
 import { db } from "@/lib/prisma";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { PlusIcon } from "@heroicons/react/24/outline";
 import { simplifyName } from "@/lib/utils";
 import { Button } from "../ui/button";
-import AsideFeedHeader from "../common/AsideFeedHeader";
+import AsideFeedHeader from "./aside-feed-header";
 
 const AsideFeed = async () => {
   const enterprises = await db.user.findMany({

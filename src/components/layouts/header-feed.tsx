@@ -4,8 +4,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { getAuthSession } from "@/lib/auth";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { simplifyName } from "@/lib/utils";
-import ButtonLink from "./button-link";
-import { ThemeToggle } from "./theme-toggle";
+import ButtonLink from "../common/button-link";
+import { ThemeToggle } from "../common/theme-toggle";
 
 const HeaderFeed: React.FC = async () => {
   const session = await getAuthSession();

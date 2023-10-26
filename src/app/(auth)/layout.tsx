@@ -1,5 +1,5 @@
-import BackButton from "@/components/common/BackButton";
-import Carousel from "@/components/layouts/Carousel";
+import BackButton from "@/components/common/back-button";
+import Carousel from "@/components/layouts/carousel-login";
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import "../globals.css";

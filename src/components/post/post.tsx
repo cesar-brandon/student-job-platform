@@ -14,11 +14,11 @@ import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef, useState } from "react";
 import { Drawer } from "vaul";
-import EditorOutput from "./EditorOutput";
+import EditorOutput from "../editor/editor-output";
 import { Button } from "../ui/button";
-import PostVoteClient from "../post-vote/PostVoteClient";
+import PostVoteClient from "./post-vote-client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { HistoryIcon } from "./Icons";
+import { HistoryIcon } from "@/components/common/icons";
 
 type PartialVote = Pick<Vote, "type">;
 

@@ -1,6 +1,6 @@
 "use client";
-import GoogleIcon from "@/components/common/GoogleIcon";
-import { LoaderCircleIcon } from "@/components/common/Icons";
+import GoogleIcon from "@/components/common/google-icon";
+import { LoaderCircleIcon } from "@/components/common/icons";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";

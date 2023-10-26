@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useQuestionStore } from "@/store/question";
-import CareerCard from "./CareerCard";
+import CareerCard from "./common/career-card";
 
 interface Props {
   career: string;

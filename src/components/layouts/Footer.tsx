@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FacebookIcon, InstagramIcon, WebsiteIcon } from "../common/Icons";
+import { FacebookIcon, InstagramIcon, WebsiteIcon } from "../common/icons";
 
 const Footer = () => {
   const items = [

@@ -1,4 +1,4 @@
-import BackButton from "@/components/common/BackButton";
+import BackButton from "@/components/common/back-button";
 import "../globals.css";
 
 export const metadata = {

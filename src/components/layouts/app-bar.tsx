@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
-import { IfvLoveIcon } from "../common/Icons";
+import { IfvLoveIcon } from "../common/icons";
 import ButtonLink from "../common/button-link";
 
 const AppBar = () => {

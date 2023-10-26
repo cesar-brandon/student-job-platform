@@ -1,6 +1,6 @@
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
-import PostFeed from "@/components/common/PostFeed";
+import PostFeed from "@/components/post/post-feed";
 
 const GeneralPostFeed = async () => {
   const posts = await db.post.findMany({

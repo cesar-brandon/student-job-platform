@@ -1,4 +1,4 @@
-import Editor from "@/components/common/Editor";
+import Editor from "@/components/editor/editor";
 import { Button } from "@/components/ui/button";
 
 interface pageProps {

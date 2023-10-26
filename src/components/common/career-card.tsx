@@ -5,7 +5,7 @@ import {
   CFIcon,
   DSIcon,
   ETIcon,
-} from "@/components/common/Icons";
+} from "@/components/common/icons";
 
 interface CareerCardProps {
   career: string;

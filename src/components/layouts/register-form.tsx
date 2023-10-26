@@ -5,10 +5,10 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { LoaderCircleIcon } from "../common/Icons";
-import OtpInput from "../common/OtpInput";
-import PasswordInput from "../common/PasswordInput";
-import { StudentCard, UserCardFallback } from "../common/UserCard";
+import { LoaderCircleIcon } from "../common/icons";
+import OtpInput from "../common/opt-input";
+import PasswordInput from "../common/password-input";
+import { StudentCard, UserCardFallback } from "../user-card";
 import { Button } from "../ui/button";
 import Link from "next/link";
 

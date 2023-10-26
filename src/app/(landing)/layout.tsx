@@ -1,6 +1,6 @@
 import "../globals.css";
-import Footer from "@/components/layouts/Footer";
-import AppBar from "@/components/layouts/AppBar";
+import Footer from "@/components/layouts/footer";
+import AppBar from "@/components/layouts/app-bar";
 
 export const metadata = {
   title: "Plataforma",

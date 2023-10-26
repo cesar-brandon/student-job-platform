@@ -1,4 +1,4 @@
-import SearchBar from "@/components/common/SearchBar";
+import SearchBar from "@/components/common/search-bar";
 
 const ExplorePage = () => {
   return (

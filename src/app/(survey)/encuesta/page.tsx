@@ -1,4 +1,4 @@
-import SurveyCareer from "@/components/survey/SurveyCareer";
+import SurveyCareer from "@/components/survey-career";
 
 const Page = () => {
   const careers = ["ET", "FT", "AE", "CF", "DS"];

@@ -7,10 +7,10 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from "embla-carousel-react";
 import { useCallback, useState } from "react";
-import { DotButton, useDotButton } from "./StoryDotButton";
-import { NextButton, PrevButton, usePrevNextButtons } from "./StoryArrowButton";
+import { DotButton, useDotButton } from "./common/dot-button";
+import { NextButton, PrevButton, usePrevNextButtons } from "./common/arrow-button";
 import { cn } from "@/lib/utils";
-import BlurImage from "./blur-image";
+import BlurImage from "./common/blur-image";
 
 interface StoryPlayerProps {
   stories: Story[];

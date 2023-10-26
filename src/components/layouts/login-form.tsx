@@ -1,14 +1,14 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import PasswordInput from "@/components/common/PasswordInput";
+import PasswordInput from "@/components/common/password-input";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
-import { UserCard, UserCardFallback } from "../common/UserCard";
+import { UserCard, UserCardFallback } from "../user-card";
 import { useRouter } from "next/navigation";
-import { LoaderCircleIcon } from "../common/Icons";
+import { LoaderCircleIcon } from "../common/icons";
 
 interface Props {
   userDetails: null;

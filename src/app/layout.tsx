@@ -1,4 +1,4 @@
-import Providers from "@/components/common/Providers";
+import Providers from "@/components/providers";
 import { TailwindIndicator } from "@/components/common/tailwind-indicator";
 import { Toaster } from "@/components/ui/toaster";
 import { fontSans } from "@/lib/fonts";

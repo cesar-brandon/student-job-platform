@@ -6,7 +6,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import NavBarItem from "../common/NavBarItem";
+import NavBarItem from "../common/navbar-item";
 import { useState, useEffect } from "react";
 import { simplifyName } from "@/lib/utils";
 import { user } from "@/types/next-auth";

@@ -1,9 +1,9 @@
 import { careerData, formatDate, simplifyName } from "@/lib/utils";
 import { Student } from "@/types/db";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
-import { Skeleton } from "../ui/skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Card, CardContent, CardDescription, CardHeader } from "./ui/card";
+import { Skeleton } from "./ui/skeleton";
 
 interface UserCardProps {
   user: {

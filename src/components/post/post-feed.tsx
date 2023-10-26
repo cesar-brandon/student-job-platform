@@ -7,7 +7,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef } from "react";
-import Post from "./Post";
+import Post from "./post";
 import { Skeleton } from "../ui/skeleton";
 
 interface PostFeedProps {
