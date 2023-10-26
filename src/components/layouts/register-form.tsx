@@ -5,11 +5,11 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { LoaderCircleIcon } from "../common/icons";
-import OtpInput from "../common/opt-input";
-import PasswordInput from "../common/password-input";
+import { LoaderCircleIcon } from "@/components/common/Icons";
+import OtpInput from "@/components/common/opt-input";
+import PasswordInput from "@/components/common/password-input";
 import { StudentCard, UserCardFallback } from "../user-card";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface Props {

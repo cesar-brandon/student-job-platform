@@ -18,7 +18,7 @@ import EditorOutput from "../editor/editor-output";
 import { Button } from "../ui/button";
 import PostVoteClient from "./post-vote-client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { HistoryIcon } from "@/components/common/icons";
+import { HistoryIcon } from "@/components/common/Icons";
 
 type PartialVote = Pick<Vote, "type">;
 
