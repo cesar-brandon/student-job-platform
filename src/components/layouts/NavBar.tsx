@@ -15,7 +15,7 @@ interface Props {
   user: user
 }
 
-const NavBar: React.FC<Props> = ({ user }) => {
+export function NavBar({ user }: Props) {
   const items = [
     {
       content: "Inicio",
@@ -83,5 +83,3 @@ const NavBar: React.FC<Props> = ({ user }) => {
     </div>
   );
 };
-
-export default NavBar;

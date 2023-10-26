@@ -1,6 +1,6 @@
 import "../globals.css";
 import AsideFeed from "@/components/layouts/aside-feed";
-import NavBar from "@/components/layouts/navbar";
+import { NavBar } from "@/components/layouts/navbar";
 import SidebarFeed from "@/components/layouts/sidebar-feed";
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";

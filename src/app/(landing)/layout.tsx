@@ -1,5 +1,5 @@
+import { Footer } from "@/components/layouts/footer";
 import "../globals.css";
-import Footer from "@/components/layouts/footer";
 import AppBar from "@/components/layouts/app-bar";
 
 export const metadata = {

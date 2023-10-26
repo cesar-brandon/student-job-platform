@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FacebookIcon, InstagramIcon, WebsiteIcon } from "@/components/common/Icons";
 
-const Footer = () => {
+export function Footer() {
   const items = [
     {
       title: "Mi cuenta",
@@ -77,5 +77,3 @@ const Footer = () => {
     </section>
   );
 };
-
-export default Footer;
