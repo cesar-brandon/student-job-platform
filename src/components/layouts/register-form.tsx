@@ -5,7 +5,7 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { LoaderCircleIcon } from "@/components/common/Icons";
+import { LoaderCircleIcon } from "@/components/common/icons";
 import OtpInput from "@/components/common/opt-input";
 import PasswordInput from "@/components/common/password-input";
 import { StudentCard, UserCardFallback } from "../user-card";

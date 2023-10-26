@@ -1,6 +1,6 @@
 import CommentsSection from '@/components/post/comments-section'
 import EditorOutput from '@/components/editor/editor-output'
-import { LoaderCircleIcon } from '@/components/common/Icons'
+import { LoaderCircleIcon } from '@/components/common/icons'
 import PostVoteServer from '@/components/post/post-vote-server'
 import { buttonVariants } from '@/components/ui/button'
 import { db } from '@/lib/prisma'

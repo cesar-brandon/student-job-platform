@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Student } from "@/types/db";
-import { LoaderCircleIcon } from "@/components/common/Icons";
+import { LoaderCircleIcon } from "@/components/common/icons";
 
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

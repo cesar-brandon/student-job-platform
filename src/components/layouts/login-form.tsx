@@ -8,7 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { UserCard, UserCardFallback } from "../user-card";
 import { useRouter } from "next/navigation";
-import { LoaderCircleIcon } from "@/components/common/Icons";
+import { LoaderCircleIcon } from "@/components/common/icons";
 
 interface Props {
   userDetails: null;

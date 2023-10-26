@@ -3,7 +3,7 @@ import { careerData, generateCode } from "@/lib/utils";
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
-import { LoaderCircleIcon } from "@/components/common/Icons";
+import { LoaderCircleIcon } from "@/components/common/icons";
 
 interface OtpInputProps {
   user: {
