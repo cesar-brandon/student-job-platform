@@ -1,11 +1,5 @@
 import { careerData, cn } from "@/lib/utils";
-import {
-  FTIcon,
-  AEIcon,
-  CFIcon,
-  DSIcon,
-  ETIcon,
-} from "@/components/common/icons";
+import { AEIcon, CFIcon, DSIcon, ETIcon, FTIcon } from "./icons";
 
 interface CareerCardProps {
   career: string;
