@@ -61,6 +61,8 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
           return acc;
         }, 0);
 
+        const bookmarkAmt = post.bookmarks.length;
+
         const currentVote = post.votes.find(
           (vote) => vote.userId === session?.user?.id
         );
@@ -75,6 +77,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
                 authorImage={post.author.image || ""}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
+                bookmarkAmt={bookmarkAmt}
               />
             </li>
           );
@@ -88,6 +91,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
               authorImage={post.author.image || ""}
               votesAmt={votesAmt}
               currentVote={currentVote}
+              bookmarkAmt={bookmarkAmt}
             />
           );
         }

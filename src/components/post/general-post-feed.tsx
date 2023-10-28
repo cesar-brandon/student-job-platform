@@ -11,6 +11,7 @@ const GeneralPostFeed = async () => {
       votes: true,
       author: true,
       comments: true,
+      bookmarks: true,
     },
     take: INFINITE_SCROLL_PAGINATION_RESULTS, // 4 to demonstrate infinite scroll, should be higher in production
   });

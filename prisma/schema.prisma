@@ -71,6 +71,7 @@ model User {
   CommentVote   CommentVote[]
   Comment       Comment[]
   Vote          Vote[]
+  BookMark      Bookmark[]
   Subscription  Subscription[]
   accounts      Account[]
   sessions      Session[]
@@ -134,8 +135,9 @@ model Post {
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
-  comments Comment[]
-  votes    Vote[]
+  comments  Comment[]
+  votes     Vote[]
+  bookmarks Bookmark[]
 }
 
 model Comment {
@@ -173,6 +175,15 @@ model CommentVote {
   type      VoteType
 
   @@id([userId, commentId])
+}
+
+model Bookmark {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+
+  @@id([userId, postId])
 }
 
 model Postulacion {

@@ -1,10 +1,7 @@
 "use client";
 
 import { formatTimeToNow, simplifyName } from "@/lib/utils";
-import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
 import {
-  BookmarkIcon,
-  ChatBubbleBottomCenterIcon,
   ClockIcon,
   MapPinIcon,
   PaperAirplaneIcon,
@@ -12,13 +9,13 @@ import {
 import { Post, User, Vote } from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import { Drawer } from "vaul";
 import EditorOutput from "../editor/editor-output";
 import { Button } from "../ui/button";
-import PostVoteClient from "./post-vote-client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { HistoryIcon } from "@/components/common/icons";
+import { PostBookmarkClient } from "./post-bookmark-client";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -32,23 +29,19 @@ interface PostProps {
   authorImage: string;
   currentVote?: PartialVote;
   commentAmt: number;
+  bookmarkAmt: number;
 }
 
 const Post: FC<PostProps> = ({
   post,
   votesAmt: _votesAmt,
+  bookmarkAmt: _bookmarkAmt,
   currentVote: _currentVote,
   authorName,
   authorImage,
-  commentAmt,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
   const pRef = useRef<HTMLParagraphElement>(null);
 
-  const handleBookMarkClick = () => {
-    setIsChecked(!isChecked);
-  };
   return (
     <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
       <div className="px-6 pt-6 pb-4 flex justify-between">
@@ -74,20 +67,9 @@ const Post: FC<PostProps> = ({
                   {authorName}
                 </a>
               ) : null}
-              <div className="absolute top-0 right-0 w-6 h-6 cursor-pointer transition-all duration-300" onClick={handleBookMarkClick}>
-                <div className={`group w-full h-full relative flex items-center justify-center ${isChecked && 'text-amber-400'}`}>
-                  <BookmarkIcon className="absolute" />
-                  <BookmarkIconSolid className={`absolute ${isChecked ? "animate-svg-filled" : "hidden"}`} />
-                  <svg className={`absolute ${isChecked ? "animate-svg-celebrate" : "hidden"} opacity-0`} width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                    <polygon className="stroke-amber-500" points="10,10 20,20"></polygon>
-                    <polygon className="stroke-amber-500" points="10,50 20,50"></polygon>
-                    <polygon className="stroke-amber-500" points="20,80 30,70"></polygon>
-                    <polygon className="stroke-amber-500" points="90,10 80,20"></polygon>
-                    <polygon className="stroke-amber-500" points="90,50 80,50"></polygon>
-                    <polygon className="stroke-amber-500" points="80,80 70,70"></polygon>
-                  </svg>
-                </div>
-              </div>
+              <PostBookmarkClient
+                postId={post.id}
+                initialBookmarksAmt={_bookmarkAmt} />
             </div>
             <Drawer.Root shouldScaleBackground>
               <Drawer.Trigger asChild>
