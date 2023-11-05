@@ -65,7 +65,7 @@ export function PostBookmarkClient({ postId, initialBookmarksAmt }: BookmarsClie
           <polygon className="stroke-amber-500" points="80,80 70,70"></polygon>
         </svg>
       </div>
-      <p>{bookmarksAmt}</p>
+      <p className="text-center">{bookmarksAmt}</p>
     </div >
   )
 }

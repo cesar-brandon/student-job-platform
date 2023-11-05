@@ -61,7 +61,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
           return acc;
         }, 0);
 
-        const bookmarkAmt = post.bookmarks.length;
+        const bookmarkAmt = (post.bookmarks && post.bookmarks.length) || 0;
 
         const currentVote = post.votes.find(
           (vote) => vote.userId === session?.user?.id
