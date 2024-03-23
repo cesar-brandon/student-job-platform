@@ -1,7 +1,6 @@
 "use client";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
 import BackButton from "../common/back-button";
 import BlurImage from "../common/blur-image";
 
