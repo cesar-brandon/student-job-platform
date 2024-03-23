@@ -1,8 +1,21 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BellIcon, BookmarkIcon, Cog8ToothIcon, EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
+import {
+  BellIcon,
+  BookmarkIcon,
+  Cog8ToothIcon,
+  EllipsisHorizontalCircleIcon,
+} from "@heroicons/react/24/outline";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { getAuthSession } from "@/lib/auth";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
 import { simplifyName } from "@/lib/utils";
 import ButtonLink from "../common/button-link";
 import { ThemeToggle } from "../common/theme-toggle";
@@ -36,32 +49,53 @@ const HeaderFeed: React.FC = async () => {
                   </AvatarFallback>
                 </Avatar>
               </SheetTitle>
-              <SheetDescription>
-                <h3 className="font-bold">
-                  {user.name}
-                </h3>
-                <p className="text-black text-opacity-50">
-                  @{user.name}
-                </p>
+              <SheetDescription asChild>
+                <div className="flex flex-col">
+                  <h3 className="font-bold">{user.name}</h3>
+                  <p className="text-opacity-50">@{user.name}</p>
+                </div>
               </SheetDescription>
             </SheetHeader>
             <SheetClose asChild>
-              <ButtonLink href="/bookmarks" text="Guardados" ariaLabel="Guardados" variant="ghost"
-                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start " icon={<BookmarkIcon className="w-6 h-6 order-first mr-4" />} />
+              <ButtonLink
+                href="/bookmarks"
+                text="Guardados"
+                ariaLabel="Guardados"
+                variant="ghost"
+                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start "
+                icon={<BookmarkIcon className="w-6 h-6 order-first mr-4" />}
+              />
             </SheetClose>
             <SheetClose asChild>
-              <ButtonLink href="/notifications" text="Notificaciones" ariaLabel="Notificaciones" variant="ghost"
-                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start " icon={<BellIcon className="w-6 h-6 order-first mr-4" />} />
+              <ButtonLink
+                href="/notifications"
+                text="Notificaciones"
+                ariaLabel="Notificaciones"
+                variant="ghost"
+                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start "
+                icon={<BellIcon className="w-6 h-6 order-first mr-4" />}
+              />
             </SheetClose>
             <SheetClose asChild>
               <ThemeToggle />
             </SheetClose>
             <SheetClose asChild>
-              <ButtonLink href="/settings" text="Configuración" ariaLabel="Configuración" variant="ghost"
-                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start" icon={<Cog8ToothIcon className="w-6 h-6 order-first mr-4" />} />
+              <ButtonLink
+                href="/settings"
+                text="Configuración"
+                ariaLabel="Configuración"
+                variant="ghost"
+                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start"
+                icon={<Cog8ToothIcon className="w-6 h-6 order-first mr-4" />}
+              />
             </SheetClose>
             {user.role === "ENTERPRISE" && (
-              <ButtonLink href={`/${user.name}/submit`} text="Publicar oferta" ariaLabel="Publicar oferta" className="mt-8" />
+              <ButtonLink
+                href={`/${user.name}/submit`}
+                text="Publicar oferta"
+                ariaLabel="Publicar oferta"
+                className="mt-8"
+              />
             )}
           </SheetContent>
         </Sheet>
