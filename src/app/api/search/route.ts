@@ -1,5 +1,6 @@
 import { db } from '@/lib/prisma'
 
+//! Agregar validacion para poder buscar usuarios
 export async function GET(req: Request) {
   const url = new URL(req.url)
   const q = url.searchParams.get('q')

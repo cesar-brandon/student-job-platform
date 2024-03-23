@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from "tailwindcss";
+
+const config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -7,6 +8,7 @@ module.exports = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -50,7 +52,6 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-
         orange: {
           DEFAULT: "hsl(var(--orange))",
           foreground: "hsl(var(--orange-foreground))",
@@ -63,12 +64,12 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
         "click-pulse": {
           "0%": { transform: "scale(1)" },
@@ -82,9 +83,9 @@ module.exports = {
         },
         "svg-celebrate": {
           "0%": { transform: "scale(0)" },
-          "50%": { opacity: 1, filter: "brightness(1.1)" },
-          "100%": { transform: "scale(1.4)", opacity: 0, display: "none" },
-        }
+          "50%": { opacity: "1", filter: "brightness(1.1)" },
+          "100%": { transform: "scale(1.4)", opacity: "0", display: "none" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -95,12 +96,10 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    function({ addVariant }) {
-      addVariant('child', '& > *');
-      addVariant('child-hover', '& > *:hover');
-    }
-  ],
-};
+  function ({ addVariant }: { addVariant: any }) {
+    addVariant("child", "& > *");
+    addVariant("child-hover", "& > *:hover");
+  },
+} satisfies Config;
 
+export default config;

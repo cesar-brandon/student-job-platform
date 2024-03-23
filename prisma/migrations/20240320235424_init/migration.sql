@@ -39,10 +39,11 @@ CREATE TABLE "Session" (
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "username" TEXT,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "role" "UserRole" NOT NULL DEFAULT 'STUDENT',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -139,6 +140,14 @@ CREATE TABLE "CommentVote" (
 );
 
 -- CreateTable
+CREATE TABLE "Bookmark" (
+    "userId" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
+
+    CONSTRAINT "Bookmark_pkey" PRIMARY KEY ("userId","postId")
+);
+
+-- CreateTable
 CREATE TABLE "Postulacion" (
     "id" TEXT NOT NULL,
     "accepted" BOOLEAN NOT NULL DEFAULT false,
@@ -158,6 +167,9 @@ CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
@@ -227,6 +239,12 @@ ALTER TABLE "CommentVote" ADD CONSTRAINT "CommentVote_userId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "CommentVote" ADD CONSTRAINT "CommentVote_commentId_fkey" FOREIGN KEY ("commentId") REFERENCES "Comment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Bookmark" ADD CONSTRAINT "Bookmark_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Bookmark" ADD CONSTRAINT "Bookmark_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Postulacion" ADD CONSTRAINT "student" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -4,8 +4,7 @@ interface RequestBody {
   name: string;
   email: string;
 }
-
-
+// ! Agregar validacion para poder crear una empresa
 const POST = async (request: Request) => {
   const body: RequestBody = await request.json();
 

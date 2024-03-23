@@ -2,6 +2,7 @@ import { getAuthSession } from '@/lib/auth'
 import { db } from '@/lib/prisma'
 import { z } from 'zod'
 
+//! Agregar validacion para poder consultar los posts
 export async function GET(req: Request) {
   const url = new URL(req.url)
 

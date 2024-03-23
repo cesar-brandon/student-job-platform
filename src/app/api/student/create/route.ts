@@ -1,6 +1,7 @@
 import { db } from "@/lib/prisma";
 import { Student } from "@prisma/client";
 
+// ! Agregar validacion para poder crear un estudiante
 const POST = async (request: Request) => {
   const body: Student[] = await request.json();
 
