@@ -5,29 +5,31 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Autoplay from "embla-carousel-autoplay";
-import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useState } from "react";
 import { DotButton, useDotButton } from "./common/dot-button";
 import { NextButton, PrevButton, usePrevNextButtons } from "./common/arrow-button";
 import { cn } from "@/lib/utils";
 import BlurImage from "./common/blur-image";
+import { CarouselApi, CarouselOptions } from "@/types/carousel";
 
 interface StoryPlayerProps {
   stories: Story[];
   screen?: boolean;
   closeStory?: () => void;
-  options?: EmblaOptionsType;
+  options?: CarouselOptions;
 }
 
 const StoryPlayer = ({ screen, closeStory, stories, options }: StoryPlayerProps) => {
   const [muted, setMuted] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
 
-  const onButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
-    const { autoplay } = emblaApi.plugins()
-    if (!autoplay) return
-    if (autoplay.options.stopOnInteraction !== false) autoplay.stop()
-  }, [])
+  const onButtonClick = useCallback((emblaApi: CarouselApi) => {
+    if (!emblaApi) return;
+    const { autoplay } = emblaApi.plugins();
+    if (!autoplay) return;
+    if ((autoplay as any).options.stopOnInteraction !== false) (autoplay as any).stop();
+  }, []);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
     emblaApi,

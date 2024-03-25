@@ -6,7 +6,7 @@ import {
   MapPinIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
-import { Post, User, Vote } from "@prisma/client";
+import { Post as PrismaPost, User, Vote } from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef } from "react";
@@ -20,7 +20,7 @@ import { PostBookmarkClient } from "./post-bookmark-client";
 type PartialVote = Pick<Vote, "type">;
 
 interface PostProps {
-  post: Post & {
+  post: PrismaPost & {
     author: User;
     votes: Vote[];
   };
