@@ -10,7 +10,10 @@ export const simplifyName = (fullName: string): string => {
   const words = fullName.split(" ");
   let simplifiedName = "";
   if (words.length >= 2) {
-    simplifiedName = words.slice(0, 2).map((word) => word.charAt(0)).join("");
+    simplifiedName = words
+      .slice(0, 2)
+      .map((word) => word.charAt(0))
+      .join("");
   } else {
     simplifiedName = words[0].charAt(0);
   }
@@ -97,6 +100,10 @@ export const careerData: {
   DS: {
     name: "Desarrollo de Sistemas de Información",
     color: "bg-yellow-400",
+  },
+  ENTERPRISE: {
+    name: "Empresa",
+    color: "bg-amber-400",
   },
 };
 

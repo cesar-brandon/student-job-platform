@@ -45,31 +45,32 @@ const Post: FC<PostProps> = ({
   return (
     <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
       <div className="px-6 pt-6 pb-4 flex justify-between">
-        <div className="w-full flex gap-4">
+        <div className="relative w-full flex gap-4">
           <Avatar className="flex items-center justify-center">
             <AvatarImage src={authorImage} alt="avatar" />
             <AvatarFallback>
               {simplifyName(authorName.toUpperCase())}
             </AvatarFallback>
           </Avatar>
+          <PostBookmarkClient
+            postId={post.id}
+            initialBookmarksAmt={_bookmarkAmt}
+          />
           <div>
             <div className="max-h-40 relative">
-              <Link
-                href={`/${post.author.username}/post/${post.id}`}>
-                <h1 className="text-2xl text-primary font-semibold leading-none tracking-tight hover:underline">
+              <Link href={`/${post.author.username}/post/${post.id}`}>
+                <h3 className="text-2xl text-primary font-semibold leading-none tracking-tight hover:underline">
                   {post.title}
-                </h1>
+                </h3>
               </Link>
               {authorName ? (
                 <a
                   className="hover:underline underline-offset-2"
-                  href={`/${post.author.username}`}>
+                  href={`/${post.author.username}`}
+                >
                   {authorName}
                 </a>
               ) : null}
-              <PostBookmarkClient
-                postId={post.id}
-                initialBookmarksAmt={_bookmarkAmt} />
             </div>
             <Drawer.Root shouldScaleBackground>
               <Drawer.Trigger asChild>
@@ -126,16 +127,19 @@ const Post: FC<PostProps> = ({
               </Drawer.Portal>
             </Drawer.Root>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
 
       <div className="z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
-        <p className="flex items-center gap-2"><HistoryIcon className="w-4 h-4" /> Publicado hace {formatTimeToNow(new Date(post.createdAt))}</p>
+        <p className="flex items-center gap-2">
+          <HistoryIcon className="w-4 h-4" /> Publicado hace{" "}
+          {formatTimeToNow(new Date(post.createdAt))}
+        </p>
         <div className="flex items-center justify-center">
           <PaperAirplaneIcon className="h-4 w-4" />
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 export default Post;

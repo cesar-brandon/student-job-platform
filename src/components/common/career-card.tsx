@@ -1,5 +1,11 @@
 import { careerData, cn } from "@/lib/utils";
-import { AEIcon, CFIcon, DSIcon, ETIcon, FTIcon } from "@/components/common/icons";
+import {
+  AEIcon,
+  CFIcon,
+  DSIcon,
+  ETIcon,
+  FTIcon,
+} from "@/components/common/icons";
 
 interface CareerCardProps {
   career: string;
@@ -9,9 +15,14 @@ interface CareerCardProps {
   classNameIcon?: string;
 }
 
-const CareerCard: React.FC<CareerCardProps> = ({ career, children, handleClick, className, classNameIcon }) => {
+const CareerCard: React.FC<CareerCardProps> = ({
+  career,
+  children,
+  handleClick,
+  className,
+  classNameIcon,
+}) => {
   const color = careerData[career].color;
-
 
   const careerIcons: {
     [key: string]: JSX.Element;
@@ -21,15 +32,24 @@ const CareerCard: React.FC<CareerCardProps> = ({ career, children, handleClick, 
     AE: <AEIcon className="w-full h-full stroke-white" />,
     CF: <CFIcon className="w-full h-full stroke-white" />,
     DS: <DSIcon className="w-full h-full stroke-white" />,
+    ENTERPRISE: <AEIcon className="w-full h-full stroke-white" />,
   };
 
   return (
     <div
-      className={cn(`group relative flex flex-col justify-between items-center w-36 h-40 rounded-xl ${color} overflow-hidden p-4`, className)}
+      className={cn(
+        `group relative flex flex-col justify-between items-center w-36 h-40 rounded-xl ${color} overflow-hidden p-4`,
+        className
+      )}
       onClick={handleClick}
     >
       {children}
-      <span className={cn("absolute opacity-20 transition-all duration-300", classNameIcon)}>
+      <span
+        className={cn(
+          "absolute opacity-20 transition-all duration-300",
+          classNameIcon
+        )}
+      >
         {careerIcons[career]}
       </span>
     </div>

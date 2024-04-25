@@ -2,7 +2,7 @@ import { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./prisma";
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { nanoid } from "nanoid";
 
 export const authOptions: NextAuthOptions = {
@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   session: {
@@ -45,12 +45,12 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
-    error: "/login/error"
+    error: "/login/error",
   },
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google") {
-        const email = user.email as string
+        const email = user.email as string;
         const isVerified = await verifyGoogleEmail(email);
         if (!isVerified) {
           return false;
@@ -72,12 +72,20 @@ export const authOptions: NextAuthOptions = {
           where: { email: token.email as string },
         });
 
+        const student = await db.student.findUnique({
+          where: { email: token.email as string },
+        });
+
         if (enterprise) {
           await db.user.update({
             where: { id: token.id as string },
             data: { role: "ENTERPRISE" },
           });
           session.user.role = "ENTERPRISE";
+        }
+
+        if (student) {
+          session.user.career = student.career;
         }
       }
       return session;
@@ -86,20 +94,20 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
         where: {
-          email: token.email as string
-        }
-      })
+          email: token.email as string,
+        },
+      });
 
       if (!dbUser) {
         token.id = user.id;
-        return token
+        return token;
       }
 
       if (!dbUser.username) {
         await db.user.update({
           where: { id: dbUser.id },
-          data: { username: nanoid(10) }
-        })
+          data: { username: nanoid(10) },
+        });
       }
 
       return {
@@ -108,8 +116,8 @@ export const authOptions: NextAuthOptions = {
         username: dbUser.username,
         email: dbUser.email,
         image: dbUser.image,
-        role: dbUser.role
-      }
+        role: dbUser.role,
+      };
     },
   },
 };
@@ -137,4 +145,4 @@ export const verifyGoogleEmail = async (email: string) => {
   } catch (error) {
     return false;
   }
-}
+};

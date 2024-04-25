@@ -12,7 +12,7 @@ interface UserCardProps {
     lastName: string;
     createdAt: string;
     image: string;
-    Student: [{ name: string; lastname: string; }];
+    Student: [{ name: string; lastname: string }];
   };
   setUser: (user: any) => void;
 }
@@ -24,7 +24,6 @@ interface StudentCardProps {
 
 const UserCard = ({ user, setUser }: UserCardProps) => {
   if (!user) return null;
-  console.log(user)
   return (
     <Card>
       <CardHeader>
@@ -44,14 +43,10 @@ const UserCard = ({ user, setUser }: UserCardProps) => {
               src={user.image}
               alt={user.name}
             />
-            <AvatarFallback>
-              {simplifyName(user.name)}
-            </AvatarFallback>
+            <AvatarFallback>{simplifyName(user.name)}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-sm font-medium leading-none">
-              {user.name}
-            </p>
+            <p className="text-sm font-medium leading-none">{user.name}</p>
             <p className="text-sm text-muted-foreground">@{user.username}</p>
           </div>
         </div>

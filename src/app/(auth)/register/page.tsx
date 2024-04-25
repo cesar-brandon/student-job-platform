@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Student } from "@/types/db";
 import { LoaderCircleIcon } from "@/components/common/icons";
+import { Separator } from "@/components/ui/separator";
 
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -33,7 +34,11 @@ const RegisterPage = () => {
 
   return (
     <div className="w-full h-100">
-      <h1 className={`text-xl md:text-2xl font-bold leading-tight mt-12 ${userDetails && userDetails.userId && "hidden"}`}>
+      <h1
+        className={`text-xl md:text-2xl font-bold leading-tight mt-12 ${
+          userDetails && userDetails.userId && "hidden"
+        }`}
+      >
         {title}
       </h1>
 
@@ -41,10 +46,11 @@ const RegisterPage = () => {
 
       {!userDetails && (
         <>
-          <hr className="my-6 border-gray-300 w-full" />
+          <Separator className="my-6" />
 
           <Button
-            className="w-full bg-white text-base hover:bg-gray-100 focus:bg-gray-100 text-gray-900 border border-gray-300"
+            className="w-full text-base"
+            variant="outline"
             onClick={loginWithGoogle}
             disabled={isLoading}
           >
