@@ -16,6 +16,7 @@ import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { HistoryIcon } from "@/components/common/icons";
 import { PostBookmarkClient } from "./post-bookmark-client";
+import { Badge } from "../ui/badge";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -75,15 +76,15 @@ const Post: FC<PostProps> = ({
             <Drawer.Root shouldScaleBackground>
               <Drawer.Trigger asChild>
                 <div>
-                  <div className="flex gap-2 text-sm text-muted-foreground my-2">
-                    <div className="flex items-center gap-2 rounded-full border py-1 px-2">
+                  <div className="flex gap-2 my-2">
+                    <Badge className="gap-2 text-muted-foreground py-1" variant="secondary">
                       <MapPinIcon className="h-4 w-4" />
                       Direccion de ejemplo
-                    </div>
-                    <div className="flex items-center gap-2 rounded-full border py-1 px-2">
+                    </Badge>
+                    <Badge className="gap-2 text-muted-foreground py-1" variant="secondary">
                       <ClockIcon className="h-4 w-4" />
                       Full Time
-                    </div>
+                    </Badge>
                   </div>
 
                   <div

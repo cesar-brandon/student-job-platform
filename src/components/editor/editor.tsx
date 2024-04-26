@@ -195,7 +195,7 @@ const Editor: React.FC<EditorProps> = (id) => {
 
   return (
     <>
-      <div className="w-full p-4 bg-gray-50 rounded-lg border border-gray-200">
+      <div className="w-full p-4 bg-gray-50 dark:bg-card rounded-lg border">
         <form
           id="enterprise-post-form"
           className="w-fit"
@@ -212,7 +212,7 @@ const Editor: React.FC<EditorProps> = (id) => {
               placeholder="Título"
               className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
             />
-            <div id="editor" className="min-h-[500px]" />
+            <div id="editor" className="min-h-[400px]" />
             <p className="text-sm text-gray-500">
               Usa{" "}
               <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
