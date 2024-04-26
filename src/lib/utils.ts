@@ -103,7 +103,7 @@ export const careerData: {
   },
   ENTERPRISE: {
     name: "Empresa",
-    color: "bg-amber-400",
+    color: "bg-[#fba124]",
   },
 };
 

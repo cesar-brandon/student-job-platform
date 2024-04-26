@@ -9,14 +9,32 @@ import {
 import { Post as PrismaPost, User, Vote } from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
-import { FC, useRef } from "react";
-import { Drawer } from "vaul";
+import { FC, useRef, useState } from "react";
 import EditorOutput from "../editor/editor-output";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HistoryIcon } from "@/components/common/icons";
 import { PostBookmarkClient } from "./post-bookmark-client";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
+import { useMediaQuery } from "@mantine/hooks";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { ScrollArea } from "../ui/scroll-area";
+import { ArrowUpRight } from "lucide-react";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -73,60 +91,34 @@ const Post: FC<PostProps> = ({
                 </a>
               ) : null}
             </div>
-            <Drawer.Root shouldScaleBackground>
-              <Drawer.Trigger asChild>
-                <div>
-                  <div className="flex gap-2 my-2">
-                    <Badge className="gap-2 text-muted-foreground py-1" variant="secondary">
-                      <MapPinIcon className="h-4 w-4" />
-                      Direccion de ejemplo
-                    </Badge>
-                    <Badge className="gap-2 text-muted-foreground py-1" variant="secondary">
-                      <ClockIcon className="h-4 w-4" />
-                      Full Time
-                    </Badge>
-                  </div>
+            <PostContent post={post} pRef={pRef}>
+              <div className="flex gap-2 my-2">
+                <Badge
+                  className="gap-2 text-muted-foreground py-1"
+                  variant="secondary"
+                >
+                  <MapPinIcon className="h-4 w-4" />
+                  Direccion de ejemplo
+                </Badge>
+                <Badge
+                  className="gap-2 text-muted-foreground py-1"
+                  variant="secondary"
+                >
+                  <ClockIcon className="h-4 w-4" />
+                  Full Time
+                </Badge>
+              </div>
 
-                  <div
-                    className="relative text-sm max-h-32 w-full overflow-clip"
-                    ref={pRef}
-                  >
-                    <EditorOutput content={post.content} />
-                    {/* {pRef.current?.clientHeight === 128 ? ( */}
-                    <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white dark:from-zinc-950 to-transparent"></div>
-                    {/* ) : null} */}
-                  </div>
-                </div>
-              </Drawer.Trigger>
-              <Drawer.Portal>
-                <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-                <Drawer.Content className="bg-background flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0">
-                  <div className="p-4 rounded-t-[10px] flex-1">
-                    <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-accent mb-8" />
-                    <div className="max-w-md mx-auto">
-                      <Drawer.Title className="font-medium text-xl mb-4">
-                        Oferta {post.title}
-                      </Drawer.Title>
-                      <div>
-                        <p className="text-slate-500 text-sm flex gap-4">
-                          <ClockIcon className="h-4 w-4 inline-block" />{" "}
-                          Publicado hace{" "}
-                          {formatTimeToNow(new Date(post.createdAt))}{" "}
-                        </p>
-                        <Button>Postularme</Button>
-                      </div>
-                      <Separator className="mb-2" />
-                      <div
-                        className="relative text-sm h-full w-full overflow-clip"
-                        ref={pRef}
-                      >
-                        <EditorOutput content={post.content} />
-                      </div>
-                    </div>
-                  </div>
-                </Drawer.Content>
-              </Drawer.Portal>
-            </Drawer.Root>
+              <div
+                className="relative text-sm max-h-32 w-full overflow-clip"
+                ref={pRef}
+              >
+                <EditorOutput content={post.content} />
+                {/* {pRef.current?.clientHeight === 128 ? ( */}
+                <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white dark:from-zinc-950 to-transparent"></div>
+                {/* ) : null} */}
+              </div>
+            </PostContent>
           </div>
         </div>
       </div>
@@ -144,3 +136,80 @@ const Post: FC<PostProps> = ({
   );
 };
 export default Post;
+
+function PostContent({
+  post,
+  pRef,
+  children,
+}: {
+  post: PrismaPost & {
+    author: User;
+    votes: Vote[];
+  };
+  pRef: React.RefObject<HTMLParagraphElement>;
+  children?: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  if (isDesktop) {
+    return (
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <div>{children}</div>
+        </SheetTrigger>
+        <SheetContent className="md:max-w-[35rem]">
+          <SheetHeader className="mb-6">
+            <SheetTitle>Oferta {post.title}</SheetTitle>
+            <SheetDescription className="flex items-center gap-1">
+              <ClockIcon className="h-4 w-4 inline-block" /> Publicado hace{" "}
+              {formatTimeToNow(new Date(post.createdAt))}{" "}
+            </SheetDescription>
+          </SheetHeader>
+          <div className="flex gap-2">
+            <Button>
+              Solicitar
+              <ArrowUpRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button variant="outline">Guardar</Button>
+          </div>
+
+          <Separator className="mb-2" />
+          <ScrollArea className="h-80 w-full" ref={pRef}>
+            <EditorOutput content={post.content} />
+          </ScrollArea>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <div>{children}</div>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Oferta {post.title}</DrawerTitle>
+          <DrawerDescription>
+            Publicado hace {formatTimeToNow(new Date(post.createdAt))}{" "}
+          </DrawerDescription>
+        </DrawerHeader>
+        <div className="p-4 flex-1 max-w-md mx-auto">
+          <div className="flex gap-2">
+            <Button>
+              Solicitar
+              <ArrowUpRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button variant="outline">Guardar</Button>
+          </div>
+          <Separator className="mb-2" />
+
+          <ScrollArea className="h-96 w-full" ref={pRef}>
+            <EditorOutput content={post.content} />
+          </ScrollArea>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+}
