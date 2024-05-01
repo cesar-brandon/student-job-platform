@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { toast } from "@/hooks/use-toast";
 import { PostBookmarkRequest } from "@/lib/validators/bookmark";
@@ -13,10 +13,12 @@ interface BookmarsClientProps {
   initialBookmarksAmt: number;
 }
 
-export function PostBookmarkClient({ postId, initialBookmarksAmt }: BookmarsClientProps) {
+export function PostBookmarkClient({
+  postId,
+  initialBookmarksAmt,
+}: BookmarsClientProps) {
   const [isChecked, setIsChecked] = useState(false);
   const [bookmarksAmt, setBookmarksAmt] = useState<number>(initialBookmarksAmt);
-
 
   const handleBookMarkClick = () => {
     setIsChecked(!isChecked);
@@ -24,11 +26,11 @@ export function PostBookmarkClient({ postId, initialBookmarksAmt }: BookmarsClie
 
   const { mutate: bookmark } = useMutation({
     mutationFn: async () => {
-      const payload: PostBookmarkRequest = { postId }
-      await axios.patch(`/api/user/post/bookmark`, payload)
+      const payload: PostBookmarkRequest = { postId };
+      await axios.patch(`/api/user/post/bookmark`, payload);
     },
     onError: (err) => {
-      setBookmarksAmt((prev) => prev - 1)
+      setBookmarksAmt((prev) => prev - 1);
 
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {
@@ -46,17 +48,31 @@ export function PostBookmarkClient({ postId, initialBookmarksAmt }: BookmarsClie
         variant: "destructive",
       });
     },
-  })
-
+  });
 
   return (
-    <div className="absolute top-0 right-0 w-6 h-6 cursor-pointer transition-all duration-300" onClick={handleBookMarkClick}>
-      <div className={`group w-full h-full relative flex items-center justify-center ${isChecked && 'text-amber-400'}`}
+    <div
+      className="absolute top-0 right-0 w-6 h-6 cursor-pointer transition-all duration-300 z-10"
+      onClick={handleBookMarkClick}
+    >
+      <div
+        className={`group w-full h-full relative flex items-center justify-center ${
+          isChecked && "text-amber-400"
+        }`}
         onClick={() => bookmark()}
       >
         <BookmarkIcon className="absolute" />
-        <BookmarkIconSolid className={`absolute ${isChecked ? "animate-svg-filled" : "hidden"}`} />
-        <svg className={`absolute ${isChecked ? "animate-svg-celebrate" : "hidden"} opacity-0`} width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <BookmarkIconSolid
+          className={`absolute ${isChecked ? "animate-svg-filled" : "hidden"}`}
+        />
+        <svg
+          className={`absolute ${
+            isChecked ? "animate-svg-celebrate" : "hidden"
+          } opacity-0`}
+          width="100"
+          height="100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <polygon className="stroke-amber-500" points="10,10 20,20"></polygon>
           <polygon className="stroke-amber-500" points="10,50 20,50"></polygon>
           <polygon className="stroke-amber-500" points="20,80 30,70"></polygon>
@@ -66,6 +82,6 @@ export function PostBookmarkClient({ postId, initialBookmarksAmt }: BookmarsClie
         </svg>
       </div>
       <p className="text-center">{bookmarksAmt}</p>
-    </div >
-  )
+    </div>
+  );
 }

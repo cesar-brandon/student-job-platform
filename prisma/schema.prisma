@@ -75,6 +75,7 @@ model User {
   Subscription  Subscription[]
   accounts      Account[]
   sessions      Session[]
+  Apply         Apply[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
@@ -88,19 +89,18 @@ model VerificationToken {
 }
 
 model Student {
-  id          String        @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   lastname    String
-  email       String?       @unique
-  dni         Int?          @unique
+  email       String? @unique
+  dni         Int?    @unique
   state       String?
-  code        Int?          @unique
+  code        Int?    @unique
   age         Int?
-  phoneNumber Int?          @unique
+  phoneNumber Int?    @unique
   career      Career?
-  User        User?         @relation(fields: [userId], references: [id])
+  User        User?   @relation(fields: [userId], references: [id])
   userId      String?
-  Postulacion Postulacion[]
 }
 
 model Enterprise {
@@ -124,17 +124,17 @@ model Subscription {
 }
 
 model Post {
-  id          String        @id @default(cuid())
-  title       String
-  content     Json?
-  published   Boolean       @default(false)
-  Postulacion Postulacion[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id        String   @id @default(cuid())
+  title     String
+  content   Json?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
+  applies   Apply[]
   comments  Comment[]
   votes     Vote[]
   bookmarks Bookmark[]
@@ -186,13 +186,22 @@ model Bookmark {
   @@id([userId, postId])
 }
 
-model Postulacion {
-  id        String   @id @default(cuid())
-  student   Student  @relation(fields: [studentId], references: [id], map: "student")
-  Post      Post     @relation(fields: [postId], references: [id], map: "post")
-  accepted  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  studentId String
+enum ApplyStatus {
+  APPLIED
+  VIEWED
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Apply {
+  userId    String
   postId    String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  status    ApplyStatus @default(APPLIED)
+  user      User        @relation(fields: [userId], references: [id], map: "user")
+  Post      Post        @relation(fields: [postId], references: [id], map: "post")
+
+  @@id([userId, postId])
 }

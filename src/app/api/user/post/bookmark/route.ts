@@ -1,8 +1,8 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/prisma";
+import { kv } from "@/lib/redis";
 import { PostBookmarkValidator } from "@/lib/validators/bookmark";
 import { CachedPost } from "@/types/redis";
-import { kv } from "@vercel/kv";
 import { z } from "zod";
 
 const CACHE_AFTER_BOOKMARKS = 1;

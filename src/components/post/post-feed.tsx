@@ -44,9 +44,9 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
 
   useEffect(() => {
     if (entry?.isIntersecting) {
-      fetchNextPage()
+      fetchNextPage();
     }
-  }, [entry, fetchNextPage])
+  }, [entry, fetchNextPage]);
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 
@@ -61,10 +61,18 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
           return acc;
         }, 0);
 
-        const bookmarkAmt = (post.bookmarks && post.bookmarks.length) || 0;
-
         const currentVote = post.votes.find(
           (vote) => vote.userId === session?.user?.id
+        );
+
+        const bookmarkAmt = (post.bookmarks && post.bookmarks.length) || 0;
+
+        // const currentBookmark = post.bookmarks.find(
+        //   (bookmark) => bookmark.userId === session?.user?.id
+        // );
+
+        const currentApply = post.applies?.find(
+          (apply) => apply.userId === session?.user?.id
         );
 
         if (index === posts.length - 1) {
@@ -78,6 +86,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
                 votesAmt={votesAmt}
                 currentVote={currentVote}
                 bookmarkAmt={bookmarkAmt}
+                currentApply={currentApply}
               />
             </li>
           );
@@ -92,12 +101,13 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
               votesAmt={votesAmt}
               currentVote={currentVote}
               bookmarkAmt={bookmarkAmt}
+              currentApply={currentApply}
             />
           );
         }
       })}
       {isFetchingNextPage && (
-        <li className='flex justify-center'>
+        <li className="flex justify-center">
           <Skeleton className="w-full h-[10rem] rounded-xl" />
         </li>
       )}

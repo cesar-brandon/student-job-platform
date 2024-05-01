@@ -8,12 +8,12 @@ export interface user {
   email: string;
   image: string;
   role: UserRole;
+  career?: string;
 }
-
 
 declare module "next-auth" {
   interface Session {
-    user
+    user;
   }
 }
 

@@ -106,7 +106,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
             value={formData.identifier}
             onChange={handleChange}
             placeholder="Ingrese su correo institucional o código de estudiante"
-            className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+            className="w-full px-4 py-3 rounded-lg bg-gray-200 dark:bg-background mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
             autoFocus
             autoComplete="on"
             required
@@ -132,7 +132,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="Crea tu nombre de usuario"
-                className="w-full lowercase px-4 py-3 rounded-lg bg-gray-200 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                className="w-full lowercase px-4 py-3 rounded-lg bg-gray-200 dark:bg-background border focus:border-blue-500 focus:bg-white focus:outline-none"
                 autoFocus
                 autoComplete="on"
                 required

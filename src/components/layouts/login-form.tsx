@@ -107,7 +107,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
           value={formData.identifier}
           onChange={handleChange}
           placeholder="Ingrese su nombre de usuario o correo"
-          className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+          className="w-full px-4 py-3 rounded-lg bg-gray-200 dark:bg-background mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
           autoFocus
           autoComplete="on"
           required

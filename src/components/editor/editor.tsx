@@ -11,6 +11,8 @@ import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { z } from "zod";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { LoaderCircleIcon } from "../common/icons";
 
 type FormData = z.infer<typeof PostValidator>;
 
@@ -35,6 +37,7 @@ const Editor: React.FC<EditorProps> = (id) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const _titleRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
@@ -163,15 +166,27 @@ const Editor: React.FC<EditorProps> = (id) => {
   });
 
   async function onSubmit(data: PostCreationRequest) {
-    const blocks = await ref.current?.save();
-    if (!blocks) return;
-    const payload: PostCreationRequest = {
-      title: data.title,
-      content: blocks,
-      id: `${id}`,
-    };
+    setIsLoading(true);
+    try {
+      const blocks = await ref.current?.save();
+      if (!blocks) return;
+      const payload: PostCreationRequest = {
+        title: data.title,
+        content: blocks,
+        id: `${id}`,
+      };
 
-    createPost(payload);
+      createPost(payload);
+    } catch (error) {
+      toast({
+        title: "Algo salió mal",
+        description:
+          "Tu publicación no se publicó, inténtalo de nuevo más tarde",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   if (!isMounted) return null;
@@ -179,34 +194,46 @@ const Editor: React.FC<EditorProps> = (id) => {
   const { ref: titleRef, ...rest } = register("title");
 
   return (
-    <div className="w-full p-4 bg-gray-50 rounded-lg border border-gray-200">
-      <form
-        id="enterprise-post-form"
-        className="w-fit"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="prose prose-stone dark:prose-invert">
-          <TextareaAutosize
-            ref={(e) => {
-              titleRef(e);
-              // @ts-ignore
-              _titleRef.current = e;
-            }}
-            {...rest}
-            placeholder="Título"
-            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
-          />
-          <div id="editor" className="min-h-[500px]" />
-          <p className="text-sm text-gray-500">
-            Usa{" "}
-            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-              Tab
-            </kbd>{" "}
-            para abrir el menú de comandos.
-          </p>
-        </div>
-      </form>
-    </div>
+    <>
+      <div className="w-full p-4 bg-gray-50 dark:bg-card rounded-lg border">
+        <form
+          id="enterprise-post-form"
+          className="w-fit"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="prose prose-stone dark:prose-invert">
+            <TextareaAutosize
+              ref={(e) => {
+                titleRef(e);
+                // @ts-ignore
+                _titleRef.current = e;
+              }}
+              {...rest}
+              placeholder="Título"
+              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
+            />
+            <div id="editor" className="min-h-[400px]" />
+            <p className="text-sm text-gray-500">
+              Usa{" "}
+              <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+                Tab
+              </kbd>{" "}
+              para abrir el menú de comandos.
+            </p>
+          </div>
+        </form>
+      </div>
+      <div className="w-full flex justify-end">
+        <Button
+          type="submit"
+          className="w-full"
+          form="enterprise-post-form"
+          disabled={isLoading}
+        >
+          {isLoading ? <LoaderCircleIcon /> : "Publicar"}
+        </Button>
+      </div>
+    </>
   );
 };
 

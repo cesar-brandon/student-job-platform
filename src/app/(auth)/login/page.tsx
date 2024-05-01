@@ -3,6 +3,7 @@ import GoogleIcon from "@/components/common/google-icon";
 import { LoaderCircleIcon } from "@/components/common/icons";
 import LoginForm from "@/components/layouts/login-form";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -12,11 +13,10 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState(null);
 
-
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      await signIn('google');
+      await signIn("google");
     } catch (error) {
       return toast({
         title: "Algo salió mal",
@@ -36,11 +36,12 @@ const LoginPage = () => {
       <LoginForm userDetails={userDetails} setUserDetails={setUserDetails} />
       {!userDetails && (
         <>
-          <hr className="my-6 border-gray-300 w-full" />
+          <Separator className="my-6" />
 
           <Button
-            className="w-full bg-white text-base hover:bg-gray-100 focus:bg-gray-100 text-gray-900 border border-gray-300"
+            className="w-full text-base"
             onClick={loginWithGoogle}
+            variant="outline"
             disabled={isLoading}
           >
             {isLoading ? (

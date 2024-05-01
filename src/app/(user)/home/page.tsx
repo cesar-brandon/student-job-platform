@@ -15,6 +15,7 @@ const HomePage = async () => {
       createdAt: "desc",
     },
     include: {
+      applies: true,
       votes: true,
       author: true,
       comments: true,
