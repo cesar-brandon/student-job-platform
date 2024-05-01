@@ -1,4 +1,4 @@
-import CommentsSection from "@/components/post/comments-section";
+import CommentsSection from "@/components/post/comment/comments-section";
 import EditorOutput from "@/components/editor/editor-output";
 import { LoaderCircleIcon } from "@/components/common/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import { Post, User, Vote } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { kv } from "@/lib/redis";
-import { ArrowLeft, ClockIcon, MapPinIcon } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ClockIcon, MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
@@ -81,7 +81,7 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
             {post?.title ?? cachedPost.title}
           </h1>
 
-          <div className="w-full flex gap-2">
+          <div className="w-full flex gap-2 mb-6">
             <Badge
               className="gap-2 text-muted-foreground py-1"
               variant="secondary"
@@ -96,6 +96,14 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
               <ClockIcon className="h-4 w-4" />
               Full Time
             </Badge>
+          </div>
+
+          <div className="flex gap-2">
+            <Button>
+              Solicitar
+              <ArrowUpRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button variant="outline">Guardar</Button>
           </div>
 
           <EditorOutput content={post?.content ?? cachedPost.content} />

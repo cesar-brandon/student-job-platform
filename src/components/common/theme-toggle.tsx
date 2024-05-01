@@ -1,28 +1,28 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { useTheme } from 'next-themes'
+import * as React from "react";
+import { useTheme } from "next-themes";
 
-import { Button } from '@/components/ui/button'
-import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
+import { Button } from "@/components/ui/button";
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 
 export function ThemeToggle() {
-  const { setTheme, theme } = useTheme()
-  const [_, startTransition] = React.useTransition()
+  const { setTheme, theme } = useTheme();
+  const [_, startTransition] = React.useTransition();
 
   return (
     <Button
       variant="ghost"
-      className='rounded-full px-6 py-4 bg-background justify-start'
+      className="rounded-full px-6 py-4 bg-background justify-start"
       onClick={() => {
         startTransition(() => {
-          setTheme(theme === 'light' ? 'dark' : 'light')
-        })
+          setTheme(theme === "light" ? "dark" : "light");
+        });
       }}
     >
       {!theme ? (
         <SunIcon className="transition-all w-6 h-6 mr-4" />
-      ) : theme === 'dark' ? (
+      ) : theme === "dark" ? (
         <MoonIcon className="transition-all w-6 h-6 mr-4" />
       ) : (
         <SunIcon className="transition-all w-6 h-6 mr-4" />
@@ -30,5 +30,5 @@ export function ThemeToggle() {
       Tema
       <span className="sr-only">Alternar tema</span>
     </Button>
-  )
+  );
 }

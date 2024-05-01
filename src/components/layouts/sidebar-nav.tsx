@@ -35,7 +35,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
             Más opciones
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="rounded-xl w-[15rem] xl:w-[20rem] p-0">
+        <DropdownMenuContent className="w-[15rem] xl:w-[20rem] p-0">
           <DropdownMenuItem
             onClick={() => signOut({ callbackUrl: "/" })}
             className="text-sm font-medium text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-accent px-6 py-4">

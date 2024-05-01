@@ -6,7 +6,13 @@ import {
   MapPinIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
-import { Post as PrismaPost, User, Vote } from "@prisma/client";
+import {
+  Apply,
+  Bookmark,
+  Post as PrismaPost,
+  User,
+  Vote,
+} from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef, useState } from "react";
@@ -14,7 +20,7 @@ import EditorOutput from "../editor/editor-output";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HistoryIcon } from "@/components/common/icons";
-import { PostBookmarkClient } from "./post-bookmark-client";
+import { PostBookmarkClient } from "./bookmark/post-bookmark-client";
 import { Badge } from "@/components/ui/badge";
 import { useMediaQuery } from "@mantine/hooks";
 import {
@@ -35,6 +41,7 @@ import {
 } from "@/components/ui/drawer";
 import { ScrollArea } from "../ui/scroll-area";
 import { ArrowUpRight } from "lucide-react";
+import { PostApplyClient } from "./apply/post-apply-client";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -49,6 +56,7 @@ interface PostProps {
   currentVote?: PartialVote;
   commentAmt: number;
   bookmarkAmt: number;
+  currentApply?: Apply;
 }
 
 const Post: FC<PostProps> = ({
@@ -56,6 +64,7 @@ const Post: FC<PostProps> = ({
   votesAmt: _votesAmt,
   bookmarkAmt: _bookmarkAmt,
   currentVote: _currentVote,
+  currentApply: _currentApply,
   authorName,
   authorImage,
 }) => {
@@ -91,7 +100,7 @@ const Post: FC<PostProps> = ({
                 </a>
               ) : null}
             </div>
-            <PostContent post={post} pRef={pRef}>
+            <PostContent post={post} pRef={pRef} _currentApply={_currentApply}>
               <div className="flex gap-2 my-2">
                 <Badge
                   className="gap-2 text-muted-foreground py-1"
@@ -140,6 +149,7 @@ export default Post;
 function PostContent({
   post,
   pRef,
+  _currentApply,
   children,
 }: {
   post: PrismaPost & {
@@ -147,6 +157,7 @@ function PostContent({
     votes: Vote[];
   };
   pRef: React.RefObject<HTMLParagraphElement>;
+  _currentApply?: Apply;
   children?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -167,10 +178,7 @@ function PostContent({
             </SheetDescription>
           </SheetHeader>
           <div className="flex gap-2">
-            <Button>
-              Solicitar
-              <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Button>
+            <PostApplyClient postId={post.id} initialApply={_currentApply?.status} />
             <Button variant="outline">Guardar</Button>
           </div>
 
@@ -197,10 +205,7 @@ function PostContent({
         </DrawerHeader>
         <div className="p-4 flex-1 max-w-md mx-auto">
           <div className="flex gap-2">
-            <Button>
-              Solicitar
-              <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Button>
+            <PostApplyClient postId={post.id} initialApply={_currentApply?.status} />
             <Button variant="outline">Guardar</Button>
           </div>
           <Separator className="mb-2" />

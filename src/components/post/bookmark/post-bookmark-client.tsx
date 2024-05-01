@@ -1,7 +1,6 @@
 "use client";
 
 import { toast } from "@/hooks/use-toast";
-import { careerData } from "@/lib/utils";
 import { PostBookmarkRequest } from "@/lib/validators/bookmark";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
