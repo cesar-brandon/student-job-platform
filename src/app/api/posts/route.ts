@@ -6,10 +6,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
 
   const session = await getAuthSession();
-
-  if (!session?.user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+  if (!session?.user) return new Response("Unauthorized", { status: 401 });
 
   try {
     const { limit, page, authorName } = z

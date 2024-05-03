@@ -6,9 +6,7 @@ const POST = async (request: Request) => {
   const body: Student[] = await request.json();
 
   const session = await getAuthSession();
-  if (!session?.user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+  if (!session?.user) return new Response("Unauthorized", { status: 401 });
 
   const studentsData = body.map((student) => ({
     name: student.name,
@@ -23,7 +21,8 @@ const POST = async (request: Request) => {
   }));
 
   const filteredStudentsData = studentsData.filter(
-    (student) => student.state === "Asistiendo" || student.state === "Promovido"
+    (student) =>
+      student.state === "Asistiendo" || student.state === "Promovido",
   );
 
   const students = await db.student.createMany({

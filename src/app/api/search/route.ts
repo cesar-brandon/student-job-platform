@@ -8,9 +8,7 @@ export async function GET(req: Request) {
   if (!q) return new Response("Consulta invalida", { status: 400 });
 
   const session = await getAuthSession();
-  if (!session?.user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+  if (!session?.user) return new Response("Unauthorized", { status: 401 });
 
   const results = await db.user.findMany({
     where: {

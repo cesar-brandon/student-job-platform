@@ -5,34 +5,36 @@ import { z } from "zod";
 
 export async function PATCH(req: Request) {
   try {
-    const session = await getAuthSession()
+    const session = await getAuthSession();
+    if (!session?.user) return new Response("Unauthorized", { status: 401 });
 
-    if (!session?.user) {
-      return new Response("Unauthorized", { status: 401 })
-    }
+    const body = await req.json();
 
-    const body = await req.json()
-
-    const { name } = UserNameValidator.parse(body)
+    const { name } = UserNameValidator.parse(body);
 
     const username = await db.user.findFirst({
-      where: { username: name }
-    })
+      where: { username: name },
+    });
 
     if (username) {
-      return new Response("Username already exists", { status: 409 })
+      return new Response("Username already exists", { status: 409 });
     }
 
     await db.user.update({
       where: { id: session.user.id },
-      data: { username: name }
-    })
-    return new Response('OK')
+      data: { username: name },
+    });
+    return new Response("OK");
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response("Se pasaron datos de solicitud no válidos", { status: 422 })
+      return new Response("Se pasaron datos de solicitud no válidos", {
+        status: 422,
+      });
     }
 
-    return new Response("No se pudo actualizar el nombre de usuario, inténtelo nuevamente más tarde.", { status: 500 })
+    return new Response(
+      "No se pudo actualizar el nombre de usuario, inténtelo nuevamente más tarde.",
+      { status: 500 },
+    );
   }
-} 
+}

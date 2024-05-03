@@ -1,22 +1,41 @@
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface Props {
-  href: string
-  text?: string
-  ariaLabel: string
-  variant?: "default" | "destructive" | "outline" | "subtle" | "secondary" | "ghost" | "link"
-  className?: string
-  icon?: React.ReactNode
+  href: string;
+  text?: string;
+  ariaLabel: string;
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "subtle"
+    | "secondary"
+    | "ghost"
+    | "link";
+  className?: string;
+  icon?: React.ReactNode;
 }
 
-const ButtonLink: React.FC<Props> = ({ href, text, className, icon, ariaLabel, variant }) => {
+const ButtonLink: React.FC<Props> = ({
+  href,
+  text,
+  className,
+  icon,
+  ariaLabel,
+  variant,
+}) => {
   return (
-    <Button className={cn("rounded-full p-0", className)} variant={variant}>
-      <Link href={href} aria-label={ariaLabel} className="w-full h-full px-6 py-4 flex items-center">{text}{icon}</Link>
-    </Button>
-  )
-}
+    <Link
+      href={href}
+      aria-label={ariaLabel}
+      className={cn(buttonVariants({ variant }), "rounded-full", className)}
+    >
+      {text}
+      {icon}
+    </Link>
+  );
+};
 
-export default ButtonLink
+export default ButtonLink;

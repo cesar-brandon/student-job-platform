@@ -2,11 +2,12 @@
 import StoryPlayer from "@/components/story-player";
 import StoryPreview from "@/components/story-preview";
 import ButtonLink from "@/components/common/button-link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { OPTIONS } from "@/config";
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [openStory, setOpenStory] = useState(false);
@@ -57,14 +58,26 @@ export default function Home() {
             </h1>
 
             <div className="mt-12 lg:block flex xs:flex-col justify-center gap-3">
-              <Button className="bg-orange rounded-full hover:bg-orange/90 lg:font-bold lg:text-lg lg:py-7 lg:px-8">
-                <Link href="/login" aria-label="Accede a las oportunidades">
-                  Accede a las oportunidades
-                </Link>
-              </Button>
-              <ButtonLink href="/login-enterprise" text="Empresas" ariaLabel="Login empresas"
+              <Link
+                href="/login"
+                aria-label="Accede a las oportunidades"
+                className={cn(
+                  buttonVariants(),
+                  "bg-orange rounded-full hover:bg-orange/90 lg:font-bold lg:text-lg lg:py-7 lg:px-8"
+                )}
+              >
+                Accede a las oportunidades
+              </Link>
+
+              <ButtonLink
+                href="/login-enterprise"
+                text="Empresas"
+                ariaLabel="Login empresas"
                 className="group lg:hidden"
-                icon={<ArrowLongRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-all duration-300" />} />
+                icon={
+                  <ArrowLongRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-all duration-300" />
+                }
+              />
             </div>
           </div>
           <div className="hidden lg:flex w-full justify-center">
