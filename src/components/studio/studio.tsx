@@ -11,32 +11,16 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
-
 import { MailDisplay } from "@/components/studio/post-display";
 import { MailList } from "@/components/studio/post-list";
-import { type Mail } from "./data";
 import { useMail } from "./use-post";
-import { Nav } from "./nav";
+import { mails } from "@/components/studio/data";
 
 interface MailProps {
-  accounts: {
-    label: string;
-    email: string;
-    icon: React.ReactNode;
-  }[];
-  mails: Mail[];
   defaultLayout: number[] | undefined;
-  defaultCollapsed?: boolean;
-  navCollapsedSize: number;
 }
 
-export function Studio({
-  accounts,
-  mails,
-  defaultLayout = [265, 440, 655],
-  defaultCollapsed = false,
-  navCollapsedSize,
-}: MailProps) {
+export function Studio({ defaultLayout = [265, 440, 655] }: MailProps) {
   const [mail] = useMail();
 
   return (
@@ -50,13 +34,6 @@ export function Studio({
         }}
         className="h-full max-h-screen items-stretch"
       >
-        <Nav
-          accounts={accounts}
-          navCollapsedSize={navCollapsedSize}
-          defaultLayout={defaultLayout}
-          defaultCollapsed={defaultCollapsed}
-        />
-        <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Tabs defaultValue="all">
             <div className="flex items-center px-4 py-2">

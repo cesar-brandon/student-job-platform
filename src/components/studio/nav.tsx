@@ -1,146 +1,182 @@
+"use client";
 import * as React from "react";
 import {
   AlertCircle,
   Archive,
   ArchiveX,
+  ChevronLeft,
+  ChevronRight,
+  CircleArrowLeft,
   File,
-  Inbox,
-  MessagesSquare,
+  Paperclip,
   Send,
-  ShoppingCart,
   Trash2,
   Users2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ResizablePanel } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import { AccountSwitcher } from "@/components/studio/account-switcher";
 import { NavGroup } from "@/components/studio/nav-item";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Button, buttonVariants } from "../ui/button";
+import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { accounts } from "@/components/studio/data";
+import { User } from "@prisma/client";
 
 interface NavProps {
-  accounts: {
-    label: string;
-    email: string;
-    icon: React.ReactNode;
-  }[];
-  navCollapsedSize: number;
-  defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
+  user: User;
 }
 
-export function Nav({
-  accounts,
-  navCollapsedSize,
-  defaultLayout,
-  defaultCollapsed,
-}: NavProps) {
+export function Nav({ defaultCollapsed, user }: NavProps) {
   const [isCollapsed, setIsCollapsed] = React.useState<boolean>(
     defaultCollapsed || false
   );
 
   return (
-    <ResizablePanel
-      defaultSize={defaultLayout ? defaultLayout[0] : undefined}
-      collapsedSize={navCollapsedSize}
-      collapsible={true}
-      minSize={15}
-      maxSize={20}
-      onCollapse={() => {
-        setIsCollapsed(!isCollapsed);
-        document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-          !isCollapsed
-        )}`;
-      }}
-      className={cn(
-        isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out"
-      )}
-    >
+    <TooltipProvider delayDuration={0}>
       <div
         className={cn(
-          "flex h-[52px] items-center justify-center",
-          isCollapsed ? "h-[52px]" : "px-2"
+          "relative border-r-[1px] min-w-60",
+          isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out"
         )}
       >
-        <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            setIsCollapsed(!isCollapsed);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+              !isCollapsed
+            )}`;
+          }}
+          className="absolute -right-2 top-1/2 transform -translate-y-1/2
+          z-10 flex w-7"
+        >
+          {isCollapsed ? (
+            <ChevronRight className="h-5 w-5" />
+          ) : (
+            <ChevronLeft className="h-5 w-5" />
+          )}
+        </Button>
+
+        <div
+          className={cn(
+            "flex h-[56px] items-center justify-center",
+            isCollapsed ? "h-[56px]" : "px-2"
+          )}
+        >
+          <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+        </div>
+        <Separator />
+        <NavGroup
+          isCollapsed={isCollapsed}
+          links={[
+            {
+              title: "Ofertas",
+              label: "128",
+              href: "/studio",
+              icon: File,
+              variant: "ghost",
+            },
+            {
+              title: "Publicar oferta",
+              label: "9",
+              href: `/studio/${user.id}/create`,
+              icon: Send,
+              variant: "ghost",
+            },
+            {
+              title: "Archivos",
+              label: "",
+              href: "/studio/files",
+              icon: Paperclip,
+              variant: "ghost",
+            },
+            {
+              title: "Junk",
+              label: "23",
+              href: "/studio/junk",
+              icon: ArchiveX,
+              variant: "checked",
+            },
+            {
+              title: "Trash",
+              label: "",
+              href: "/studio/trash",
+              icon: Trash2,
+              variant: "ghost",
+            },
+            {
+              title: "Archive",
+              label: "",
+              href: "/studio/archive",
+              icon: Archive,
+              variant: "ghost",
+            },
+          ]}
+        />
+        <Separator />
+        <NavGroup
+          isCollapsed={isCollapsed}
+          links={[
+            {
+              title: "Encuestas",
+              label: "972",
+              href: "/studio/surveys",
+              icon: Users2,
+              variant: "ghost",
+            },
+            {
+              title: "Anuncios",
+              label: "342",
+              href: "/studio/ads",
+              icon: AlertCircle,
+              variant: "ghost",
+            },
+          ]}
+        />
+        <div
+          className={cn(
+            "absolute bottom-10 left-0 w-full",
+            isCollapsed ? "px-2" : "p-3"
+          )}
+        >
+          {isCollapsed ? (
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/home"
+                  className={cn(
+                    buttonVariants({ variant: "ghost", size: "icon" }),
+                    "h-9 w-9"
+                  )}
+                >
+                  <CircleArrowLeft className="h-4 w-4" />
+                  <span className="sr-only">Volver al inicio</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="flex items-center gap-4">
+                <span className="ml-auto text-muted-foreground">
+                  Volver al inicio
+                </span>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Link
+              href="/home"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "w-full justify-start"
+              )}
+            >
+              <CircleArrowLeft className="h-4 w-4 mr-2" />
+              Volver al inicio
+            </Link>
+          )}
+        </div>
       </div>
-      <Separator />
-      <NavGroup
-        isCollapsed={isCollapsed}
-        links={[
-          {
-            title: "Inbox",
-            label: "128",
-            icon: Inbox,
-            variant: "default",
-          },
-          {
-            title: "Drafts",
-            label: "9",
-            icon: File,
-            variant: "ghost",
-          },
-          {
-            title: "Sent",
-            label: "",
-            icon: Send,
-            variant: "ghost",
-          },
-          {
-            title: "Junk",
-            label: "23",
-            icon: ArchiveX,
-            variant: "ghost",
-          },
-          {
-            title: "Trash",
-            label: "",
-            icon: Trash2,
-            variant: "ghost",
-          },
-          {
-            title: "Archive",
-            label: "",
-            icon: Archive,
-            variant: "ghost",
-          },
-        ]}
-      />
-      <Separator />
-      <NavGroup
-        isCollapsed={isCollapsed}
-        links={[
-          {
-            title: "Social",
-            label: "972",
-            icon: Users2,
-            variant: "ghost",
-          },
-          {
-            title: "Updates",
-            label: "342",
-            icon: AlertCircle,
-            variant: "ghost",
-          },
-          {
-            title: "Forums",
-            label: "128",
-            icon: MessagesSquare,
-            variant: "ghost",
-          },
-          {
-            title: "Shopping",
-            label: "8",
-            icon: ShoppingCart,
-            variant: "ghost",
-          },
-          {
-            title: "Promotions",
-            label: "21",
-            icon: Archive,
-            variant: "ghost",
-          },
-        ]}
-      />
-    </ResizablePanel>
+    </TooltipProvider>
   );
 }

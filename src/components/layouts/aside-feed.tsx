@@ -26,7 +26,7 @@ const AsideFeed = async () => {
                   <AvatarFallback>{simplifyName(enterprise.name)}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
-                  <h4 className="text-sm font-semibold">{enterprise.name}</h4>
+                  <p className="text-sm font-semibold line-clamp-1">{enterprise.name}</p>
                   <span className="text-xs text-muted-foreground">
                     @{enterprise.username}
                   </span>

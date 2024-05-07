@@ -1,6 +1,8 @@
+import { Nav } from "@/components/studio/nav";
 import "../globals.css";
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default async function DashboardLayout({
   children,
@@ -9,9 +11,13 @@ export default async function DashboardLayout({
 }) {
   const session = await getAuthSession();
 
+  const collapsed = cookies().get("react-resizable-panels:collapsed");
+  const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined;
+
   if (session && session.user.role === "ENTERPRISE") {
     return (
-      <main className="bg-background xl:w-[1440px] lg:w-[1024px] max-w-full mr-auto ml-auto py-0 lg:px-8 xl:px-16 flex justify-center">
+      <main className="bg-background flex justify-center">
+        <Nav defaultCollapsed={defaultCollapsed} user={session.user}/>
         {children}
       </main>
     );
