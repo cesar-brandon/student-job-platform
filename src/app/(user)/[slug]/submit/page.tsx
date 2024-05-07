@@ -1,5 +1,5 @@
 import Editor from "@/components/editor/editor";
-import { getAuthSession } from "@/lib/auth";
+import getSession from "@/lib/getSession";
 
 interface pageProps {
   params: {
@@ -8,7 +8,7 @@ interface pageProps {
 }
 
 const SubmitPage = async ({ params }: pageProps) => {
-  const session = await getAuthSession();
+  const session = await getSession();
   const { user } = session || {};
 
   if (user.role === "ENTERPRISE") {

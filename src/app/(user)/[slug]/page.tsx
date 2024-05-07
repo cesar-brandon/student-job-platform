@@ -1,7 +1,10 @@
-const ProfilePage = () => {
-  return (
-    <div><h3 className="font-bold">Perfil</h3></div>
-  )
-}
+import MiniProfile from "@/components/mini-profile";
+import getSession from "@/lib/getSession";
+
+const ProfilePage = async () => {
+  const session = await getSession();
+  const user = session?.user;
+  return <MiniProfile user={user} />;
+};
 
 export default ProfilePage;

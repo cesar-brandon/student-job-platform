@@ -1,8 +1,8 @@
 import BackButton from "@/components/common/back-button";
 import Carousel from "@/components/layouts/carousel-login";
-import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import "../globals.css";
+import getSession from "@/lib/getSession";
 
 export const metadata = {
   title: "Inicia sesión",
@@ -14,7 +14,7 @@ export default async function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getAuthSession();
+  const session = await getSession();
 
   if (session && session.user) {
     redirect("/home");

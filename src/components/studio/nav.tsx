@@ -88,10 +88,10 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
               variant: "ghost",
             },
             {
-              title: "Archivos",
-              label: "",
-              href: "/studio/files",
-              icon: Paperclip,
+              title: "Estudiantes",
+              label: "420",
+              href: "/studio/students",
+              icon: Users2,
               variant: "ghost",
             },
             {

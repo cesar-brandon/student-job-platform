@@ -2,7 +2,7 @@ import "../globals.css";
 import AsideFeed from "@/components/layouts/aside-feed";
 import { NavBar } from "@/components/layouts/navbar";
 import SidebarFeed from "@/components/layouts/sidebar-feed";
-import { getAuthSession } from "@/lib/auth";
+import getSession from "@/lib/getSession";
 import { redirect } from "next/navigation";
 
 export default async function UserLayout({
@@ -10,7 +10,7 @@ export default async function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getAuthSession();
+  const session = await getSession();
 
   if (session && session.user) {
     const { user } = session;
