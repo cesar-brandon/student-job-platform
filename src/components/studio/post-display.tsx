@@ -12,7 +12,6 @@ import {
   ReplyAll,
   Trash2,
 } from "lucide-react";
-
 import {
   DropdownMenuContent,
   DropdownMenuItem,
@@ -38,13 +37,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mail } from "./data";
+import EditorOutput from "../editor/editor-output";
+import { ExtendedPost } from "@/types/db";
+import { ScrollArea } from "../ui/scroll-area";
 
-interface MailDisplayProps {
-  mail: Mail | null;
+interface PostDisplayProps {
+  post: ExtendedPost | null;
 }
 
-export function MailDisplay({ mail }: MailDisplayProps) {
+export function PostDisplay({ post }: PostDisplayProps) {
   const today = new Date();
 
   return (
@@ -53,7 +54,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!post}>
                 <Archive className="h-4 w-4" />
                 <span className="sr-only">Archive</span>
               </Button>
@@ -62,7 +63,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!post}>
                 <ArchiveX className="h-4 w-4" />
                 <span className="sr-only">Move to junk</span>
               </Button>
@@ -71,7 +72,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!post}>
                 <Trash2 className="h-4 w-4" />
                 <span className="sr-only">Move to trash</span>
               </Button>
@@ -83,7 +84,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             <Popover>
               <PopoverTrigger asChild>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" disabled={!mail}>
+                  <Button variant="ghost" size="icon" disabled={!post}>
                     <Clock className="h-4 w-4" />
                     <span className="sr-only">Snooze</span>
                   </Button>
@@ -142,7 +143,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!post}>
                 <Reply className="h-4 w-4" />
                 <span className="sr-only">Reply</span>
               </Button>
@@ -151,7 +152,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!post}>
                 <ReplyAll className="h-4 w-4" />
                 <span className="sr-only">Reply all</span>
               </Button>
@@ -160,7 +161,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!post}>
                 <Forward className="h-4 w-4" />
                 <span className="sr-only">Forward</span>
               </Button>
@@ -171,7 +172,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         <Separator orientation="vertical" className="mx-2 h-6" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={!mail}>
+            <Button variant="ghost" size="icon" disabled={!post}>
               <MoreVertical className="h-4 w-4" />
               <span className="sr-only">More</span>
             </Button>
@@ -185,44 +186,41 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         </DropdownMenu>
       </div>
       <Separator />
-      {mail ? (
+      {post ? (
         <div className="flex flex-1 flex-col">
           <div className="flex items-start p-4">
             <div className="flex items-start gap-4 text-sm">
               <Avatar>
-                <AvatarImage alt={mail.name} />
+                <AvatarImage alt={post.author.name} />
                 <AvatarFallback>
-                  {mail.name
+                  {post.author.name
                     .split(" ")
                     .map((chunk) => chunk[0])
                     .join("")}
                 </AvatarFallback>
               </Avatar>
               <div className="grid gap-1">
-                <div className="font-semibold">{mail.name}</div>
-                <div className="line-clamp-1 text-xs">{mail.subject}</div>
-                <div className="line-clamp-1 text-xs">
-                  <span className="font-medium">Reply-To:</span> {mail.email}
-                </div>
+                <div className="font-semibold">{post.title}</div>
+                <div className="line-clamp-1 text-xs">{post.author.name}</div>
               </div>
             </div>
-            {mail.date && (
+            {post.updatedAt && (
               <div className="ml-auto text-xs text-muted-foreground">
-                {format(new Date(mail.date), "PPpp")}
+                {format(new Date(post.updatedAt), "PPpp")}
               </div>
             )}
           </div>
           <Separator />
-          <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
-            {mail.text}
-          </div>
+          <ScrollArea className="w-full h-[35rem] whitespace-pre-wrap pt-0 px-4 text-sm">
+            <EditorOutput content={post.content} />
+          </ScrollArea>
           <Separator className="mt-auto" />
           <div className="p-4">
             <form>
               <div className="grid gap-4">
                 <Textarea
                   className="p-4"
-                  placeholder={`Reply ${mail.name}...`}
+                  placeholder={`Reply ${post.author.name}...`}
                 />
                 <div className="flex items-center">
                   <Label

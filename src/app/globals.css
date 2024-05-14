@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -60,9 +59,12 @@
 
   body {
     @apply bg-background text-foreground;
+    overflow-y: scroll;
+  }
+  html {
+    scrollbar-gutter: stable;
   }
 }
-
 
 input::-ms-reveal,
 input::-ms-clear {
@@ -79,3 +81,4 @@ a {
 /*   border-radius: 0.75rem; */
 /*   padding: 0.5rem; */
 /* } */
+

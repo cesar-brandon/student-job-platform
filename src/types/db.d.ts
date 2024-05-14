@@ -6,6 +6,7 @@ export type ExtendedPost = Post & {
   comments: Comment[];
   bookmarks: Bookmark[];
   applies: Apply[];
+  read?: boolean;
 };
 
 export type Student = Student;

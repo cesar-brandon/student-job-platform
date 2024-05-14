@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,17 +11,59 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { MailDisplay } from "@/components/studio/post-display";
-import { MailList } from "@/components/studio/post-list";
+import { PostList } from "@/components/studio/post-list";
 import { useMail } from "./use-post";
-import { mails } from "@/components/studio/data";
+import { useIntersection } from "@mantine/hooks";
+import { ExtendedPost } from "@/types/db";
+import { useSession } from "next-auth/react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
+import axios from "axios";
+import { PostDisplay } from "./post-display";
+import { usePostStore } from "@/store/post";
 
 interface MailProps {
+  initialPosts: ExtendedPost[];
   defaultLayout: number[] | undefined;
 }
 
-export function Studio({ defaultLayout = [265, 440, 655] }: MailProps) {
-  const [mail] = useMail();
+export function Studio({
+  initialPosts,
+  defaultLayout = [265, 440, 655],
+}: MailProps) {
+  const { post } = usePostStore();
+  const lastPostRef = useRef<HTMLDivElement>(null);
+  const { ref, entry } = useIntersection({
+    root: lastPostRef.current,
+    threshold: 1,
+  });
+
+  const { data: session } = useSession();
+
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    ["posts"],
+    async ({ pageParam = 1 }) => {
+      const query = `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
+      const { data } = await axios.get(query);
+      return data as ExtendedPost[];
+    },
+    {
+      getNextPageParam: (_, pages) => {
+        return pages.length + 1;
+      },
+      initialData: { pages: [initialPosts], pageParams: [1] },
+    },
+  );
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      fetchNextPage();
+    }
+  }, [entry, fetchNextPage]);
+
+  const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
+
+  if (!posts) return <p>No hay ofertas</p>;
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -29,7 +71,7 @@ export function Studio({ defaultLayout = [265, 440, 655] }: MailProps) {
         direction="horizontal"
         onLayout={(sizes: number[]) => {
           document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes
+            sizes,
           )}`;
         }}
         className="h-full max-h-screen items-stretch"
@@ -63,18 +105,20 @@ export function Studio({ defaultLayout = [265, 440, 655] }: MailProps) {
               </form>
             </div>
             <TabsContent value="all" className="m-0">
-              <MailList items={mails} />
+              <PostList items={posts} />
             </TabsContent>
             <TabsContent value="unread" className="m-0">
-              <MailList items={mails.filter((item) => !item.read)} />
+              <PostList items={posts.filter((item) => !item.read)} />
             </TabsContent>
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <MailDisplay
-            mail={mails.find((item) => item.id === mail.selected) || null}
-          />
+          {post && post.selected && (
+            <PostDisplay
+              post={posts.find((item) => item.id === post.selected) || null}
+            />
+          )}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

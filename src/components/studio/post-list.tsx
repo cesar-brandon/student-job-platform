@@ -4,15 +4,34 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Mail } from "./data";
-import { useMail } from "./use-post";
+import { ExtendedPost } from "@/types/db";
+import EditorOutput from "../editor/editor-output";
+import { ClockIcon, MapPinIcon } from "lucide-react";
+import { usePostStore } from "@/store/post";
 
 interface MailListProps {
-  items: Mail[];
+  items: ExtendedPost[];
 }
 
-export function MailList({ items }: MailListProps) {
-  const [mail, setMail] = useMail();
+const labels = [
+  {
+    id: "address",
+    title: "Dirección de empleo",
+    label: "work",
+    icon: <MapPinIcon className="h-4 w-4" />,
+    variant: "accent",
+  },
+  {
+    id: "full-time",
+    title: "Full Time",
+    label: "personal",
+    icon: <ClockIcon className="h-4 w-4" />,
+    variant: "primary",
+  },
+];
+
+export function PostList({ items }: MailListProps) {
+  const { post, setPost } = usePostStore();
 
   return (
     <ScrollArea className="h-screen">
@@ -22,11 +41,11 @@ export function MailList({ items }: MailListProps) {
             key={item.id}
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              mail.selected === item.id && "bg-muted",
+              post && post.selected === item.id && "bg-muted",
             )}
             onClick={() =>
-              setMail({
-                ...mail,
+              setPost({
+                ...post,
                 selected: item.id,
               })
             }
@@ -34,7 +53,7 @@ export function MailList({ items }: MailListProps) {
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">
                 <div className="flex items-center gap-2">
-                  <div className="font-semibold">{item.name}</div>
+                  <div className="font-semibold">{item.title}</div>
                   {!item.read && (
                     <span className="flex h-2 w-2 rounded-full bg-blue-600" />
                   )}
@@ -42,26 +61,31 @@ export function MailList({ items }: MailListProps) {
                 <div
                   className={cn(
                     "ml-auto text-xs",
-                    mail.selected === item.id
+                    post && post.selected === item.id
                       ? "text-foreground"
                       : "text-muted-foreground",
                   )}
                 >
-                  {formatDistanceToNow(new Date(item.date), {
+                  {formatDistanceToNow(new Date(item.createdAt), {
                     addSuffix: true,
                   })}
                 </div>
               </div>
-              <div className="text-xs font-medium">{item.subject}</div>
+              <div className="text-xs font-medium">{item.author.name}</div>
             </div>
             <div className="line-clamp-2 text-xs text-muted-foreground">
-              {item.text.substring(0, 300)}
+              {item.content && <EditorOutput content={item.content} />}
             </div>
-            {item.labels.length ? (
+            {labels.length ? (
               <div className="flex items-center gap-2">
-                {item.labels.map((label) => (
-                  <Badge key={label} variant={getBadgeVariantFromLabel(label)}>
-                    {label}
+                {labels.map((label) => (
+                  <Badge
+                    key={label.id}
+                    variant={getBadgeVariantFromLabel(label.label)}
+                    className="gap-2 py-1"
+                  >
+                    {label.icon}
+                    {label.title}
                   </Badge>
                 ))}
               </div>

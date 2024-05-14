@@ -25,7 +25,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
   const { data: session } = useSession();
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["infinite-query"],
+    ["posts"],
     async ({ pageParam = 1 }) => {
       const query =
         `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
@@ -39,7 +39,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
         return pages.length + 1;
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
-    }
+    },
   );
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
         }, 0);
 
         const currentVote = post.votes.find(
-          (vote) => vote.userId === session?.user?.id
+          (vote) => vote.userId === session?.user?.id,
         );
 
         const bookmarkAmt = (post.bookmarks && post.bookmarks.length) || 0;
@@ -72,7 +72,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
         // );
 
         const currentApply = post.applies?.find(
-          (apply) => apply.userId === session?.user?.id
+          (apply) => apply.userId === session?.user?.id,
         );
 
         if (index === posts.length - 1) {
