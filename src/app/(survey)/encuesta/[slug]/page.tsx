@@ -1,33 +1,50 @@
 "use client";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Progress } from "@/components/ui/progress";
 import { useQuestionStore } from "@/store/question";
+import { useEffect, useState } from "react";
+import { type CarouselApi } from "@/components/ui/carousel";
+import { SurveryItem } from "@/components/survey/survey-item";
 
-const Page = async ({ params }: { params: { slug: string } }) => {
+export default function SurveyPage({ params }: { params: { slug: string } }) {
   const questions = useQuestionStore((state) => state.questions);
+  const [api, setApi] = useState<CarouselApi>();
+  const [count, setCount] = useState(0);
+  const [progress, setProgress] = useState(count / 100);
+
+  useEffect(() => {
+    if (!api) return;
+    setCount(api.scrollSnapList().length);
+    setProgress(((api.selectedScrollSnap() + 1) / count) * 100);
+    api.on("select", () => {
+      setProgress(((api.selectedScrollSnap() + 1) / count) * 100);
+    });
+  }, [api, count, progress]);
 
   return (
-    <div className="w-full flex flex-col items-center gap-8">
-      <div className="flex flex-col gap-4">
-        <p className="text-center">Encuesta</p>
-        <Progress value={50} className={`career-${params.slug} h-2 rounded-full`} />
-        <section className="flex flex-col gap-8">
-          <p className="text-center text-3xl">
-            ¿Estás al tanto de la idea de la plataforma de empleo y prácticas?
-          </p>
-          <div className="flex flex-col">
-            <div className="flex gap-2">
-              <input type="radio" name="radio" id="radio1" />
-              <label htmlFor="radio1">Si</label>
-            </div>
-            <div className="flex gap-2">
-              <input type="radio" name="radio" id="radio2" />
-              <label htmlFor="radio2">No</label>
-            </div>
-          </div>
-        </section>
+    <div className="w-full sm:max-w-sm md:max-w-xl">
+      <div className="w-full mb-8">
+        <p className="text-center mb-2">Encuesta</p>
+        <Progress
+          value={progress}
+          className={`career-${params.slug} h-2 rounded-full`}
+        />
       </div>
+
+      <Carousel setApi={setApi}>
+        <CarouselContent>
+          {questions.map((question, index) => (
+            <SurveryItem key={index} question={question} career={params.slug} />
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden sm:flex" />
+        <CarouselNext className="hidden sm:flex" />
+      </Carousel>
     </div>
   );
-};
-
-export default Page;
+}

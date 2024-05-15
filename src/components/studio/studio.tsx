@@ -12,7 +12,6 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PostList } from "@/components/studio/post-list";
-import { useMail } from "./use-post";
 import { useIntersection } from "@mantine/hooks";
 import { ExtendedPost } from "@/types/db";
 import { useSession } from "next-auth/react";

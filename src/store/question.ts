@@ -9,11 +9,11 @@ interface State {
 }
 
 const useQuestionStore = create<State>((set) => ({
-  questions: [],
+  questions: questions,
   currentQuestion: 0,
   getQuestions: () => {
     set({ questions });
   },
 }));
 
-export { useQuestionStore } 
+export { useQuestionStore };

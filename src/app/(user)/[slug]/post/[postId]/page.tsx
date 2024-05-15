@@ -69,10 +69,10 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
               </Button>
             </Link>
 
-            <p className="max-h-40 mt-1 truncate text-xs text-gray-500">
+            <p className="max-h-40 mt-1 truncate text-xs text-muted-foreground">
               Publicado por @{post?.author.name ?? cachedPost.authorUsername}{" "}
               {formatTimeToNow(
-                new Date(post?.createdAt ?? cachedPost.createdAt)
+                new Date(post?.createdAt ?? cachedPost.createdAt),
               )}
             </p>
           </div>

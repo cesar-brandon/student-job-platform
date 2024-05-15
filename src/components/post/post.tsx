@@ -124,7 +124,7 @@ const Post: FC<PostProps> = ({
               >
                 <EditorOutput content={post.content} />
                 {/* {pRef.current?.clientHeight === 128 ? ( */}
-                <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white dark:from-zinc-950 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-card to-transparent"></div>
                 {/* ) : null} */}
               </div>
             </PostContent>
@@ -178,7 +178,10 @@ function PostContent({
             </SheetDescription>
           </SheetHeader>
           <div className="flex gap-2">
-            <PostApplyClient postId={post.id} initialApply={_currentApply?.status} />
+            <PostApplyClient
+              postId={post.id}
+              initialApply={_currentApply?.status}
+            />
             <Button variant="outline">Guardar</Button>
           </div>
 
@@ -205,7 +208,10 @@ function PostContent({
         </DrawerHeader>
         <div className="p-4 flex-1 max-w-md mx-auto">
           <div className="flex gap-2">
-            <PostApplyClient postId={post.id} initialApply={_currentApply?.status} />
+            <PostApplyClient
+              postId={post.id}
+              initialApply={_currentApply?.status}
+            />
             <Button variant="outline">Guardar</Button>
           </div>
           <Separator className="mb-2" />

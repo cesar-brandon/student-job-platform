@@ -12,7 +12,7 @@ const SidebarFeed = ({ user }: SidebarProps) => {
   const pathname = usePathname();
 
   return (
-    <div className="w-[25%] h-screen relative hidden lg:block">
+    <div className="w-[25%] hidden lg:flex h-screen relative">
       <div className="fixed h-full md:w-[14rem] lg:w-[15rem] xl:w-[20rem] hidden md:block">
         {pathname !== `/${user.username}` && <MiniProfile user={user} />}
 

@@ -56,11 +56,11 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
                 if (vote.type === "UP") return acc + 1;
                 return acc;
               },
-              0
+              0,
             );
 
             const topLevelCommentVote = topLevelComment.votes.find(
-              (vote) => vote.userId === session?.user.id
+              (vote) => vote.userId === session?.user.id,
             );
 
             return (
@@ -84,14 +84,11 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
                     }, 0);
 
                     const replyVote = reply.votes.find(
-                      (vote) => vote.userId === session?.user.id
+                      (vote) => vote.userId === session?.user.id,
                     );
 
                     return (
-                      <div
-                        key={reply.id}
-                        className="ml-2 py-2 pl-4 border-l-2 border-zinc-200"
-                      >
+                      <div key={reply.id} className="ml-2 py-2 pl-4 border-l-2">
                         <PostComment
                           comment={reply as ExtendedComment}
                           currentVote={replyVote}

@@ -15,7 +15,7 @@ export default async function AuthLayout({
     <>
       <BackButton type="chevron" route="back" />
       <div
-        className="bg-white w-full md:mx-auto xl:w-1/2 h-screen px-6 lg:px-[10rem] xl:px-12
+        className="bg-background w-full md:mx-auto xl:w-1/2 h-screen px-6 lg:px-[10rem] xl:px-12
         flex items-center justify-center"
       >
         {children}

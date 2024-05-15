@@ -1,20 +1,20 @@
+import { user } from "@/types/next-auth";
 import { simplifyName } from "@/lib/utils";
 import CareerCard from "@/components/common/career-card";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { user } from "@/types/next-auth";
-import { UserProfileFallback } from "./profile/user-profile-fallback";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserProfileFallback } from "./user-profile-fallback";
 
-export default function MiniProfile({ user }: { user: user }) {
+export function UserProfile({ user }: { user: user }) {
   if (!user) return <UserProfileFallback />;
 
   return (
     <CareerCard
       career={user.career || "ENTERPRISE"}
-      className="min-h-[15rem] w-full px-8 rounded-b-xl rounded-t-none items-start justify-start"
+      className="min-h-[15rem] w-full px-8 rounded-3xl items-start justify-start"
       classNameIcon="right-[-5rem] scale-125"
     >
       <div className="flex mt-12 gap-4 items-center z-10">
-        <Avatar>
+        <Avatar className="w-36 h-36">
           <AvatarImage src={user.image} alt="avatar" />
           <AvatarFallback>
             {simplifyName(user.name.toUpperCase())}

@@ -9,11 +9,11 @@ const Page = () => {
         <p className="text-center">Encuesta</p>
         <p className="font-bold text-5xl sm:text-6xl">
           Opiniones sobre la{" "}
-          <strong className="font-bold bg-purple-200 text-purple-600 rounded-xl px-2">
+          <strong className="font-bold bg-orange/30 dark:bg-orange text-orange dark:text-foreground/60 rounded-xl px-2">
             Idea
           </strong>{" "}
           de una{" "}
-          <strong className="font-bold bg-purple-200 text-purple-600 rounded-xl px-2">
+          <strong className="font-bold bg-orange/30 dark:bg-orange text-orange dark:text-foreground/60 rounded-xl px-2">
             Plataforma
           </strong>{" "}
           de Empleo
@@ -21,11 +21,9 @@ const Page = () => {
       </div>
 
       <section className="w-full grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-4 place-items-center">
-        {
-          careers.map((career, index) => (
-            <SurveyCareer key={index} career={career} />
-          ))
-        }
+        {careers.map((career, index) => (
+          <SurveyCareer key={index} career={career} />
+        ))}
       </section>
     </div>
   );

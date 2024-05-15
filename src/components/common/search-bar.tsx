@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import { Prisma, User } from '@prisma/client'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import debounce from 'lodash.debounce'
-import { usePathname, useRouter } from 'next/navigation'
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { Prisma, User } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import debounce from "lodash.debounce";
+import { usePathname, useRouter } from "next/navigation";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import {
   Command,
@@ -14,31 +14,31 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command'
-import { useOnClickOutside } from '@/hooks/use-on-click-outside'
-import { UsersIcon } from '@heroicons/react/24/outline'
+} from "@/components/ui/command";
+import { useOnClickOutside } from "@/hooks/use-on-click-outside";
+import { UsersIcon } from "@heroicons/react/24/outline";
 
-interface SearchBarProps { }
+interface SearchBarProps {}
 
-const SearchBar: FC<SearchBarProps> = ({ }) => {
-  const [input, setInput] = useState<string>('')
-  const pathname = usePathname()
-  const commandRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
+const SearchBar: FC<SearchBarProps> = ({}) => {
+  const [input, setInput] = useState<string>("");
+  const pathname = usePathname();
+  const commandRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useOnClickOutside(commandRef, () => {
-    setInput('')
-  })
+    setInput("");
+  });
 
   const request = debounce(async () => {
-    refetch()
-  }, 300)
+    refetch();
+  }, 300);
 
   const debounceRequest = useCallback(() => {
-    request()
+    request();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const {
     isFetching,
@@ -47,49 +47,52 @@ const SearchBar: FC<SearchBarProps> = ({ }) => {
     isFetched,
   } = useQuery({
     queryFn: async () => {
-      if (!input) return []
-      const { data } = await axios.get(`/api/search?q=${input}`)
+      if (!input) return [];
+      const { data } = await axios.get(`/api/search?q=${input}`);
       return data as (User & {
-        _count: Prisma.UserCountOutputType
-      })[]
+        _count: Prisma.UserCountOutputType;
+      })[];
     },
-    queryKey: ['search-query'],
+    queryKey: ["search-query"],
     enabled: false,
-  })
+  });
 
   useEffect(() => {
-    setInput('')
-  }, [pathname])
+    setInput("");
+  }, [pathname]);
 
   return (
     <Command
       ref={commandRef}
-      className='relative rounded-2xl max-w-lg z-50 overflow-visible'>
+      className="relative rounded-2xl border max-w-lg z-50 overflow-visible"
+    >
       <CommandInput
         isLoading={isFetching}
         onValueChange={(text) => {
-          setInput(text)
-          debounceRequest()
+          setInput(text);
+          debounceRequest();
         }}
         value={input}
-        className='outline-none border-none focus:border-none focus:outline-none ring-0'
-        placeholder='Puesto, empresa o palabra clave'
+        placeholder="Puesto, empresa o palabra clave"
       />
 
       {input.length > 0 && (
-        <CommandList className='absolute bg-white top-full inset-x-0 shadow rounded-b-md'>
-          {isFetched && <CommandEmpty>No se encontraron resultados.</CommandEmpty>}
+        <CommandList className="absolute bg-border top-full inset-x-0 shadow rounded-b-md">
+          {isFetched && (
+            <CommandEmpty>No se encontraron resultados.</CommandEmpty>
+          )}
           {(queryResults?.length ?? 0) > 0 ? (
-            <CommandGroup heading='Usuarios'>
+            <CommandGroup heading="Usuarios">
               {queryResults?.map((subreddit) => (
                 <CommandItem
                   onSelect={(e) => {
-                    router.push(`/${e}`)
-                    router.refresh()
+                    router.push(`/${e}`);
+                    router.refresh();
                   }}
                   key={subreddit.id}
-                  value={subreddit.name}>
-                  <UsersIcon className='mr-2 h-4 w-4' />
+                  value={subreddit.name}
+                >
+                  <UsersIcon className="mr-2 h-4 w-4" />
                   <a href={`/${subreddit.username}`}>@{subreddit.name}</a>
                 </CommandItem>
               ))}
@@ -98,7 +101,7 @@ const SearchBar: FC<SearchBarProps> = ({ }) => {
         </CommandList>
       )}
     </Command>
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;

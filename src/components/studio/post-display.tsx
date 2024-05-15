@@ -49,7 +49,7 @@ export function PostDisplay({ post }: PostDisplayProps) {
   const today = new Date();
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-full flex-col">
       <div className="flex items-center p-2">
         <div className="flex items-center gap-2">
           <Tooltip>
@@ -187,7 +187,7 @@ export function PostDisplay({ post }: PostDisplayProps) {
       </div>
       <Separator />
       {post ? (
-        <div className="flex flex-1 flex-col">
+        <div className="h-full flex flex-1 flex-col">
           <div className="flex items-start p-4">
             <div className="flex items-start gap-4 text-sm">
               <Avatar>
@@ -211,9 +211,35 @@ export function PostDisplay({ post }: PostDisplayProps) {
             )}
           </div>
           <Separator />
-          <ScrollArea className="w-full h-[35rem] whitespace-pre-wrap pt-0 px-4 text-sm">
+          <ScrollArea className="w-full h-[34rem] whitespace-pre-wrap pt-0 px-4 text-sm">
             <EditorOutput content={post.content} />
           </ScrollArea>
+          <Separator />
+          <div className="flex items-center justify-start p-8">
+            <div className="h-full flex -space-x-2 overflow-hidden">
+              {Array.from({ length: 4 }, (_, i) => (
+                <Avatar key={i}>
+                  <AvatarImage
+                    className="ring-2 ring-white"
+                    src={post.author.image || ""}
+                    alt="avatar"
+                  />
+                  <AvatarFallback>
+                    {post.author.name
+                      .split(" ")
+                      .map((chunk) => chunk[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+              ))}
+              <div className="flex align-items justify-center h-10 w-10 rounded-full ring-2 ring-white bg-muted z-20">
+                <span className="flex items-center justify-center text-muted-foreground">
+                  +3
+                </span>
+              </div>
+            </div>
+          </div>
+
           <Separator className="mt-auto" />
           <div className="p-4">
             <form>
