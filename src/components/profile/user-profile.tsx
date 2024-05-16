@@ -1,10 +1,10 @@
-import { user } from "@/types/next-auth";
 import { simplifyName } from "@/lib/utils";
 import CareerCard from "@/components/common/career-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserProfileFallback } from "./user-profile-fallback";
+import { User } from "@prisma/client";
 
-export function UserProfile({ user }: { user: user }) {
+export function UserProfile({ user }: { user: User }) {
   if (!user) return <UserProfileFallback />;
 
   return (
@@ -15,14 +15,16 @@ export function UserProfile({ user }: { user: user }) {
     >
       <div className="flex mt-12 gap-4 items-center z-10">
         <Avatar className="w-36 h-36">
-          <AvatarImage src={user.image} alt="avatar" />
+          <AvatarImage src={user.image || ""} alt="avatar" />
           <AvatarFallback>
             {simplifyName(user.name.toUpperCase())}
           </AvatarFallback>
         </Avatar>
         <div>
           <h3 className="font-semibold">{user.name}</h3>
-          <p className="text-black text-opacity-50">@{user.username}</p>
+          <p className="text-muted-foreground text-opacity-50">
+            @{user.username}
+          </p>
         </div>
       </div>
     </CareerCard>

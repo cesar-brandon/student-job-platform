@@ -49,6 +49,11 @@ export async function GET(req: Request) {
         votes: true,
         author: true,
         comments: true,
+        applies: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
 

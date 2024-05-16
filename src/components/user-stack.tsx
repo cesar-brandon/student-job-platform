@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { displayType } from "./studio/post-display";
 import { ExtendedApply } from "@/types/db";
+import { simplifyName } from "@/lib/utils";
 
 interface UserStackProps {
   applies: ExtendedApply[];
@@ -15,29 +16,29 @@ interface UserStackProps {
 }
 
 export function UserStack({ applies, setDisplay }: UserStackProps) {
+  if (!applies) return null;
+  if (applies.length === 0) return <p>No hay postulantes</p>;
+
   return (
     <div className="flex items-center gap-2">
-      <div className="h-full flex -space-x-2 overflow-hidden p-2">
-        {applies &&
-          applies.map((apply) => (
-            <Avatar key={apply.userId}>
-              <AvatarImage
-                className="ring-2 ring-white"
-                src={""}
-                alt="avatar"
-              />
-              <AvatarFallback>
-                {apply &&
-                  apply.user.name
-                    .split(" ")
-                    .map((chunk) => chunk[0])
-                    .join("")}
-              </AvatarFallback>
-            </Avatar>
-          ))}
-        <div className="flex items-center justify-center h-10 w-10 rounded-full ring bg-muted z-20">
-          +3
-        </div>
+      <div className="h-full flex -space-x-2 overflow-hidden">
+        {applies.map((apply) => (
+          <Avatar key={apply.userId}>
+            <AvatarImage
+              className="ring-2 ring-white"
+              src={apply.user.image || ""}
+              alt="avatar"
+            />
+            <AvatarFallback>
+              {apply && simplifyName(apply.user.name)}
+            </AvatarFallback>
+          </Avatar>
+        ))}
+        {applies.length > 3 && (
+          <div className="flex items-center justify-center h-10 w-10 rounded-full ring bg-muted z-20">
+            +{applies.length - 3}
+          </div>
+        )}
       </div>
       <Tooltip>
         <TooltipTrigger asChild>

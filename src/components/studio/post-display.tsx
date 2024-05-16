@@ -1,5 +1,5 @@
 import format from "date-fns/format";
-import { Pencil, Trash2 } from "lucide-react";
+import { BriefcaseBusiness, Pencil, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,9 @@ import { ExtendedPost } from "@/types/db";
 import { ScrollArea } from "../ui/scroll-area";
 import { UserStack } from "@/components/user-stack";
 import { useState } from "react";
+import { simplifyName } from "@/lib/utils";
+import { ApplyList } from "./apply-list";
+import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 
 interface PostDisplayProps {
   post: ExtendedPost | null;
@@ -25,7 +28,6 @@ export type displayType = "post" | "apply" | "comment";
 
 export function PostDisplay({ post }: PostDisplayProps) {
   const [display, setDisplay] = useState<displayType>("post");
-  console.log(post);
 
   return (
     <div className="flex min-h-full flex-col">
@@ -58,10 +60,7 @@ export function PostDisplay({ post }: PostDisplayProps) {
               <Avatar>
                 <AvatarImage alt={post.author.name} />
                 <AvatarFallback>
-                  {post.author.name
-                    .split(" ")
-                    .map((chunk) => chunk[0])
-                    .join("")}
+                  {simplifyName(post.author.name)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid gap-1">
@@ -80,12 +79,10 @@ export function PostDisplay({ post }: PostDisplayProps) {
             {display === "post" ? (
               <EditorOutput content={post.content} />
             ) : display === "apply" ? (
-              <div className="flex items-center justify-center h-full">
-                <div className="text-muted-foreground">
-                  No content to display.
-                </div>
-              </div>
-            ) : null}
+              <ApplyList applies={post.applies} />
+            ) : (
+              <p>Comentarios</p>
+            )}
           </ScrollArea>
           <Separator />
           <div className="flex items-center justify-between p-6">
@@ -93,17 +90,29 @@ export function PostDisplay({ post }: PostDisplayProps) {
               <UserStack applies={post.applies} setDisplay={setDisplay} />
             )}
             {display !== "post" && (
-              <Button onClick={() => setDisplay("post")} size="sm">
+              <Button
+                onClick={() => setDisplay("post")}
+                size="sm"
+                variant="outline"
+                className="h-10"
+              >
+                <BriefcaseBusiness className="h-4 w-4 mr-2" />
                 Puesto
               </Button>
             )}
             {display !== "comment" && (
-              <Button onClick={() => setDisplay("comment")} size="sm">
+              <Button
+                onClick={() => setDisplay("comment")}
+                size="sm"
+                variant="outline"
+                className="h-10"
+              >
+                <ChatBubbleLeftIcon className="h-4 w-4 mr-2" />
                 Comentarios
               </Button>
             )}
           </div>
-          <Separator className="mt-auto" />
+          <Separator />
           <div className="p-4">
             <form>
               <div className="grid gap-4">

@@ -24,7 +24,6 @@ export function PostApplyClient({
 
   useEffect(() => {
     setCurrentApply(initialApply);
-    console.log("initialApply", initialApply);
   }, [initialApply]);
 
   const {

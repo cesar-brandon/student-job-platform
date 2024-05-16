@@ -98,6 +98,9 @@ const config = {
         "svg-filled": "svg-filled 1s",
         "svg-celebrate": "svg-celebrate 0.5s",
       },
+      gridTemplateColumns: {
+        fit: "repeat(auto-fit, minmax(30rem, 1fr))",
+      },
     },
   },
   function({ addVariant }: { addVariant: any }) {

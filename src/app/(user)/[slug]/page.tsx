@@ -30,7 +30,7 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   return (
     <section className="flex flex-col gap-4">
       <UserProfile user={user} />
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between">
         <ProfileTabs />
         <Button variant="outline">Editar Pefil</Button>
       </div>

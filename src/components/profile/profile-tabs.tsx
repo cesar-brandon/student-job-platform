@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function ProfileTabs() {
   return (
-    <Tabs>
+    <Tabs defaultValue="skills">
       <TabsList>
         <TabsTrigger value="skills">Habilidades</TabsTrigger>
         <TabsTrigger value="experience">Experiencia</TabsTrigger>
