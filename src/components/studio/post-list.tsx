@@ -4,13 +4,13 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ExtendedPost } from "@/types/db";
+import { ExtendedPostApply } from "@/types/db";
 import EditorOutput from "../editor/editor-output";
 import { ClockIcon, MapPinIcon } from "lucide-react";
 import { usePostStore } from "@/store/post";
 
 interface MailListProps {
-  items: ExtendedPost[];
+  items: ExtendedPostApply[];
 }
 
 const labels = [

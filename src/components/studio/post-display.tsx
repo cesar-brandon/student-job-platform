@@ -12,7 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import EditorOutput from "../editor/editor-output";
-import { ExtendedPost } from "@/types/db";
+import { ExtendedPostApply } from "@/types/db";
 import { ScrollArea } from "../ui/scroll-area";
 import { UserStack } from "@/components/user-stack";
 import { useState } from "react";
@@ -21,7 +21,7 @@ import { ApplyList } from "./apply-list";
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 
 interface PostDisplayProps {
-  post: ExtendedPost | null;
+  post: ExtendedPostApply | null;
 }
 
 export type displayType = "post" | "apply" | "comment";

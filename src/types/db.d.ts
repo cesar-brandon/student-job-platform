@@ -9,6 +9,13 @@ export type ExtendedPost = Post & {
   author: User;
   comments: Comment[];
   bookmarks: Bookmark[];
+  applies: Apply[];
+  read?: boolean;
+};
+
+export type ExtendedPostApply = Post & {
+  author: User;
+  comments: Comment[];
   applies: ExtendedApply[];
   read?: boolean;
 };

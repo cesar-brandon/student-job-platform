@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PostList } from "@/components/studio/post-list";
 import { useIntersection } from "@mantine/hooks";
-import { ExtendedPost } from "@/types/db";
+import { ExtendedPostApply } from "@/types/db";
 import { useSession } from "next-auth/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
@@ -23,7 +23,7 @@ import { usePostStore } from "@/store/post";
 import { ScrollArea } from "../ui/scroll-area";
 
 interface MailProps {
-  initialPosts: ExtendedPost[];
+  initialPosts: ExtendedPostApply[];
   defaultLayout: number[] | undefined;
 }
 
@@ -45,7 +45,7 @@ export function Studio({
     async ({ pageParam = 1 }) => {
       const query = `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
       const { data } = await axios.get(query);
-      return data as ExtendedPost[];
+      return data as ExtendedPostApply[];
     },
     {
       getNextPageParam: (_, pages) => {

@@ -9,7 +9,7 @@ export function UserProfile({ user }: { user: User }) {
 
   return (
     <CareerCard
-      career={user.career || "ENTERPRISE"}
+      career={"ENTERPRISE"}
       className="min-h-[15rem] w-full px-8 rounded-3xl items-start justify-start"
       classNameIcon="right-[-5rem] scale-125"
     >

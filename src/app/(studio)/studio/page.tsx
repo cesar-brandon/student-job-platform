@@ -22,10 +22,8 @@ export default async function StudioPage() {
           user: true,
         },
       },
-      votes: true,
       author: true,
       comments: true,
-      bookmarks: true,
     },
     take: INFINITE_SCROLL_PAGINATION_RESULTS,
   });
