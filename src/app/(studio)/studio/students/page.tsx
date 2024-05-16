@@ -1,6 +1,11 @@
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+export const metadata = {
+  title: "Estudiantes",
+  description: "Students page",
+};
+
 export default function StudentsPage() {
   return (
     <div>

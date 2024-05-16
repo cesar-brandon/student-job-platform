@@ -17,7 +17,11 @@ export default async function StudioPage() {
       createdAt: "desc",
     },
     include: {
-      applies: true,
+      applies: {
+        include: {
+          user: true,
+        },
+      },
       votes: true,
       author: true,
       comments: true,

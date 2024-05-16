@@ -2,15 +2,12 @@
 import * as React from "react";
 import {
   AlertCircle,
-  Archive,
-  ArchiveX,
   ChevronLeft,
   ChevronRight,
   CircleArrowLeft,
+  Cog,
   File,
-  Paperclip,
   Send,
-  Trash2,
   Users2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -31,7 +28,7 @@ interface NavProps {
 
 export function Nav({ defaultCollapsed, user }: NavProps) {
   const [isCollapsed, setIsCollapsed] = React.useState<boolean>(
-    defaultCollapsed || false
+    defaultCollapsed || false,
   );
 
   return (
@@ -39,7 +36,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
       <div
         className={cn(
           "relative border-r-[1px] min-w-60",
-          isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out"
+          isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out",
         )}
       >
         <Button
@@ -48,7 +45,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
           onClick={() => {
             setIsCollapsed(!isCollapsed);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              !isCollapsed
+              !isCollapsed,
             )}`;
           }}
           className="absolute -right-2 top-1/2 transform -translate-y-1/2
@@ -64,7 +61,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
         <div
           className={cn(
             "flex h-[56px] items-center justify-center",
-            isCollapsed ? "h-[56px]" : "px-2"
+            isCollapsed ? "h-[56px]" : "px-2",
           )}
         >
           <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
@@ -74,7 +71,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
           isCollapsed={isCollapsed}
           links={[
             {
-              title: "Ofertas",
+              title: "Puestos",
               label: "128",
               href: "/studio",
               icon: File,
@@ -92,28 +89,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
               label: "420",
               href: "/studio/students",
               icon: Users2,
-              variant: "ghost",
-            },
-            {
-              title: "Junk",
-              label: "23",
-              href: "/studio/junk",
-              icon: ArchiveX,
               variant: "checked",
-            },
-            {
-              title: "Trash",
-              label: "",
-              href: "/studio/trash",
-              icon: Trash2,
-              variant: "ghost",
-            },
-            {
-              title: "Archive",
-              label: "",
-              href: "/studio/archive",
-              icon: Archive,
-              variant: "ghost",
             },
           ]}
         />
@@ -121,6 +97,12 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
         <NavGroup
           isCollapsed={isCollapsed}
           links={[
+            {
+              title: "Cuenta",
+              href: "/studio/account",
+              icon: Cog,
+              variant: "ghost",
+            },
             {
               title: "Encuestas",
               label: "972",
@@ -140,7 +122,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
         <div
           className={cn(
             "absolute bottom-10 left-0 w-full",
-            isCollapsed ? "px-2" : "p-3"
+            isCollapsed ? "px-2" : "p-3",
           )}
         >
           {isCollapsed ? (
@@ -150,7 +132,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
                   href="/home"
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" }),
-                    "h-9 w-9"
+                    "h-9 w-9",
                   )}
                 >
                   <CircleArrowLeft className="h-4 w-4" />
@@ -168,7 +150,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
               href="/home"
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "w-full justify-start"
+                "w-full justify-start",
               )}
             >
               <CircleArrowLeft className="h-4 w-4 mr-2" />

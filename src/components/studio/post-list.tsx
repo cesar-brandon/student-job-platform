@@ -105,7 +105,7 @@ function getBadgeVariantFromLabel(
   }
 
   if (["personal"].includes(label.toLowerCase())) {
-    return "outline";
+    return "secondary";
   }
 
   return "secondary";

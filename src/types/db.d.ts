@@ -1,11 +1,15 @@
 import { Apply, Bookmark, Comment, Post, User, Vote } from "@prisma/client";
 
+export type ExtendedApply = Apply & {
+  user: User;
+};
+
 export type ExtendedPost = Post & {
   votes: Vote[];
   author: User;
   comments: Comment[];
   bookmarks: Bookmark[];
-  applies: Apply[];
+  applies: ExtendedApply[];
   read?: boolean;
 };
 
