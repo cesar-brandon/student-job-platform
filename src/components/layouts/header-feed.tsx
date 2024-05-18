@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   BellIcon,
   BookmarkIcon,
-  Cog8ToothIcon,
+  CogIcon,
   EllipsisHorizontalCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
@@ -86,7 +86,7 @@ const HeaderFeed: React.FC = async () => {
                 ariaLabel="Configuración"
                 variant="ghost"
                 className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start"
-                icon={<Cog8ToothIcon className="w-6 h-6 order-first mr-4" />}
+                icon={<CogIcon className="w-6 h-6 order-first mr-4" />}
               />
             </SheetClose>
             {user.role === "ENTERPRISE" && (

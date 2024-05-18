@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
+import { badgeVariants } from "@/components/ui/badge";
+import { VariantProps } from "class-variance-authority";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -117,4 +119,34 @@ export const generateCode = (length: number) => {
   }
 
   return code;
+};
+
+type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>["variant"]>;
+
+export const applyStatusColor: {
+  [key: string]: {
+    name: string;
+    variant: BadgeVariant;
+  };
+} = {
+  APPLIED: {
+    name: "Aplicado",
+    variant: "info",
+  },
+  VIEWED: {
+    name: "Visto",
+    variant: "outline",
+  },
+  PENDING: {
+    name: "Pendiente",
+    variant: "warning",
+  },
+  ACCEPTED: {
+    name: "Aceptado",
+    variant: "success",
+  },
+  REJECTED: {
+    name: "Rechazado",
+    variant: "error",
+  },
 };

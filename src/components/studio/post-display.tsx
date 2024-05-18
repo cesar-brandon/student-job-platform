@@ -17,7 +17,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { UserStack } from "@/components/user-stack";
 import { useState } from "react";
 import { simplifyName } from "@/lib/utils";
-import { ApplyList } from "./apply-list";
+import { ApplyList } from "./apply/apply-list";
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 
 interface PostDisplayProps {

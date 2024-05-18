@@ -1,14 +1,13 @@
 "use client";
 
 import {
-  ArrowRightOnRectangleIcon,
   BellIcon,
   BookmarkIcon,
-  Cog8ToothIcon,
+  CogIcon,
   EllipsisHorizontalCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
-  Cog8ToothIcon as Cog8ToothIconSolid,
+  CogIcon as CogIconIconSolid,
   BellIcon as BellIconSolid,
 } from "@heroicons/react/24/solid";
 import ButtonLink from "../common/button-link";
@@ -23,7 +22,7 @@ import {
 } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { BoltIcon, CircleArrowLeft, CircleArrowRight } from "lucide-react";
+import { CircleArrowRight, LogOut } from "lucide-react";
 
 interface Props {
   user: user;
@@ -76,9 +75,9 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
         }`}
         icon={
           pathname === "/settings" ? (
-            <Cog8ToothIconSolid className="w-6 h-6 order-first mr-4" />
+            <CogIconIconSolid className="w-6 h-6 order-first mr-4" />
           ) : (
-            <Cog8ToothIcon className="w-6 h-6 order-first mr-4" />
+            <CogIcon className="w-6 h-6 order-first mr-4" />
           )
         }
       />
@@ -97,7 +96,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
             onClick={() => signOut({ callbackUrl: "/" })}
             className="text-sm font-medium text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-accent px-6 py-4"
           >
-            <ArrowRightOnRectangleIcon className="mr-4 h-6 w-6" />
+            <LogOut className="mr-4 h-6 w-6" />
             <span>Serrar Sesion</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

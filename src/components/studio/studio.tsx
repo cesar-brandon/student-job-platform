@@ -27,10 +27,7 @@ interface MailProps {
   defaultLayout: number[] | undefined;
 }
 
-export function Studio({
-  initialPosts,
-  defaultLayout = [265, 440, 655],
-}: MailProps) {
+export function Studio({ initialPosts, defaultLayout = [70, 30] }: MailProps) {
   const { post } = usePostStore();
   const lastPostRef = useRef<HTMLDivElement>(null);
   const { ref, entry } = useIntersection({

@@ -1,11 +1,11 @@
 import { simplifyName } from "@/lib/utils";
 import CareerCard from "@/components/common/career-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UserProfileFallback } from "./user-profile-fallback";
+import { StudentProfileFallback } from "./student-profile-fallback";
 import { User } from "@prisma/client";
 
 export function UserProfile({ user }: { user: User }) {
-  if (!user) return <UserProfileFallback />;
+  if (!user) return <StudentProfileFallback />;
 
   return (
     <CareerCard

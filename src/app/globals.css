@@ -27,6 +27,15 @@
 
     --orange: 24.6 95% 53.1%;
     --orange-foreground: 60 9.1% 97.8%;
+
+    --error: 6 98% 76%;
+    --error-foreground: 6 98% 16%;
+    --success: 137 63% 70%;
+    --success-foreground: 137 63% 10%;
+    --warning: 37 98% 76%;
+    --warning-foreground: 37 98% 16%;
+    --info: 236 98% 76%;
+    --info-foreground: 236 98% 16%;
   }
 
   .dark {
@@ -49,6 +58,15 @@
     --destructive: 3 89% 54%;
     --destructive-foreground: 0 0% 100%;
     --ring: 229 100% 62%;
+
+    --error: 0 98% 23%;
+    --error-foreground: 0 98% 83%;
+    --success: 144 98% 23%;
+    --success-foreground: 0 0% 100%;
+    --warning: 37 98% 23%;
+    --warning-foreground: 37 98% 83%;
+    --info: 181 98% 23%;
+    --info-foreground: 0 0% 100%;
   }
 }
 

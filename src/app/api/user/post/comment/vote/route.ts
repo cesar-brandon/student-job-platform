@@ -1,18 +1,18 @@
-import { getAuthSession } from '@/lib/auth'
-import { db } from '@/lib/prisma'
-import { CommentVoteValidator } from '@/lib/validators/vote'
-import { z } from 'zod'
+import { getAuthSession } from "@/lib/auth";
+import { db } from "@/lib/prisma";
+import { CommentVoteValidator } from "@/lib/validators/vote";
+import { z } from "zod";
 
 export async function PATCH(req: Request) {
   try {
-    const body = await req.json()
+    const body = await req.json();
 
-    const { commentId, voteType } = CommentVoteValidator.parse(body)
+    const { commentId, voteType } = CommentVoteValidator.parse(body);
 
-    const session = await getAuthSession()
+    const session = await getAuthSession();
 
     if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 })
+      return new Response("Unauthorized", { status: 401 });
     }
 
     // check if user has already voted on this post
@@ -21,7 +21,7 @@ export async function PATCH(req: Request) {
         userId: session.user.id,
         commentId,
       },
-    })
+    });
 
     if (existingVote) {
       // if vote type is the same as existing vote, delete the vote
@@ -33,8 +33,8 @@ export async function PATCH(req: Request) {
               userId: session.user.id,
             },
           },
-        })
-        return new Response('OK')
+        });
+        return new Response("OK");
       } else {
         // if vote type is different, update the vote
         await db.commentVote.update({
@@ -47,8 +47,8 @@ export async function PATCH(req: Request) {
           data: {
             type: voteType,
           },
-        })
-        return new Response('OK')
+        });
+        return new Response("OK");
       }
     }
 
@@ -59,17 +59,16 @@ export async function PATCH(req: Request) {
         userId: session.user.id,
         commentId,
       },
-    })
+    });
 
-    return new Response('OK')
+    return new Response("OK");
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(error.message, { status: 400 })
+      return new Response(error.message, { status: 400 });
     }
 
-    return new Response(
-      'Could not post to subreddit at this time. Please try later',
-      { status: 500 }
-    )
+    return new Response("Could not post at this time. Please try later", {
+      status: 500,
+    });
   }
 }

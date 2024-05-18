@@ -1,4 +1,12 @@
-import { Apply, Bookmark, Comment, Post, User, Vote } from "@prisma/client";
+import {
+  Apply,
+  Bookmark,
+  Comment,
+  Post,
+  User,
+  Vote,
+  Student,
+} from "@prisma/client";
 
 export type ExtendedApply = Apply & {
   user: User;
@@ -21,3 +29,7 @@ export type ExtendedPostApply = Post & {
 };
 
 export type Student = Student;
+
+export type ExtendedStudent = Student & {
+  User: User;
+};
