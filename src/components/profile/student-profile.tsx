@@ -3,7 +3,7 @@ import CareerCard from "@/components/common/career-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ProfileTabs } from "./profile-tabs";
 import { StudentProfileFallback } from "./student-profile-fallback";
-import { ExtendedStudent } from "@/types/db";
+import { ExtendedStudent } from "@/types/student";
 
 export function StudentProfile({ student }: { student: ExtendedStudent }) {
   if (!student) return <StudentProfileFallback />;
