@@ -9,9 +9,6 @@ import {
 } from "@/components/ui/select";
 import { ApplyStatus } from "@prisma/client";
 import { ExtendedApply } from "@/types/db";
-import { useQuery } from "@tanstack/react-query";
-import { UserProfileFallback } from "@/components/profile/user-profile-fallback";
-import axios from "axios";
 import { StudentProfile } from "@/components/profile/student-profile";
 
 interface ApplyDisplayProps {
@@ -25,15 +22,6 @@ interface ApplyDisplayProps {
 
 export function ApplyDisplay({ apply, updateApplyStatus }: ApplyDisplayProps) {
   const { userId, postId, status } = apply;
-
-  const { data: student } = useQuery({
-    queryKey: ["student", userId],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/student/${userId}`);
-      return data;
-    },
-  });
-  if (!student) return <UserProfileFallback />;
 
   return (
     <div className="flex flex-col gap-4">
@@ -57,7 +45,7 @@ export function ApplyDisplay({ apply, updateApplyStatus }: ApplyDisplayProps) {
           </SelectContent>
         </Select>
       </div>
-      <StudentProfile student={student} />
+      <StudentProfile userId={userId} />
     </div>
   );
 }

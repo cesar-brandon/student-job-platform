@@ -1,8 +1,7 @@
-import { ProfileTabs } from "@/components/profile/profile-tabs";
+import { StudentProfile } from "@/components/profile/student-profile";
 import { UserProfile } from "@/components/profile/user-profile";
 import getSession from "@/lib/getSession";
 import { db } from "@/lib/prisma";
-import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Profile",
@@ -29,11 +28,11 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
 
   return (
     <section className="flex flex-col gap-4">
-      <UserProfile user={user} />
-      <div className="flex items-start justify-between">
-        <ProfileTabs />
-        <Button variant="outline">Editar Pefil</Button>
-      </div>
+      {user.role === "STUDENT" ? (
+        <StudentProfile userId={user.id} />
+      ) : (
+        <UserProfile user={user} />
+      )}
     </section>
   );
 };

@@ -6,13 +6,7 @@ import {
   MapPinIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
-import {
-  Apply,
-  Bookmark,
-  Post as PrismaPost,
-  User,
-  Vote,
-} from "@prisma/client";
+import { Apply, Post as PrismaPost, User, Vote } from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef, useState } from "react";
@@ -39,9 +33,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { ScrollArea } from "../ui/scroll-area";
-import { ArrowUpRight } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { PostApplyClient } from "./apply/post-apply-client";
+import { HoverProfile } from "../profile/hover-profile";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -74,12 +68,14 @@ const Post: FC<PostProps> = ({
     <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
       <div className="px-6 pt-6 pb-4 flex justify-between">
         <div className="relative w-full flex gap-4">
-          <Avatar className="flex items-center justify-center">
-            <AvatarImage src={authorImage} alt="avatar" />
-            <AvatarFallback>
-              {simplifyName(authorName.toUpperCase())}
-            </AvatarFallback>
-          </Avatar>
+          <HoverProfile authorName={authorName} authorImage={authorImage}>
+            <Avatar className="flex items-center justify-center">
+              <AvatarImage src={authorImage} alt="avatar" />
+              <AvatarFallback>
+                {simplifyName(authorName.toUpperCase())}
+              </AvatarFallback>
+            </Avatar>
+          </HoverProfile>
           <PostBookmarkClient
             postId={post.id}
             initialBookmarksAmt={_bookmarkAmt}
@@ -92,12 +88,14 @@ const Post: FC<PostProps> = ({
                 </h3>
               </Link>
               {authorName ? (
-                <a
-                  className="hover:underline underline-offset-2"
-                  href={`/${post.author.username}`}
-                >
-                  {authorName}
-                </a>
+                <HoverProfile authorName={authorName} authorImage={authorImage}>
+                  <a
+                    className="hover:underline underline-offset-2"
+                    href={`/${post.author.username}`}
+                  >
+                    {authorName}
+                  </a>
+                </HoverProfile>
               ) : null}
             </div>
             <PostContent post={post} pRef={pRef} _currentApply={_currentApply}>

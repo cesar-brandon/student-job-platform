@@ -94,7 +94,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
         <DropdownMenuContent className="w-[15rem] xl:w-[20rem] p-0">
           <DropdownMenuItem
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="text-sm font-medium text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-accent px-6 py-4"
+            className="text-sm font-medium text-destructive focus:text-destructive focus:bg-destructive/5 dark:focus:bg-accent px-6 py-4"
           >
             <LogOut className="mr-4 h-6 w-6" />
             <span>Serrar Sesion</span>
@@ -104,20 +104,10 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
 
       {user.role === "ENTERPRISE" && (
         <ButtonLink
-          href={`/${user.username}/submit`}
-          text="Publicar oferta"
-          ariaLabel="Publicar oferta"
-          className="mt-8 child:flex child:justify-center"
-        />
-      )}
-      {user.role === "ENTERPRISE" && (
-        <ButtonLink
-          href="/studio"
+          href={`/studio`}
           text="IFV Studio"
-          ariaLabel="studio"
-          variant="outline"
-          className={`mt-4 bg-background dark:bg-orange/20 justify-start border-orange dark:border-none text-orange hover:bg-orange/5 hover:text-orange`}
-          icon={<CircleArrowRight className="w-6 h-6 order-first mr-4" />}
+          ariaLabel="ifv studio"
+          className="mt-8 child:flex child:justify-center"
         />
       )}
     </div>
