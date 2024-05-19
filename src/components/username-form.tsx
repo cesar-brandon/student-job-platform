@@ -108,7 +108,9 @@ const UserNameForm: FC<Props> = ({ user }) => {
           )}
         </CardContent>
         <CardFooter>
-          <Button isLoading={isLoading}>Cambiar nombre</Button>
+          <Button type="submit" isLoading={isLoading}>
+            Cambiar nombre
+          </Button>
         </CardFooter>
       </Card>
     </form>

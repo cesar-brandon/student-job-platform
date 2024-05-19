@@ -1,3 +1,4 @@
+import { NewPasswordForm } from "@/components/new-password-form";
 import UserNameForm from "@/components/username-form";
 import { authOptions } from "@/lib/auth";
 import getSession from "@/lib/getSession";
@@ -26,6 +27,7 @@ const Page = async () => {
               username: session.user.username || "",
             }}
           />
+          <NewPasswordForm userId={session.user.id} />
         </div>
       </div>
     </div>
