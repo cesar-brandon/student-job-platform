@@ -6,7 +6,6 @@ import axios from "axios";
 import debounce from "lodash.debounce";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-
 import {
   Command,
   CommandEmpty,
@@ -15,12 +14,17 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 import { UsersIcon } from "@heroicons/react/24/outline";
+import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
-interface SearchBarProps {}
+interface SearchBarProps {
+  className?: string;
+}
 
-const SearchBar: FC<SearchBarProps> = ({}) => {
+const SearchBar: FC<SearchBarProps> = ({ className }) => {
   const [input, setInput] = useState<string>("");
   const pathname = usePathname();
   const commandRef = useRef<HTMLDivElement>(null);
@@ -64,7 +68,11 @@ const SearchBar: FC<SearchBarProps> = ({}) => {
   return (
     <Command
       ref={commandRef}
-      className="relative rounded-2xl border max-w-lg z-50 overflow-visible"
+      className={cn(
+        "relative rounded-2xl border max-w-lg z-50 overflow-visible",
+        className,
+        input.length > 0 && "rounded-b-none",
+      )}
     >
       <CommandInput
         isLoading={isFetching}
@@ -74,10 +82,11 @@ const SearchBar: FC<SearchBarProps> = ({}) => {
         }}
         value={input}
         placeholder="Puesto, empresa o palabra clave"
+        className="pr-6"
       />
 
       {input.length > 0 && (
-        <CommandList className="absolute bg-border top-full inset-x-0 shadow rounded-b-md">
+        <CommandList className="absolute bg-border top-full inset-x-0 shadow rounded-b-md border-2">
           {isFetched && (
             <CommandEmpty>No se encontraron resultados.</CommandEmpty>
           )}
@@ -99,6 +108,16 @@ const SearchBar: FC<SearchBarProps> = ({}) => {
             </CommandGroup>
           ) : null}
         </CommandList>
+      )}
+      {input.length > 0 && (
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute w-6 h-6 bg-accent right-0 top-1/2 transform -translate-y-1/2 mr-2"
+          onClick={() => setInput("")}
+        >
+          <X className="h-4 w-4" />
+        </Button>
       )}
     </Command>
   );

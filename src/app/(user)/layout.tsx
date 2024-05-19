@@ -1,5 +1,5 @@
 import "../globals.css";
-import AsideFeed from "@/components/layouts/aside-feed";
+import { AsideFeed } from "@/components/layouts/aside-feed";
 import { NavBar } from "@/components/layouts/navbar";
 import SidebarFeed from "@/components/layouts/sidebar-feed";
 import getSession from "@/lib/getSession";

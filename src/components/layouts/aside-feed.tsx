@@ -1,50 +1,36 @@
 import { db } from "@/lib/prisma";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { simplifyName } from "@/lib/utils";
-import { Button } from "../ui/button";
 import AsideFeedHeader from "./aside-feed-header";
+import { User } from "@prisma/client";
+import { ProfileLink } from "@/components/profile/profile-link";
 
-const AsideFeed = async () => {
-  const enterprises = await db.user.findMany({
-    where: {
-      role: "ENTERPRISE",
-    },
-  });
+export const AsideFeed = async () => {
+  const users = await db.user.findMany();
+
+  const enterprises = users.filter((user: User) => user.role === "ENTERPRISE");
+  const students = users.filter((user: User) => user.role === "STUDENT");
 
   return (
-    <div className="w-[25%] p-4 hidden xl:block">
+    <div className="w-[25%] p-4 hidden xl:flex flex-col gap-4">
       <AsideFeedHeader />
-      <div className="bg-card min-h-[30rem] rounded-xl p-6 mt-2 font-semibold">
-        <p className="text-lg">Empresas</p>
+      <div className="bg-card rounded-xl mt-2 font-semibold border">
+        <p className="text-lg px-6 pt-6 pb-4">Empresas</p>
         {enterprises ? (
-          enterprises.map((enterprise) => (
-            <div
-              key={enterprise.id}
-              className="flex items-center justify-between gap-4 mt-4"
-            >
-              <div className="flex justify-between space-x-4">
-                <Avatar>
-                  <AvatarImage
-                    src={enterprise.image || ""}
-                    alt={enterprise.name}
-                  />
-                  <AvatarFallback>
-                    {simplifyName(enterprise.name)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="space-y-1">
-                  <p className="text-sm font-semibold line-clamp-1">
-                    {enterprise.name}
-                  </p>
-                  <span className="text-xs text-muted-foreground">
-                    @{enterprise.username}
-                  </span>
-                </div>
-              </div>
-              <Button className="bg-primary h-8 p-4 rounded-full">
-                <p className="text-sm font-semibold text-white">Seguir</p>
-              </Button>
-            </div>
+          enterprises.map((enterprise: User) => (
+            <ProfileLink user={enterprise} key={enterprise.id} />
+          ))
+        ) : (
+          <div className="flex items-center justify-center gap-4 mt-4">
+            <span className="text-xs text-muted-foreground">
+              No se encontraron resultados.
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="bg-card min-h-[30rem] rounded-xl mt-2 font-semibold border">
+        <p className="text-lg px-6 pt-6 pb-4">Estudiantes</p>
+        {students ? (
+          students.map((student: User) => (
+            <ProfileLink user={student} key={student.id} />
           ))
         ) : (
           <div className="flex items-center justify-center gap-4 mt-4">
@@ -57,5 +43,3 @@ const AsideFeed = async () => {
     </div>
   );
 };
-
-export default AsideFeed;
