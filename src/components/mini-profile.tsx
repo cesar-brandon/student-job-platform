@@ -1,8 +1,7 @@
-import { simplifyName } from "@/lib/utils";
 import CareerCard from "@/components/common/career-card";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { user } from "@/types/next-auth";
 import { UserProfileFallback } from "./profile/user-profile-fallback";
+import BlurImage from "./common/blur-image";
 
 export default function MiniProfile({ user }: { user: user }) {
   if (!user) return <UserProfileFallback />;
@@ -10,20 +9,21 @@ export default function MiniProfile({ user }: { user: user }) {
   return (
     <CareerCard
       career={user.career || "ENTERPRISE"}
-      className="min-h-[15rem] w-full px-8 rounded-b-xl rounded-t-none items-start justify-start"
+      className="min-h-[15rem] w-full rounded-b-2xl rounded-t-none items-start justify-start"
       classNameIcon="right-[-5rem] scale-125"
     >
-      <div className="flex mt-12 gap-4 items-center z-10">
-        <Avatar>
-          <AvatarImage src={user.image} alt="avatar" />
-          <AvatarFallback>
-            {simplifyName(user.name.toUpperCase())}
-          </AvatarFallback>
-        </Avatar>
-        <div>
-          <h3 className="font-semibold">{user.name}</h3>
-          <p className="text-black text-opacity-50">@{user.username}</p>
+      <div className="relative w-[10rem] h-full flex mt-12 rounded-lg gap-4 items-center overflow-hidden z-10">
+        <BlurImage
+          src={user.image || ""}
+          className="bg-foreground"
+          alt="avatar"
+          fill
+        />
+        <div className="absolute bottom-0 text-white p-3 z-30">
+          <h3 className="font-semibold line-clamp-1">{user.name}</h3>
+          <p className="text-opacity-50 text-sm">@{user.username}</p>
         </div>
+        <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-foreground dark:from-background to-transparent" />
       </div>
     </CareerCard>
   );

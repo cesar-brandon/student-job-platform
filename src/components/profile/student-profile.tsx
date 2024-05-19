@@ -29,7 +29,7 @@ export function StudentProfile({ userId }: { userId: string }) {
           <div className="relative rounded-lg w-[14rem] h-full overflow-hidden">
             <BlurImage
               src={student.User.image || ""}
-              className="w-full h-full object-cover bg-foreground"
+              className="w-full h-full bg-foreground"
               alt="avatar"
               fill
             />

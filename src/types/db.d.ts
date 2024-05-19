@@ -21,3 +21,9 @@ export type ExtendedPostApply = Post & {
 };
 
 export type Student = Student;
+
+export type ExtendedBookmark = Bookmark & {
+  post: Post & {
+    author: User;
+  };
+};

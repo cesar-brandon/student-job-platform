@@ -7,10 +7,15 @@ import { formatTimeToNow } from "@/lib/utils";
 import { CachedPost } from "@/types/redis";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { Post, User, Vote } from "@prisma/client";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { kv } from "@/lib/redis";
-import { ArrowLeft, ArrowUpRight, ClockIcon, MapPinIcon } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  ClockIcon,
+  LibraryBig,
+  MapPinIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
@@ -40,7 +45,14 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
     });
   }
 
-  if (!post && !cachedPost) return notFound();
+  if (!post && !cachedPost) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center mx-auto gap-2 text-accent">
+        <LibraryBig className="h-20 w-20" />
+        <p className="text-accent-foreground">Este post fue eliminado</p>
+      </div>
+    );
+  }
 
   return (
     <div>

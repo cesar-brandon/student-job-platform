@@ -19,7 +19,7 @@ export function UserProfile({ user }: { user: User }) {
           <div className="relative rounded-lg w-[14rem] h-full overflow-hidden">
             <BlurImage
               src={user.image || ""}
-              className="w-full h-full object-cover bg-foreground"
+              className="w-full h-full bg-foreground"
               alt="avatar"
               fill
             />

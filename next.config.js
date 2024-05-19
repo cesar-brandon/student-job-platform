@@ -29,22 +29,22 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "i.pinimg.com",
-        port: "",
         pathname: "/564x/42/dc/3d/*",
       },
       {
         protocol: "https",
         hostname: "utfs.io",
-        port: "",
       },
       {
         protocol: "https",
         hostname: "cdn.dribbble.com",
-        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
       },
     ],
   },
 };
 
 module.exports = withPWA(nextConfig);
-

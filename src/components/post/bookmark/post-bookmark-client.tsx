@@ -11,11 +11,13 @@ import { useState } from "react";
 interface BookmarsClientProps {
   postId: string;
   initialBookmarksAmt: number;
+  showBookmarkAmt?: boolean;
 }
 
 export function PostBookmarkClient({
   postId,
   initialBookmarksAmt,
+  showBookmarkAmt = true,
 }: BookmarsClientProps) {
   const [isChecked, setIsChecked] = useState(false);
   const [bookmarksAmt, setBookmarksAmt] = useState<number>(initialBookmarksAmt);
@@ -81,7 +83,7 @@ export function PostBookmarkClient({
           <polygon className="stroke-amber-500" points="80,80 70,70"></polygon>
         </svg>
       </div>
-      <p className="text-center">{bookmarksAmt}</p>
+      {showBookmarkAmt && <p className="text-center">{bookmarksAmt}</p>}
     </div>
   );
 }
