@@ -4,6 +4,7 @@ import {
   ChatBubbleOvalLeftEllipsisIcon,
   HomeIcon,
   MagnifyingGlassIcon,
+  BriefcaseIcon,
 } from "@heroicons/react/24/solid";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NavBarItem from "../common/navbar-item";
@@ -27,10 +28,15 @@ export function NavBar({ user }: Props) {
       href: "/explore",
       icon: <MagnifyingGlassIcon className="stroke-current" />,
     },
+    // {
+    //   content: "Chat",
+    //   href: "/messages",
+    //   icon: <ChatBubbleOvalLeftEllipsisIcon />,
+    // },
     {
-      content: "Chat",
-      href: "/messages",
-      icon: <ChatBubbleOvalLeftEllipsisIcon />,
+      content: "Aplicados",
+      href: "/apply",
+      icon: <BriefcaseIcon />,
     },
     {
       content: "Perfil",

@@ -1,4 +1,4 @@
-import type { Bookmark } from "@prisma/client";
+import type { Bookmark, Post } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { PostBookmarkClient } from "./post-bookmark-client";
 
@@ -6,6 +6,7 @@ interface BookmarsClientProps {
   postId: string;
   userId: string;
   initialBookmarksAmt?: number;
+  initialBookmark?: boolean;
   getData?: () => Promise<(Post & { bookmark: Bookmark }) | null>;
   showBookmarkAmt?: boolean;
 }
@@ -37,8 +38,8 @@ export async function PostBookmarkServer({
     <PostBookmarkClient
       postId={postId}
       initialBookmarksAmt={_bookmarksAmt}
+      initialBookmark
       showBookmarkAmt={showBookmarkAmt}
-      // currentBookmark={_currentBookmark}
     />
   );
 }

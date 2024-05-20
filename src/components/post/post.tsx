@@ -6,7 +6,13 @@ import {
   MapPinIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
-import { Apply, Post as PrismaPost, User, Vote } from "@prisma/client";
+import type {
+  Apply,
+  Bookmark,
+  Post as PrismaPost,
+  User,
+  Vote,
+} from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef, useState } from "react";
@@ -50,17 +56,19 @@ interface PostProps {
   currentVote?: PartialVote;
   commentAmt: number;
   bookmarkAmt: number;
+  currentBookmark: boolean;
   currentApply?: Apply;
 }
 
 const Post: FC<PostProps> = ({
   post,
+  authorName,
+  authorImage,
   votesAmt: _votesAmt,
   bookmarkAmt: _bookmarkAmt,
   currentVote: _currentVote,
   currentApply: _currentApply,
-  authorName,
-  authorImage,
+  currentBookmark,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null);
 
@@ -79,6 +87,7 @@ const Post: FC<PostProps> = ({
           <PostBookmarkClient
             postId={post.id}
             initialBookmarksAmt={_bookmarkAmt}
+            initialBookmark={currentBookmark}
           />
           <div>
             <div className="max-h-40 relative">

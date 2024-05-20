@@ -48,31 +48,21 @@ export default async function BookmarksPage() {
 
 function BookmarkItem({ bookmark }: { bookmark: ExtendedBookmark }) {
   return (
-    <div className="w-full flex justify-between items-center rounded-lg border bg-card text-card-foreground shadow-sm p-4">
-      <div>
-        <Link
-          href={`/${bookmark.post.author.username}/post/${bookmark.postId}`}
-        >
-          {bookmark.post.title}
-        </Link>
+    <div className="w-full flex justify-between items-center rounded-lg border bg-card text-card-foreground shadow-sm">
+      <Link
+        href={`/${bookmark.post.author.username}/post/${bookmark.postId}`}
+        className="w-full p-4"
+      >
+        {bookmark.post.title}
         <p className="text-sm">{"J&R CRM SERVICES"}</p>
         <p className="text-sm dark:font-thin font-light">Lima,Lima</p>
-      </div>
-      <div className="relative w-6 h-6">
+      </Link>
+      <div className="relative w-6 h-6 m-4">
         <PostBookmarkServer
           postId={bookmark.postId}
           userId={bookmark.userId}
           showBookmarkAmt={false}
-          // getData={async () => {
-          //   return await db.post.findFirst({
-          //     where: {
-          //       id: bookmark.postId,
-          //     },
-          //     include: {
-          //       bookmarks: true,
-          //     },
-          //   });
-          // }}
+          initialBookmark
         />
       </div>
     </div>

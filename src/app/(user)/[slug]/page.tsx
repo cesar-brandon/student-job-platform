@@ -2,6 +2,7 @@ import { StudentProfile } from "@/components/profile/student-profile";
 import { UserProfile } from "@/components/profile/user-profile";
 import getSession from "@/lib/getSession";
 import { db } from "@/lib/prisma";
+import { LibraryBig } from "lucide-react";
 
 export const metadata = {
   title: "Profile",
@@ -24,6 +25,14 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
         username: params.slug,
       },
     });
+  }
+  if (!user) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center mx-auto gap-2 text-accent">
+        <LibraryBig className="h-20 w-20" />
+        <p className="text-accent-foreground">Este usuario no existe</p>
+      </div>
+    );
   }
 
   return (

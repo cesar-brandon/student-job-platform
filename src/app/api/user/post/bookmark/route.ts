@@ -14,12 +14,9 @@ export async function PATCH(req: Request) {
     const { postId } = PostBookmarkValidator.parse(body);
 
     const session = await getAuthSession();
+    if (!session?.user) return new Response("Unauthorized", { status: 401 });
 
-    if (!session?.user) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-
-    // check if user has already bookmarked this post 
+    // check if user has already bookmarked this post
     const existingBookmark = await db.bookmark.findFirst({
       where: {
         userId: session.user.id,
@@ -51,7 +48,7 @@ export async function PATCH(req: Request) {
       });
 
       // Recount the bookmarks
-      const bookmarksAmt = post.bookmarks.length
+      const bookmarksAmt = post.bookmarks.length;
 
       if (bookmarksAmt >= CACHE_AFTER_BOOKMARKS) {
         const cachePayload: CachedPost = {
@@ -60,12 +57,12 @@ export async function PATCH(req: Request) {
           id: post.id,
           title: post.title,
           createdAt: post.createdAt,
-        }
+        };
 
         await kv.hset(`post:${postId}`, cachePayload);
       }
 
-      return new Response("OK")
+      return new Response("OK");
     }
 
     //if no existing bookmark, create a new bookmark
@@ -77,7 +74,7 @@ export async function PATCH(req: Request) {
     });
 
     // Recount the bookmarks
-    const bookmarksAmt = post.bookmarks.length
+    const bookmarksAmt = post.bookmarks.length;
 
     if (bookmarksAmt >= CACHE_AFTER_BOOKMARKS) {
       const cachePayload: CachedPost = {
@@ -86,15 +83,14 @@ export async function PATCH(req: Request) {
         id: post.id,
         title: post.title,
         createdAt: post.createdAt,
-      }
+      };
 
       await kv.hset(`post:${postId}`, cachePayload);
     }
 
-    return new Response("OK")
-
+    return new Response("OK");
   } catch (error) {
-    error;
+    console.log(error);
     if (error instanceof z.ZodError) {
       return new Response(error.message, { status: 400 });
     }

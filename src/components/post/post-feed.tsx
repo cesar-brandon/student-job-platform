@@ -67,9 +67,10 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
 
         const bookmarkAmt = (post.bookmarks && post.bookmarks.length) || 0;
 
-        // const currentBookmark = post.bookmarks.find(
-        //   (bookmark) => bookmark.userId === session?.user?.id
-        // );
+        //devolver true si el post tiene un bookmark del usuario actual
+        const currentBookmark = post.bookmarks?.some(
+          (bookmark) => bookmark.userId === session?.user?.id,
+        );
 
         const currentApply = post.applies?.find(
           (apply) => apply.userId === session?.user?.id,
@@ -80,12 +81,13 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
             <li key={post.id} ref={ref}>
               <Post
                 post={post}
-                commentAmt={post.comments.length}
                 authorName={post.author.name}
                 authorImage={post.author.image || ""}
+                commentAmt={post.comments.length}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
                 bookmarkAmt={bookmarkAmt}
+                currentBookmark={currentBookmark}
                 currentApply={currentApply}
               />
             </li>
@@ -95,12 +97,13 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
             <Post
               key={post.id}
               post={post}
-              commentAmt={post.comments.length}
               authorName={post.author.name}
               authorImage={post.author.image || ""}
+              commentAmt={post.comments.length}
               votesAmt={votesAmt}
               currentVote={currentVote}
               bookmarkAmt={bookmarkAmt}
+              currentBookmark={currentBookmark}
               currentApply={currentApply}
             />
           );
