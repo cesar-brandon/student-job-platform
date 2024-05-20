@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { cn, simplifyName } from "@/lib/utils";
 import { HoverProfile } from "@/components/profile/hover-profile";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { User } from "@prisma/client";
 
 export function ProfileLink({

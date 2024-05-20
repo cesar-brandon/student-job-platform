@@ -3,8 +3,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Link from "next/link";
-import { usePathname } from 'next/navigation'
+import { Link } from "next-view-transitions";
+import { usePathname } from "next/navigation";
 
 interface Props {
   icon: React.ReactNode;
@@ -17,13 +17,19 @@ const NavBarItem = ({ icon, href, content }: Props) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Link
-          className={`${pathname === href ? "text-accent-foreground" : "text-zinc-400 dark:text-zinc-700"}
-          w-6 h-6 focus:animate-click-pulse transition-all duration-300 ease-in-out outline-none`}
-          href={href}
-        >
-          {icon}
-        </Link>
+        <div className="w-6 h-6">
+          <Link
+            className={`${
+              pathname === href
+                ? "text-accent-foreground"
+                : "text-gray-400 dark:text-gray-700"
+            }
+            w-6 h-6 focus:animate-click-pulse transition-all duration-300 ease-in-out outline-none`}
+            href={href}
+          >
+            {icon}
+          </Link>
+        </div>
       </TooltipTrigger>
       <TooltipContent>{content}</TooltipContent>
     </Tooltip>

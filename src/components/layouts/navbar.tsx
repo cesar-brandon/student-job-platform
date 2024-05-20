@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   ChatBubbleOvalLeftEllipsisIcon,
@@ -12,7 +12,7 @@ import { simplifyName } from "@/lib/utils";
 import { user } from "@/types/next-auth";
 
 interface Props {
-  user: user
+  user: user;
 }
 
 export function NavBar({ user }: Props) {
@@ -38,7 +38,7 @@ export function NavBar({ user }: Props) {
       icon: (
         <Avatar className="w-full h-full">
           <AvatarImage src={user.image} alt="avatar" />
-          <AvatarFallback >
+          <AvatarFallback>
             {simplifyName(user.name.toUpperCase())}
           </AvatarFallback>
         </Avatar>
@@ -54,9 +54,9 @@ export function NavBar({ user }: Props) {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > prevScrollY) {
-        setIsHidden(true)
+        setIsHidden(true);
       } else {
-        setIsHidden(false)
+        setIsHidden(false);
       }
 
       prevScrollY = currentScrollY;
@@ -73,13 +73,13 @@ export function NavBar({ user }: Props) {
     <div
       className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-background 
                   rounded-full flex items-center justify-center gap-8 shadow-md
-                  border transition-all duration-300 ${isHidden ? "translate-y-24" : "translate-y-0"}`}>
+                  border transition-all duration-300 ${
+                    isHidden ? "translate-y-24" : "translate-y-0"
+                  }`}
+    >
       {items.map((item) => (
-        <NavBarItem
-          key={item.content}
-          {...item}
-        />
+        <NavBarItem key={item.content} {...item} />
       ))}
     </div>
   );
-};
+}
