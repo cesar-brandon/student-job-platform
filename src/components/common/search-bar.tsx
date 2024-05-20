@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
-import { UsersIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
+import { ProfileLink } from "../profile/profile-link";
 
 interface SearchBarProps {
   className?: string;
@@ -92,17 +92,20 @@ const SearchBar: FC<SearchBarProps> = ({ className }) => {
           )}
           {(queryResults?.length ?? 0) > 0 ? (
             <CommandGroup heading="Usuarios">
-              {queryResults?.map((subreddit) => (
+              {queryResults?.map((user) => (
                 <CommandItem
                   onSelect={(e) => {
                     router.push(`/${e}`);
                     router.refresh();
                   }}
-                  key={subreddit.id}
-                  value={subreddit.name}
+                  key={user.id}
+                  value={user.username || "explore"}
+                  className="hover:bg-accent"
                 >
-                  <UsersIcon className="mr-2 h-4 w-4" />
-                  <a href={`/${subreddit.username}`}>@{subreddit.name}</a>
+                  <ProfileLink
+                    user={user}
+                    className="px-0 py-2 hover:bg-transparent"
+                  />
                 </CommandItem>
               ))}
             </CommandGroup>
