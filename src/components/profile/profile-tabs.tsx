@@ -4,10 +4,18 @@ export function ProfileTabs() {
   return (
     <Tabs defaultValue="skills">
       <TabsList>
+        <TabsTrigger value="about">Acerca de</TabsTrigger>
         <TabsTrigger value="skills">Habilidades</TabsTrigger>
         <TabsTrigger value="experience">Experiencia</TabsTrigger>
         <TabsTrigger value="projects">Proyectos</TabsTrigger>
       </TabsList>
+      <TabsContent value="about">
+        <div className="p-4">
+          <p>Nombre: John Doe</p>
+          <p>Edad: 25</p>
+          <p>País: México</p>
+        </div>
+      </TabsContent>
       <TabsContent value="skills">
         <div className="p-4">
           <p>HTML</p>

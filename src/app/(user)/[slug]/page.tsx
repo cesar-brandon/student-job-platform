@@ -18,8 +18,9 @@ interface ProfilePageProps {
 const ProfilePage = async ({ params }: ProfilePageProps) => {
   const session = await getSession();
   let user = session?.user;
+  const isOwner = user?.username === params.slug;
 
-  if (user.username !== params.slug) {
+  if (!isOwner) {
     user = await db.user.findUnique({
       where: {
         username: params.slug,
@@ -34,16 +35,26 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
       </div>
     );
   }
+  if (user.role === "STUDENT") {
+    const student = await db.student.findFirst({
+      where: {
+        userId: user.id,
+      },
+      include: {
+        User: {
+          select: {
+            image: true,
+            username: true,
+            name: true,
+          },
+        },
+      },
+    });
 
-  return (
-    <section className="flex flex-col gap-4">
-      {user.role === "STUDENT" ? (
-        <StudentProfile userId={user.id} />
-      ) : (
-        <UserProfile user={user} />
-      )}
-    </section>
-  );
+    return <StudentProfile student={student} isOwner={isOwner} />;
+  }
+
+  return <UserProfile user={user} isOwner={isOwner} />;
 };
 
 export default ProfilePage;

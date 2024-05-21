@@ -2,10 +2,16 @@ import CareerCard from "@/components/common/career-card";
 import { StudentProfileFallback } from "./student-profile-fallback";
 import { User } from "@prisma/client";
 import { ProfileTabs } from "@/components/profile/profile-tabs";
-import { Button } from "@/components/ui/button";
 import BlurImage from "../common/blur-image";
+import { ProfileEditForm } from "./profile-edit-form";
 
-export function UserProfile({ user }: { user: User }) {
+export function UserProfile({
+  user,
+  isOwner,
+}: {
+  user: User;
+  isOwner?: boolean;
+}) {
   if (!user) return <StudentProfileFallback />;
 
   return (
@@ -33,7 +39,7 @@ export function UserProfile({ user }: { user: User }) {
       </CareerCard>
       <div className="flex items-start justify-between">
         <ProfileTabs />
-        <Button variant="outline">Editar Pefil</Button>
+        {isOwner && <ProfileEditForm user={user} />}
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ import {
 import { ApplyStatus } from "@prisma/client";
 import { ExtendedApply } from "@/types/db";
 import { StudentProfile } from "@/components/profile/student-profile";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 interface ApplyDisplayProps {
   apply: ExtendedApply;
@@ -22,6 +24,14 @@ interface ApplyDisplayProps {
 
 export function ApplyDisplay({ apply, updateApplyStatus }: ApplyDisplayProps) {
   const { userId, postId, status } = apply;
+
+  const { data: student } = useQuery({
+    queryKey: ["student", userId],
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/student/${userId}`);
+      return data;
+    },
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -45,7 +55,7 @@ export function ApplyDisplay({ apply, updateApplyStatus }: ApplyDisplayProps) {
           </SelectContent>
         </Select>
       </div>
-      <StudentProfile userId={userId} />
+      <StudentProfile student={student} />
     </div>
   );
 }
