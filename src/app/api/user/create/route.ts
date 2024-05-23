@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { UserRole } from "@prisma/client";
 import * as bcrypt from "bcrypt";
@@ -12,19 +13,21 @@ interface RequestBody {
 }
 
 const POST = async (request: Request) => {
-  const body: RequestBody = await request.json();
-
-  let userAssociated = null;
-
-  if (body.userId) {
-    userAssociated = await db.user.findFirst({
-      where: {
-        id: body.userId
-      },
-    });
-  }
-
   try {
+    const session = await getAuthSession();
+    if (!session?.user) return new Response("Unauthorized", { status: 401 });
+
+    const body: RequestBody = await request.json();
+
+    let userAssociated = null;
+
+    if (body.userId) {
+      userAssociated = await db.user.findFirst({
+        where: {
+          id: body.userId,
+        },
+      });
+    }
 
     if (!userAssociated || userAssociated === null) {
       const user = await db.user.create({
@@ -43,7 +46,7 @@ const POST = async (request: Request) => {
 
     const user = await db.user.update({
       where: {
-        id: body.userId
+        id: body.userId,
       },
       data: {
         name: body.username,
@@ -56,7 +59,6 @@ const POST = async (request: Request) => {
   } catch (error) {
     return new Response("Error", { status: 500 });
   }
-
 };
 
 export { POST };
