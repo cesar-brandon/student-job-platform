@@ -8,9 +8,9 @@ interface RequestBody {
 }
 
 const POST = async (request: Request) => {
-  const body: RequestBody = await request.json();
-
   try {
+    const body: RequestBody = await request.json();
+
     const user = await db.user.findFirst({
       where: {
         username: body.username,
@@ -34,7 +34,6 @@ const POST = async (request: Request) => {
   } catch (error) {
     return new Response("Error", { status: 500 });
   }
-
 };
 
 export { POST };
