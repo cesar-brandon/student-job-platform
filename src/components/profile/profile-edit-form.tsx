@@ -24,6 +24,7 @@ import { Textarea } from "../ui/textarea";
 import Image from "next/image";
 import { User } from "@prisma/client";
 import { SquarePlus } from "lucide-react";
+import { simplifyName } from "@/lib/utils";
 
 export function ProfileEditForm({ user }: { user: User }) {
   const form = useForm<ProfileRequest>({
@@ -60,13 +61,21 @@ export function ProfileEditForm({ user }: { user: User }) {
                 <FormItem>
                   <FormControl>
                     <div className="group relative w-24 h-28 rounded-lg overflow-hidden">
-                      <Image
-                        src={user.image || ""}
-                        alt="imagen de perfil"
-                        className="object-cover w-full h-full"
-                        width={100}
-                        height={100}
-                      />
+                      {user.image === null ? (
+                        <div className="w-full h-full bg-muted-foreground dark:bg-background flex items-center justify-center">
+                          <p className="text-white">
+                            {simplifyName(user.name.toUpperCase())}
+                          </p>
+                        </div>
+                      ) : (
+                        <Image
+                          src={user.image}
+                          alt="imagen de perfil"
+                          className="object-cover w-full h-full"
+                          width={100}
+                          height={100}
+                        />
+                      )}
                       <div
                         className="absolute top-0 left-0 w-full h-full bg-background/50 backdrop-blur 
                         opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity duration-300"

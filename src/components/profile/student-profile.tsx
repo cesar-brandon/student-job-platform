@@ -4,6 +4,7 @@ import { StudentProfileFallback } from "./student-profile-fallback";
 import BlurImage from "../common/blur-image";
 import { ExtendedStudent } from "@/types/student";
 import { ProfileEditForm } from "./profile-edit-form";
+import { simplifyName } from "@/lib/utils";
 
 export function StudentProfile({
   student,
@@ -23,12 +24,20 @@ export function StudentProfile({
       >
         <div className="w-[14rem] h-full flex items-center gap-4 z-10">
           <div className="relative rounded-lg w-[14rem] h-full overflow-hidden">
-            <BlurImage
-              src={student.User.image || ""}
-              className="w-full h-full bg-foreground"
-              alt="avatar"
-              fill
-            />
+            {student.User.image === null ? (
+              <div className="w-full h-full bg-muted-foreground dark:bg-background flex items-center justify-center">
+                <p className="mb-6 text-white">
+                  {simplifyName(student.User.name.toUpperCase())}
+                </p>
+              </div>
+            ) : (
+              <BlurImage
+                src={student.User.image}
+                className="w-full h-full bg-foreground"
+                alt="avatar"
+                fill
+              />
+            )}
             <div className="absolute bottom-0 text-white p-4 z-10">
               <h3 className="font-semibold">{student.User.name}</h3>
               <p>@{student.User.username}</p>

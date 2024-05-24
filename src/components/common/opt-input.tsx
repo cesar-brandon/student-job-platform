@@ -90,8 +90,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
           onChange={handleChange}
           placeholder="------"
           className="w-full text-center uppercase font-bold tracking-[.8rem] 
-								px-4 py-3 rounded-lg bg-gray-200 border focus:border-blue-500
-								focus:bg-white focus:outline-none"
+								px-4 py-3 rounded-lg bg-background border focus:border-blue-500 focus:outline-none"
         />
         <Button
           className="w-24"

@@ -14,8 +14,8 @@ interface RequestBody {
 
 const POST = async (request: Request) => {
   try {
-    const session = await getAuthSession();
-    if (!session?.user) return new Response("Unauthorized", { status: 401 });
+    // const session = await getAuthSession();
+    // if (!session?.user) return new Response("Unauthorized", { status: 401 });
 
     const body: RequestBody = await request.json();
 

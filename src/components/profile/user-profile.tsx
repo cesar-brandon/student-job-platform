@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import { ProfileTabs } from "@/components/profile/profile-tabs";
 import BlurImage from "../common/blur-image";
 import { ProfileEditForm } from "./profile-edit-form";
+import { simplifyName } from "@/lib/utils";
 
 export function UserProfile({
   user,
@@ -23,12 +24,21 @@ export function UserProfile({
       >
         <div className="w-full h-full flex items-center gap-4 z-10">
           <div className="relative rounded-lg w-[14rem] h-full overflow-hidden">
-            <BlurImage
-              src={user.image || ""}
-              className="w-full h-full bg-foreground"
-              alt="avatar"
-              fill
-            />
+            {user.image === null ? (
+              <div className="w-full h-full bg-muted-foreground dark:bg-background flex items-center justify-center">
+                <p className="mb-6 text-white">
+                  {simplifyName(user.name.toUpperCase())}
+                </p>
+              </div>
+            ) : (
+              <BlurImage
+                src={user.image}
+                className="w-full h-full bg-foreground"
+                alt="avatar"
+                fill
+              />
+            )}
+
             <div className="absolute bottom-0 text-white p-4 z-10">
               <h3 className="font-semibold">{user.name}</h3>
               <p>@{user.username}</p>
