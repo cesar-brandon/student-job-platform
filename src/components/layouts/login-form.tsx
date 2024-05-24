@@ -39,6 +39,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
         password: formData.password,
         redirect: false,
       });
+      console.log("Result credentials", result);
       if (result?.error) {
         toast({
           title: "Error",
@@ -54,6 +55,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
         router.push("/home");
       }
     } catch (error) {
+      console.log("Error credentials", error);
       toast({
         title: "Algo salió mal",
         description: "Error al iniciar sesión. Inténtalo de nuevo más tarde.",
@@ -78,6 +80,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
           identifier: formData.identifier,
         },
       });
+      console.log("Result getuser", result);
       toast({
         title: "Usuario encontrado",
         description: "Se encontró el usuario " + result.data.name,
@@ -86,6 +89,7 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
 
       setUserDetails(result.data);
     } catch (error) {
+      console.log("Error getuser", error);
       toast({
         title: "Algo salió mal",
         description: "El usuario no fue encontrado",
