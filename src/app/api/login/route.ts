@@ -10,6 +10,7 @@ interface RequestBody {
 const POST = async (request: Request) => {
   try {
     const body: RequestBody = await request.json();
+    console.log(body);
 
     const user = await db.user.findFirst({
       where: {
