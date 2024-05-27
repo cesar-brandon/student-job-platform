@@ -80,7 +80,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
             {
               title: "Publicar oferta",
               label: "9",
-              href: `/studio/${user.id}/create`,
+              href: `/studio/${user.username}/create`,
               icon: Send,
               variant: "ghost",
             },
