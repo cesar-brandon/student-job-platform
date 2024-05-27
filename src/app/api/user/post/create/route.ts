@@ -19,8 +19,8 @@ export async function POST(req: Request) {
       data: {
         title,
         content,
-        filters,
         authorId: session.user.id,
+        filters,
       },
     });
 

@@ -7,10 +7,6 @@ import { useEffect, useState } from "react";
 export default function Submit({ filters }: { filters: Filter[] }) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
-  useEffect(() => {
-    console.log(selectedFilters);
-  }, [selectedFilters]);
-
   return (
     <div className="grid md:grid-cols-2 gap-6">
       <div className="flex flex-col items-start gap-6 p-10">

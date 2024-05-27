@@ -174,7 +174,7 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
         title: data.title,
         content: blocks,
         id: `${id}`,
-        filters: data.filters,
+        filters,
       };
 
       createPost(payload);

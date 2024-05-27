@@ -10,7 +10,6 @@ interface RequestBody {
 const POST = async (request: Request) => {
   try {
     const body: RequestBody = await request.json();
-    console.log("body:", body);
 
     const user = await db.user.findFirst({
       where: {
@@ -24,8 +23,6 @@ const POST = async (request: Request) => {
     if (!(await bcrypt.compare(body.password, user.password || ""))) {
       return new Response("Unauthorized", { status: 401 });
     }
-
-    console.log("user:", user);
 
     const { password, ...userWithoutPassword } = user;
     const accessToken = signToken(userWithoutPassword);
