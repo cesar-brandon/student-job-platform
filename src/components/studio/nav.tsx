@@ -89,7 +89,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
               label: "420",
               href: "/studio/students",
               icon: Users2,
-              variant: "checked",
+              variant: "ghost",
             },
           ]}
         />
@@ -115,7 +115,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
               label: "342",
               href: "/studio/ads",
               icon: AlertCircle,
-              variant: "ghost",
+              variant: "checked",
             },
           ]}
         />

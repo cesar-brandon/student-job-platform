@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
   Accordion,
@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Switch } from "../ui/switch";
+import { Switch } from "@/components/ui/switch";
 import { useMediaQuery } from "@mantine/hooks";
 import {
   Drawer,
@@ -18,7 +18,7 @@ import {
   DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "@/components/ui/drawer";
 import {
   Sheet,
   SheetContent,
@@ -26,59 +26,12 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
-
-const filters = [
-  {
-    title: "Fecha de publicación",
-    options: [
-      {
-        label: "Última hora",
-        value: "4",
-      },
-    ],
-  },
-  {
-    title: "Area",
-    options: [
-      {
-        label: "Tecnologia",
-        value: "12",
-      },
-    ],
-  },
-  {
-    title: "Modalidad de trabajo",
-    options: [
-      {
-        label: "Remoto",
-        value: "12",
-      },
-    ],
-  },
-  {
-    title: "Nivel laboral",
-    options: [
-      {
-        label: "Sin experiencia",
-        value: "5",
-      },
-    ],
-  },
-  {
-    title: "Carga horaria",
-    options: [
-      {
-        label: "Full time",
-        value: "5",
-      },
-    ],
-  },
-];
+} from "@/components/ui/sheet";
+import { feedFilters as filters } from "./mock-filters";
 
 const topics = ["Practicas", "Remoto", "Sin experiencia", "Full time"];
 
-export default function PostFilters() {
+export default function FeedFilters() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -147,21 +100,23 @@ export default function PostFilters() {
                 <DrawerTitle className="font-bold mb-4">Filtros</DrawerTitle>
               </DrawerHeader>
               <Accordion type="single" collapsible className="w-full">
-                {filters.map((filter, index) => (
-                  <AccordionItem value={`item-${index}`} key={index}>
-                    <AccordionTrigger className="hover:no-underline lg:hover:underline">
-                      <p className="text-sm">{filter.title}</p>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      {filter.options.map((option, index) => (
-                        <div key={index} className="flex justify-between">
-                          <p>{option.label}</p>
-                          <p>({option.value})</p>
-                        </div>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
+                <div className="pb-4 pt-0">
+                  {filters.map((filter, index) => (
+                    <AccordionItem value={`item-${index}`} key={index}>
+                      <AccordionTrigger className="hover:no-underline lg:hover:underline">
+                        <p className="text-sm">{filter.title}</p>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        {filter.options.map((option, index) => (
+                          <div key={index} className="flex justify-between">
+                            <p>{option.label}</p>
+                            <p>({option.value})</p>
+                          </div>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </div>
               </Accordion>
               <div className="flex items-center justify-between space-x-2 py-4 text-sm font-medium gap-3">
                 <p>Postulantes con discapacidad</p>

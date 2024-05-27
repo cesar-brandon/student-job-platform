@@ -9,12 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@editorjs/code": "^2.8.0",
     "@editorjs/editorjs": "^2.27.0",
     "@editorjs/embed": "^2.5.3",
-    "@editorjs/header": "^2.7.0",
     "@editorjs/image": "^2.8.1",
-    "@editorjs/inline-code": "^1.4.0",
     "@editorjs/link": "^2.5.0",
     "@editorjs/list": "^1.8.0",
     "@editorjs/paragraph": "^2.9.0",
@@ -25,6 +22,7 @@
     "@next-auth/prisma-adapter": "^1.0.7",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.3",
+    "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-hover-card": "^1.0.7",

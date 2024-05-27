@@ -101,3 +101,69 @@ a {
 /*   border-radius: 0.75rem; */
 /*   padding: 0.5rem; */
 /* } */
+
+/*Editorjs Dark Mode*/
+.dark .ce-toolbar__plus,
+.dark .ce-toolbar__settings-btn,
+.dark .ce-popover-item__title,
+.dark .ce-popover-item__icon {
+  color: hsl(var(--foreground));
+}
+
+.dark .cdx-search-field.ce-popover__search {
+  background-color: hsl(var(--muted));
+  border-color: hsl(var(--border));
+}
+
+.dark .cdx-search-field__input {
+  color: hsl(var(--foreground));
+}
+
+.dark .cdx-block,
+.dark .ce-block {
+  color: hsl(var(--foreground));
+}
+
+.dark .ce-inline-toolbar,
+.dark .ce-conversion-tool__icon,
+.dark .ce-popover-item__icon {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--accent));
+}
+
+.dark .ce-popover,
+.dark .ce-conversion-toolbar,
+.dark .ce-inline-toolbar {
+  background-color: hsl(var(--background));
+  border-color: hsl(var(--border));
+  box-shadow: 0 3px 15px -3px hsl(var(--border));
+}
+
+.dark .ce-inline-tool:hover,
+.dark .ce-inline-toolbar__dropdown:hover,
+.dark .ce-toolbar__plus:hover,
+.dark .ce-toolbar__settings-btn:hover,
+.dark .ce-conversion-tool:hover,
+.dark .ce-popover-item:hover {
+  background-color: hsl(var(--accent));
+}
+
+.dark .ce-block .ce-block__content *::selection,
+.dark .cdx-block *::selection,
+.dark .cdx-search-field__input::selection,
+.dark .ce-block.ce-block--selected .ce-block__content {
+  background-color: hsl(var(--accent));
+}
+
+.dark .ce-popover__items {
+  scrollbar-color: hsl(var(--border)) hsl(var(--primary));
+}
+
+@media (max-width: 650px) {
+  .dark .ce-toolbar__settings-btn,
+  .dark .ce-toolbar__plus {
+    background-color: hsl(var(--primary));
+    border-color: hsl(var(--border));
+    box-shadow: 0 3px 15px -3px hsl(var(--border));
+  }
+}

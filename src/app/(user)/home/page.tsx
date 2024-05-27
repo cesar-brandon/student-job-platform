@@ -2,12 +2,12 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
 import HeaderFeed from "@/components/layouts/header-feed";
 import PostFeed from "@/components/post/post-feed";
-import PostFilters from "@/components/post/post-filters";
+import PostFilters from "@/components/post/filters/feed-filters";
 
 export const metadata = {
   title: "Home",
   description: "Home page",
-}
+};
 
 const HomePage = async () => {
   const posts = await db.post.findMany({
@@ -31,6 +31,6 @@ const HomePage = async () => {
       <PostFeed initialPosts={posts} />
     </div>
   );
-}
+};
 
 export default HomePage;

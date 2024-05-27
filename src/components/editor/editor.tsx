@@ -8,7 +8,7 @@ import type EditorJS from "@editorjs/editorjs";
 import { uploadFiles } from "@/lib/uploadthing";
 import { toast } from "../../hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -41,13 +41,10 @@ const Editor: React.FC<EditorProps> = (id) => {
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
-    const Header = (await import("@editorjs/header")).default;
     const Embed = (await import("@editorjs/embed")).default;
     const Table = (await import("@editorjs/table")).default;
     const List = (await import("@editorjs/list")).default;
-    const Code = (await import("@editorjs/code")).default;
     const LinkTool = (await import("@editorjs/link")).default;
-    const InlineCode = (await import("@editorjs/inline-code")).default;
     const ImageTool = (await import("@editorjs/image")).default;
 
     if (!ref.current) {
@@ -60,7 +57,6 @@ const Editor: React.FC<EditorProps> = (id) => {
         inlineToolbar: true,
         data: { blocks: [] },
         tools: {
-          header: Header,
           linkTool: {
             class: LinkTool,
             config: {
@@ -94,7 +90,6 @@ const Editor: React.FC<EditorProps> = (id) => {
             },
           },
           list: List,
-          inlineCode: InlineCode,
           table: Table,
           embed: Embed,
         },
@@ -155,7 +150,7 @@ const Editor: React.FC<EditorProps> = (id) => {
       });
     },
     onSuccess: () => {
-      router.push("/home");
+      router.push("/studio");
 
       router.refresh();
 
@@ -194,46 +189,42 @@ const Editor: React.FC<EditorProps> = (id) => {
   const { ref: titleRef, ...rest } = register("title");
 
   return (
-    <>
-      <div className="w-full p-4 bg-gray-50 dark:bg-card rounded-lg border">
-        <form
-          id="enterprise-post-form"
-          className="w-fit"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="prose prose-stone dark:prose-invert">
-            <TextareaAutosize
-              ref={(e) => {
-                titleRef(e);
-                // @ts-ignore
-                _titleRef.current = e;
-              }}
-              {...rest}
-              placeholder="Título"
-              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
-            />
-            <div id="editor" className="min-h-[400px]" />
-            <p className="text-sm text-gray-500">
-              Usa{" "}
-              <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-                Tab
-              </kbd>{" "}
-              para abrir el menú de comandos.
-            </p>
-          </div>
-        </form>
-      </div>
-      <div className="w-full flex justify-end">
+    <div className="w-full p-4 bg-gray-50 dark:bg-card rounded-lg border">
+      <form
+        id="enterprise-post-form"
+        className="w-full"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="prose prose-stone dark:prose-invert">
+          <TextareaAutosize
+            ref={(e) => {
+              titleRef(e);
+              // @ts-ignore
+              _titleRef.current = e;
+            }}
+            {...rest}
+            placeholder="Título"
+            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
+          />
+          <div id="editor" className="p-0" />
+          {/* <p className="text-sm text-gray-500"> */}
+          {/*   Usa{" "} */}
+          {/*   <kbd className="rounded-md border bg-muted px-1 text-xs uppercase"> */}
+          {/*     Tab */}
+          {/*   </kbd>{" "} */}
+          {/*   para abrir el menú de comandos. */}
+          {/* </p> */}
+        </div>
         <Button
           type="submit"
-          className="w-full"
+          className="w-full rounded-[0.5rem]"
           form="enterprise-post-form"
           disabled={isLoading}
         >
           {isLoading ? <LoaderCircleIcon /> : "Publicar"}
         </Button>
-      </div>
-    </>
+      </form>
+    </div>
   );
 };
 

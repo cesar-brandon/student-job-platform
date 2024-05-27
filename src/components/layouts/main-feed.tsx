@@ -2,7 +2,7 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
 import HeaderFeed from "@/components/layouts/header-feed";
 import PostFeed from "@/components/post/post-feed";
-import PostFilters from "@/components/post/post-filters";
+import PostFilters from "@/components/post/filters/post-filters";
 import { Separator } from "../ui/separator";
 
 const MainFeed = async () => {

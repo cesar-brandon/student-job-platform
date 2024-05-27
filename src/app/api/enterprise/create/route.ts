@@ -7,14 +7,13 @@ interface RequestBody {
 }
 
 const POST = async (request: Request) => {
-  const body: RequestBody = await request.json();
-
-  const session = await getAuthSession();
-  if (!session?.user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
   try {
+    const body: RequestBody = await request.json();
+    const session = await getAuthSession();
+    if (!session?.user) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
     const enterprise = await db.enterprise.create({
       data: {
         name: body.name,
