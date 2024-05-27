@@ -20,6 +20,7 @@ import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { accounts } from "@/components/studio/data";
 import { User } from "@prisma/client";
+import Image from "next/image";
 
 interface NavProps {
   defaultCollapsed?: boolean;
@@ -60,12 +61,25 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
 
         <div
           className={cn(
-            "flex h-[56px] items-center justify-center",
-            isCollapsed ? "h-[56px]" : "px-2",
+            "flex gap-3 h-[56px] items-center",
+            isCollapsed ? "h-[56px] justify-center" : "px-4 justify-start",
           )}
         >
-          <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+          <div className="h-9 w-9 overflow-hidden flex items-center justify-center rounded-sm">
+            <Image
+              src={user.image || ""}
+              alt="Avatar"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <span className={cn("max-w-40 truncate", isCollapsed && "hidden")}>
+            {user.name}
+          </span>
         </div>
+
+        {/* <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} /> */}
         <Separator />
         <NavGroup
           isCollapsed={isCollapsed}
@@ -79,8 +93,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
             },
             {
               title: "Publicar oferta",
-              label: "9",
-              href: `/studio/${user.username}/create`,
+              href: `/studio/${user.username}/submit`,
               icon: Send,
               variant: "ghost",
             },

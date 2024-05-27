@@ -9,28 +9,27 @@ import { uploadFiles } from "@/lib/uploadthing";
 import { toast } from "../../hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { z } from "zod";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { LoaderCircleIcon } from "../common/icons";
 
-type FormData = z.infer<typeof PostValidator>;
-
 interface EditorProps {
   id?: string;
+  filters: string[];
 }
 
-const Editor: React.FC<EditorProps> = (id) => {
+const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<PostCreationRequest>({
     resolver: zodResolver(PostValidator),
     defaultValues: {
       id: `${id}`,
       title: "",
       content: null,
+      filters: [],
     },
   });
   const ref = useRef<EditorJS>();
@@ -132,11 +131,17 @@ const Editor: React.FC<EditorProps> = (id) => {
   }, [isMounted, initializeEditor]);
 
   const { mutate: createPost } = useMutation({
-    mutationFn: async ({ title, content, id }: PostCreationRequest) => {
+    mutationFn: async ({
+      title,
+      content,
+      id,
+      filters,
+    }: PostCreationRequest) => {
       const payload: PostCreationRequest = {
         id: `${id}`,
         title,
         content,
+        filters,
       };
       const { data } = await axios.post("/api/user/post/create", payload);
       return data;
@@ -169,6 +174,7 @@ const Editor: React.FC<EditorProps> = (id) => {
         title: data.title,
         content: blocks,
         id: `${id}`,
+        filters: data.filters,
       };
 
       createPost(payload);

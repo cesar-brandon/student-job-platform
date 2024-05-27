@@ -26,7 +26,7 @@ const SubmitPage = async ({ params }: pageProps) => {
         </div>
 
         <div className="w-full flex flex-col justify-end gap-4">
-          <Editor />   
+          {/* <Editor />    */}
         </div>
       </div>
     );

@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { title, content, id } = PostValidator.parse(body);
+    const { title, content, filters, id } = PostValidator.parse(body);
 
     const session = await getAuthSession();
 
@@ -19,6 +19,7 @@ export async function POST(req: Request) {
       data: {
         title,
         content,
+        filters,
         authorId: session.user.id,
       },
     });
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
 
     return new Response(
       "No se pudo publicar en este momento. Inténtalo más tarde",
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

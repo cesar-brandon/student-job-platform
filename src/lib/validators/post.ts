@@ -11,6 +11,7 @@ export const PostValidator = z.object({
     }),
   id: z.string(),
   content: z.any(),
+  filters: z.array(z.string()),
 });
 
 export type PostCreationRequest = z.infer<typeof PostValidator>;
