@@ -93,11 +93,18 @@ function PostFilterContent({
   selectedFilters,
   setSelectedFilters,
 }: Props) {
+  const _multiselectFilters = filters.filter(
+    (filter) => filter.type === "MULTISELECT",
+  );
+  const _singleselectFilters = filters.filter(
+    (filter) => filter.type === "SELECT",
+  );
+
   return (
     <section className="w-full rounded-lg border p-4">
       <p className="font-bold mb-4">Filtros</p>
       <Accordion type="multiple" className="w-full">
-        {filters.map((filter, index) => (
+        {_multiselectFilters.map((filter, index) => (
           <AccordionItem value={`item-${index}`} key={index}>
             <AccordionTrigger className="hover:no-underline lg:hover:underline">
               <p className="text-sm">{filter.title}</p>
@@ -143,10 +150,32 @@ function PostFilterContent({
           </AccordionItem>
         ))}
       </Accordion>
-      <div className="flex items-center justify-between space-x-2 py-4 text-sm font-medium gap-3">
-        <p>Postulantes con discapacidad</p>
-        <Switch />
-      </div>
+      {_singleselectFilters.length > 0 &&
+        _singleselectFilters.map(
+          (filter, index) =>
+            Array.isArray(filter.options) &&
+            (filter.options as Array<{ label: string; id: string }>).map(
+              (option) =>
+                option && (
+                  <div
+                    key={option.id}
+                    className="flex items-center justify-between space-x-2 py-4 text-sm font-medium gap-3"
+                  >
+                    <p>{option.label}</p>
+                    <Switch
+                      checked={selectedFilters.includes(option.id)}
+                      onCheckedChange={(checked) => {
+                        return checked
+                          ? setSelectedFilters([...selectedFilters, option.id])
+                          : setSelectedFilters(
+                              selectedFilters.filter((id) => id !== option.id),
+                            );
+                      }}
+                    />
+                  </div>
+                ),
+            ),
+        )}
     </section>
   );
 }

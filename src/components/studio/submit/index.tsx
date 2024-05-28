@@ -2,7 +2,7 @@
 import Editor from "@/components/editor/editor";
 import PostFilters from "@/components/post/filters/post-filters";
 import type { Filter } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Submit({ filters }: { filters: Filter[] }) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
