@@ -40,12 +40,21 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
         redirect: false,
       });
       if (result?.error) {
-        console.error(result.error);
-        toast({
-          title: "Error",
-          description: "Credenciales inválidas.",
-          variant: "destructive",
-        });
+        if (result.status === 401) {
+          toast({
+            title: "Error",
+            description: "Credenciales inválidas.",
+            variant: "destructive",
+          });
+        }
+        if (result.status === 500) {
+          toast({
+            title: "Error",
+            description:
+              "Error al iniciar sesión. Inténtalo de nuevo más tarde.",
+            variant: "destructive",
+          });
+        }
       } else {
         toast({
           title: "Éxito",
