@@ -19,12 +19,13 @@ const MainFeed = async () => {
     },
     take: INFINITE_SCROLL_PAGINATION_RESULTS, // 4 to demonstrate infinite scroll, should be higher in production
   });
+  // const filters = await db.filter.findMany();
 
   return (
     <div className="flex flex-col gap-4">
       <HeaderFeed />
       <Separator />
-      <PostFilters />
+      {/* <PostFilters /> */}
       <PostFeed initialPosts={posts} />
     </div>
   );
