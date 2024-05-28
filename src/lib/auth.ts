@@ -15,21 +15,25 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res = await fetch(process.env.BASE_URL + "/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: credentials?.username,
-            password: credentials?.password,
-          }),
-        });
-        const user = await res.json();
-
-        if (user) {
-          return user;
-        } else {
+        try {
+          const res = await fetch(process.env.BASE_URL + "/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: credentials?.username,
+              password: credentials?.password,
+            }),
+          });
+          const user = await res.json();
+          if (user) {
+            return user;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log("Error in credentials", error);
           return null;
         }
       },
