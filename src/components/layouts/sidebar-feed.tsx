@@ -16,7 +16,7 @@ const SidebarFeed = ({ user }: SidebarProps) => {
       <div className="fixed h-full md:w-[14rem] lg:w-[15rem] xl:w-[20rem] hidden md:block">
         {pathname !== `/${user.username}` && <MiniProfile user={user} />}
 
-        <SidebarNav user={user} />
+        <SidebarNav user={user} className="mt-8" />
       </div>
     </div>
   );

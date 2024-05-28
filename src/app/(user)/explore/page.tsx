@@ -10,7 +10,7 @@ const ExplorePage = async () => {
   if (!users) return null;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-6 md:px-0">
       <SearchBar className="mx-auto" />
       <div>
         {users.map((user: User) => (

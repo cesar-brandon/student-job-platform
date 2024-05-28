@@ -22,22 +22,25 @@ import {
 } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { CircleArrowRight, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   user: user;
+  className?: string;
+  isSheet?: boolean;
 }
 
-const SidebarNav: React.FC<Props> = ({ user }) => {
+const SidebarNav: React.FC<Props> = ({ user, className, isSheet = false }) => {
   const pathname = usePathname();
   return (
-    <div className="mt-8 flex flex-col">
+    <div className={cn("flex flex-col", className)}>
       <ButtonLink
         href="/bookmarks"
         text="Guardados"
         ariaLabel="Guardados"
         variant="ghost"
-        className={`bg-background justify-start ${
+        className={`hover:bg-border justify-start ${
           pathname === "/bookmarks" && "font-bold"
         }`}
         icon={
@@ -47,13 +50,14 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
             }`}
           />
         }
+        isSheet={isSheet}
       />
       <ButtonLink
         href="/notifications"
         text="Notificaciones"
         ariaLabel="Notificaciones"
         variant="ghost"
-        className={`bg-background justify-start ${
+        className={`hover:bg-border justify-start ${
           pathname === "/notifications" && "font-bold"
         }`}
         icon={
@@ -63,6 +67,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
             <BellIcon className="w-6 h-6 order-first mr-4" />
           )
         }
+        isSheet={isSheet}
       />
       <ThemeToggle />
       <ButtonLink
@@ -70,7 +75,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
         text="Configuración"
         ariaLabel="Configuración"
         variant="ghost"
-        className={`bg-background justify-start ${
+        className={`hover:bg-border justify-start ${
           pathname === "/settings" && "font-bold"
         }`}
         icon={
@@ -80,11 +85,12 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
             <CogIcon className="w-6 h-6 order-first mr-4" />
           )
         }
+        isSheet={isSheet}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            className="rounded-full bg-background justify-start"
+            className="rounded-full hover:bg-border justify-start"
             variant="ghost"
           >
             <EllipsisHorizontalCircleIcon className="w-6 h-6 order-first mr-4" />
@@ -108,6 +114,7 @@ const SidebarNav: React.FC<Props> = ({ user }) => {
           text="IFV Studio"
           ariaLabel="ifv studio"
           className="mt-8 child:flex child:justify-center"
+          isSheet={isSheet}
         />
       )}
     </div>

@@ -1,105 +1,53 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  BellIcon,
-  BookmarkIcon,
-  CogIcon,
-  EllipsisHorizontalCircleIcon,
-} from "@heroicons/react/24/outline";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { BellIcon } from "@heroicons/react/24/outline";
 import { getAuthSession } from "@/lib/auth";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
-import { simplifyName } from "@/lib/utils";
-import ButtonLink from "../common/button-link";
-import { ThemeToggle } from "../common/theme-toggle";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { cn, simplifyName } from "@/lib/utils";
+import SidebarNav from "./sidebar-nav";
+import { IfvLoveIcon } from "../common/icons";
+import { Link } from "next-view-transitions";
 
-const HeaderFeed: React.FC = async () => {
+const HeaderFeed: React.FC<{ className?: string }> = async ({ className }) => {
   const session = await getAuthSession();
   const user = session?.user;
 
   return (
-    <div className="w-full px-4 sm:p-0 flex flex-col gap-4">
+    <div className={cn("w-full px-4 md:p-0 flex flex-col gap-4", className)}>
       <div className="hidden lg:block">
         <h1 className="font-bold text-xl">Inicio</h1>
       </div>
       <div className="flex items-center justify-between lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Avatar>
+            <Avatar className="ml-2">
               <AvatarImage src={user.image} alt="avatar" />
               <AvatarFallback>
                 {simplifyName(user.name.toUpperCase())}
               </AvatarFallback>
             </Avatar>
           </SheetTrigger>
-          <SheetContent side="left">
-            <SheetHeader>
-              <SheetTitle>
-                <Avatar>
-                  <AvatarImage src={user.image} alt="avatar" />
-                  <AvatarFallback>
-                    {simplifyName(user.name.toUpperCase())}
-                  </AvatarFallback>
-                </Avatar>
-              </SheetTitle>
-              <SheetDescription asChild>
-                <div className="flex flex-col">
-                  <h3 className="font-bold">{user.name}</h3>
-                  <p className="text-opacity-50">@{user.name}</p>
-                </div>
-              </SheetDescription>
-            </SheetHeader>
-            <SheetClose asChild>
-              <ButtonLink
-                href="/bookmarks"
-                text="Guardados"
-                ariaLabel="Guardados"
-                variant="ghost"
-                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start "
-                icon={<BookmarkIcon className="w-6 h-6 order-first mr-4" />}
-              />
-            </SheetClose>
-            <SheetClose asChild>
-              <ButtonLink
-                href="/notifications"
-                text="Notificaciones"
-                ariaLabel="Notificaciones"
-                variant="ghost"
-                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start "
-                icon={<BellIcon className="w-6 h-6 order-first mr-4" />}
-              />
-            </SheetClose>
-            <SheetClose asChild>
-              <ThemeToggle />
-            </SheetClose>
-            <SheetClose asChild>
-              <ButtonLink
-                href="/settings"
-                text="Configuración"
-                ariaLabel="Configuración"
-                variant="ghost"
-                className="hover:bg-gray-200 dark:hover:bg-slate-800 justify-start"
-                icon={<CogIcon className="w-6 h-6 order-first mr-4" />}
-              />
-            </SheetClose>
-            {user.role === "ENTERPRISE" && (
-              <ButtonLink
-                href={`/${user.name}/submit`}
-                text="Publicar oferta"
-                ariaLabel="Publicar oferta"
-                className="mt-8"
-              />
-            )}
+          <SheetContent side="left" className="flex flex-col gap-4 pr-10">
+            <div className="flex gap-4 items-center pl-4 border  rounded-lg p-2">
+              <Avatar className="flex">
+                <AvatarImage src={user.image} alt="avatar" />
+                <AvatarFallback>
+                  {simplifyName(user.name.toUpperCase())}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col max-w-52">
+                <h3 className="truncate">{user.name}</h3>
+                <p className="truncate font-light text-sm text-accent-foreground">
+                  @{user.name}
+                </p>
+              </div>
+            </div>
+            <SidebarNav user={user} isSheet />
           </SheetContent>
         </Sheet>
-        <BellIcon className="w-6 h-6" />
+        <Link href="/home">
+          <IfvLoveIcon />
+        </Link>
+        <BellIcon className="w-6 h-6 stroke-muted-foreground" />
       </div>
     </div>
   );

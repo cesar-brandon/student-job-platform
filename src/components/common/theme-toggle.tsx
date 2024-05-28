@@ -13,7 +13,7 @@ export function ThemeToggle() {
   return (
     <Button
       variant="ghost"
-      className="rounded-full bg-background justify-start"
+      className="rounded-full hover:bg-border justify-start"
       onClick={() => {
         startTransition(() => {
           setTheme(theme === "light" ? "dark" : "light");

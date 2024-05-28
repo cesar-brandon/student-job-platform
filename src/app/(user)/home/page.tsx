@@ -26,7 +26,7 @@ const HomePage = async () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <HeaderFeed />
+      <HeaderFeed className="hidden md:flex" />
       <PostFilters />
       <PostFeed initialPosts={posts} />
     </div>

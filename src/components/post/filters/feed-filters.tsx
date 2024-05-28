@@ -37,15 +37,11 @@ export default function FeedFilters() {
 
   return (
     <div className="flex items-center justify-between gap-4 cursor-default px-4 sm:p-0">
-      <div className="flex gap-4 overflow-x-scroll lg:overflow-hidden">
+      <div className="flex items-end gap-2 overflow-auto">
         {topics.map((topic, index) => (
-          <Badge
-            key={index}
-            className="rounded-md flex items-center py-1 gap-1"
-            variant="outline"
-          >
-            {topic}
-            <XMarkIcon className="w-4 h-4 text-muted-foreground" />
+          <Badge key={index} variant="outline">
+            <span className="truncate">{topic}</span>
+            <XMarkIcon className="w-4 h-4 ml-1 text-muted-foreground" />
           </Badge>
         ))}
       </div>

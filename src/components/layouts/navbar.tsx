@@ -77,7 +77,7 @@ export function NavBar({ user }: Props) {
 
   return (
     <div
-      className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-background 
+      className={`z-10 p-3 fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 bg-background/30 backdrop-blur
                   rounded-full flex items-center justify-center gap-8 shadow-md
                   border transition-all duration-300 ${
                     isHidden ? "translate-y-24" : "translate-y-0"
