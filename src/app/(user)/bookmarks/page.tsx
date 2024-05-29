@@ -28,10 +28,10 @@ export default async function BookmarksPage() {
   });
 
   return (
-    <div className="w-full h-full">
-      <h1 className="font-bold text-xl">Guardados</h1>
+    <div className="w-full px-4 sm:p-0 flex flex-col gap-4">
+      <h1 className="hidden lg:block font-bold text-xl">Guardados</h1>
       {bookmarks.length > 0 ? (
-        <div className="flex flex-col gap-4 py-12">
+        <div className="flex flex-col gap-4">
           {bookmarks.map((bookmark: ExtendedBookmark) => (
             <BookmarkItem key={bookmark.postId} bookmark={bookmark} />
           ))}

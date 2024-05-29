@@ -74,7 +74,7 @@ const Post: FC<PostProps> = ({
 
   return (
     <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
-      <div className="px-6 pt-6 pb-4 flex justify-between">
+      <div className="px-4 sm:px-6 pt-6 pb-4 flex justify-between">
         <div className="relative w-full flex gap-4">
           <HoverProfile authorName={authorName} authorImage={authorImage}>
             <Avatar className="flex items-center justify-center">
@@ -92,7 +92,10 @@ const Post: FC<PostProps> = ({
           <div>
             <div className="max-h-40 relative">
               <Link href={`/${post.author.username}/post/${post.id}`}>
-                <h3 className="text-2xl text-primary font-semibold leading-none tracking-tight hover:underline">
+                <h3
+                  className="text-lg sm:text-xl md:text-2xl text-primary font-semibold leading-none tracking-tight 
+                  hover:underline"
+                >
                   {post.title}
                 </h3>
               </Link>
@@ -108,22 +111,29 @@ const Post: FC<PostProps> = ({
               ) : null}
             </div>
             <PostContent post={post} pRef={pRef} _currentApply={_currentApply}>
-              <div className="flex gap-2 my-2">
-                <Badge
-                  className="gap-2 text-muted-foreground py-1"
-                  variant="secondary"
-                >
-                  <MapPinIcon className="h-4 w-4" />
-                  Direccion de ejemplo
-                </Badge>
-                <Badge
-                  className="gap-2 text-muted-foreground py-1"
-                  variant="secondary"
-                >
-                  <ClockIcon className="h-4 w-4" />
-                  Full Time
-                </Badge>
-              </div>
+              {/* <div className="w-full flex gap-2 overflow-scroll"> */}
+              {/*   <Badge */}
+              {/*     className="text-muted-foreground py-1" */}
+              {/*     variant="secondary" */}
+              {/*   > */}
+              {/*     <MapPinIcon className="h-4 w-4 mr-2" /> */}
+              {/*     <span className="truncate">Direccion de ejemplo</span> */}
+              {/*   </Badge> */}
+              {/*   <Badge */}
+              {/*     className="text-muted-foreground py-1" */}
+              {/*     variant="secondary" */}
+              {/*   > */}
+              {/*     <MapPinIcon className="h-4 w-4 mr-2" /> */}
+              {/*     <span className="truncate">Direccion de ejemplo</span> */}
+              {/*   </Badge> */}
+              {/*   <Badge */}
+              {/*     className="text-muted-foreground py-1" */}
+              {/*     variant="secondary" */}
+              {/*   > */}
+              {/*     <ClockIcon className="h-4 w-4 mr-2" /> */}
+              {/*     <span className="truncate">Full Time</span> */}
+              {/*   </Badge> */}
+              {/* </div> */}
 
               <div
                 className="relative text-sm max-h-32 w-full overflow-clip"

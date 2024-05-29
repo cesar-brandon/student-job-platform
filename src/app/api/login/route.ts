@@ -9,9 +9,7 @@ interface RequestBody {
 
 const POST = async (request: Request) => {
   try {
-    console.log("Request received", request);
     const body: RequestBody = await request.json();
-    console.log("Parsed body", body);
 
     const user = await db.user.findFirst({
       where: {
@@ -34,7 +32,6 @@ const POST = async (request: Request) => {
     };
     return new Response(JSON.stringify(result));
   } catch (error) {
-    console.log("error", error);
     return new Response("Error", { status: 500 });
   }
 };

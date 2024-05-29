@@ -33,7 +33,6 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
         } catch (error) {
-          console.log("Error in credentials", error);
           return null;
         }
       },

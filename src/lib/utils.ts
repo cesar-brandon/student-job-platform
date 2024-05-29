@@ -146,7 +146,7 @@ export const applyStatusColor: {
     variant: "success",
   },
   REJECTED: {
-    name: "Rechazado",
+    name: "Descartado",
     variant: "error",
   },
 };

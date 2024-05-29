@@ -27,3 +27,9 @@ export type ExtendedBookmark = Bookmark & {
     author: User;
   };
 };
+
+export type ExtendedApplyPost = Apply & {
+  Post: Post & {
+    author: User;
+  };
+};

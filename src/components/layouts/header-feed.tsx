@@ -12,14 +12,19 @@ const HeaderFeed: React.FC<{ className?: string }> = async ({ className }) => {
   const user = session?.user;
 
   return (
-    <div className={cn("w-full px-4 md:p-0 flex flex-col gap-4", className)}>
+    <div
+      className={cn(
+        "w-full px-4 sm:px-10 md:px-4 md:p-0 flex flex-col gap-4",
+        className,
+      )}
+    >
       <div className="hidden lg:block">
         <h1 className="font-bold text-xl">Inicio</h1>
       </div>
       <div className="flex items-center justify-between lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Avatar className="ml-2">
+            <Avatar>
               <AvatarImage src={user.image} alt="avatar" />
               <AvatarFallback>
                 {simplifyName(user.name.toUpperCase())}
@@ -27,7 +32,7 @@ const HeaderFeed: React.FC<{ className?: string }> = async ({ className }) => {
             </Avatar>
           </SheetTrigger>
           <SheetContent side="left" className="flex flex-col gap-4 pr-10">
-            <div className="flex gap-4 items-center pl-4 border  rounded-lg p-2">
+            <div className="flex gap-4 items-center pl-4 border rounded-lg p-2 overflow-hidden">
               <Avatar className="flex">
                 <AvatarImage src={user.image} alt="avatar" />
                 <AvatarFallback>
