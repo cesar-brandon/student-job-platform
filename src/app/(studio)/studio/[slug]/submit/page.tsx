@@ -1,6 +1,7 @@
 import Submit from "@/components/studio/submit";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/prisma";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Crear oferta",
@@ -23,7 +24,9 @@ export default async function SubmitPage({ params }: SubmitPageProps) {
         <p className="ml-2 truncate text-sm text-gray-500">@{params.slug}</p>
       </div>
       <Separator />
-      <Submit filters={filters} />
+      <Suspense fallback={<p>Cargando Filters</p>}>
+        <Submit filters={filters} />
+      </Suspense>
     </div>
   );
 }

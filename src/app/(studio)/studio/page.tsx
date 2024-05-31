@@ -2,6 +2,8 @@ import { cookies } from "next/headers";
 import { Studio } from "@/components/studio/studio";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
+import getSession from "@/lib/getSession";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Studio",
@@ -11,6 +13,8 @@ export const metadata = {
 export default async function StudioPage() {
   const layout = cookies().get("react-resizable-panels:layout");
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
+
+  const session = await getSession();
 
   const posts = await db.post.findMany({
     orderBy: {
@@ -30,7 +34,13 @@ export default async function StudioPage() {
 
   return (
     <div className="hidden flex-col md:flex">
-      <Studio initialPosts={posts} defaultLayout={defaultLayout} />
+      <Suspense fallback={<p>Cargando Studio</p>}>
+        <Studio
+          initialPosts={posts}
+          defaultLayout={defaultLayout}
+          user={session?.user}
+        />
+      </Suspense>
     </div>
   );
 }

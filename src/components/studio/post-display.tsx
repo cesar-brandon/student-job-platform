@@ -19,14 +19,16 @@ import { useState } from "react";
 import { simplifyName } from "@/lib/utils";
 import { ApplyList } from "./apply/apply-list";
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
+import type { User } from "@prisma/client";
 
 interface PostDisplayProps {
   post: ExtendedPostApply | null;
+  user: User;
 }
 
 export type displayType = "post" | "apply" | "comment";
 
-export function PostDisplay({ post }: PostDisplayProps) {
+export function PostDisplay({ post, user }: PostDisplayProps) {
   const [display, setDisplay] = useState<displayType>("post");
 
   return (
@@ -86,7 +88,7 @@ export function PostDisplay({ post }: PostDisplayProps) {
           </ScrollArea>
           <Separator />
           <div className="flex items-center justify-between p-6">
-            {display !== "apply" && (
+            {display !== "apply" && post.author.id === user?.id && (
               <UserStack applies={post.applies} setDisplay={setDisplay} />
             )}
             {display !== "post" && (

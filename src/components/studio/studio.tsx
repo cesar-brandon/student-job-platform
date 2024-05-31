@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -21,13 +21,19 @@ import axios from "axios";
 import { PostDisplay } from "./post-display";
 import { usePostStore } from "@/store/post";
 import { ScrollArea } from "../ui/scroll-area";
+import type { User } from "@prisma/client";
 
 interface MailProps {
   initialPosts: ExtendedPostApply[];
   defaultLayout: number[] | undefined;
+  user: User;
 }
 
-export function Studio({ initialPosts, defaultLayout = [70, 30] }: MailProps) {
+export function Studio({
+  initialPosts,
+  defaultLayout = [70, 30],
+  user,
+}: MailProps) {
   const { post } = usePostStore();
   const lastPostRef = useRef<HTMLDivElement>(null);
   const { ref, entry } = useIntersection({
@@ -58,9 +64,8 @@ export function Studio({ initialPosts, defaultLayout = [70, 30] }: MailProps) {
     }
   }, [entry, fetchNextPage]);
 
-  const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
-
-  if (!posts) return <p>No hay ofertas</p>;
+  const allPosts = data?.pages.flatMap((page) => page) ?? initialPosts;
+  const myPosts = allPosts.filter((p) => p.author.id === session?.user?.id);
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -78,8 +83,8 @@ export function Studio({ initialPosts, defaultLayout = [70, 30] }: MailProps) {
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Puestos</h1>
               <TabsList className="ml-auto">
-                <TabsTrigger value="all">Todas</TabsTrigger>
-                <TabsTrigger value="unread">Sin leer</TabsTrigger>
+                <TabsTrigger value="all">Mis ofertas</TabsTrigger>
+                <TabsTrigger value="unread">Todas</TabsTrigger>
               </TabsList>
             </div>
             <Separator />
@@ -93,11 +98,23 @@ export function Studio({ initialPosts, defaultLayout = [70, 30] }: MailProps) {
             </div>
             <TabsContent value="all" className="m-0">
               <ScrollArea className="min-h-screen">
-                <PostList items={posts} />
+                {myPosts ? (
+                  <Suspense fallback={<p>Cargando posts...</p>}>
+                    <PostList items={myPosts} />
+                  </Suspense>
+                ) : (
+                  <p>No tienes ofertas</p>
+                )}
               </ScrollArea>
             </TabsContent>
             <TabsContent value="unread" className="m-0">
-              <PostList items={posts.filter((item) => !item.read)} />
+              {myPosts ? (
+                <Suspense fallback={<p>Cargando posts...</p>}>
+                  <PostList items={allPosts.filter((item) => !item.read)} />
+                </Suspense>
+              ) : (
+                <p>No hay ofertas</p>
+              )}
             </TabsContent>
           </Tabs>
         </ResizablePanel>
@@ -105,7 +122,8 @@ export function Studio({ initialPosts, defaultLayout = [70, 30] }: MailProps) {
         <ResizablePanel defaultSize={defaultLayout[2]}>
           {post && post.selected && (
             <PostDisplay
-              post={posts.find((item) => item.id === post.selected) || null}
+              user={user}
+              post={allPosts.find((item) => item.id === post.selected) || null}
             />
           )}
         </ResizablePanel>
