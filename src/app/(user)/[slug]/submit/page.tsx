@@ -1,4 +1,5 @@
 import Editor from "@/components/editor/editor";
+import { privateRoles } from "@/config";
 import getSession from "@/lib/getSession";
 
 interface pageProps {
@@ -11,7 +12,7 @@ const SubmitPage = async ({ params }: pageProps) => {
   const session = await getSession();
   const { user } = session || {};
 
-  if (user.role === "ENTERPRISE") {
+  if (privateRoles.includes(user?.role)) {
     return (
       <div className="min-h-screen flex flex-col items-start gap-6 pt-10">
         <div className="border-b pb-5">

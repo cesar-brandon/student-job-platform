@@ -24,6 +24,7 @@ import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { privateRoles } from "@/config";
 
 interface Props {
   user: user;
@@ -108,7 +109,7 @@ const SidebarNav: React.FC<Props> = ({ user, className, isSheet = false }) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {user.role === "ENTERPRISE" && (
+      {privateRoles.includes(user.role) && (
         <ButtonLink
           href={`/studio`}
           text="IFV Studio"

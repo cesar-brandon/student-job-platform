@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { nanoid } from "nanoid";
+import type { UserRole } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -80,9 +81,14 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (enterprise) {
+          let role: UserRole = "ENTERPRISE";
+
+          if (enterprise.name === "IFV Chincha") {
+            role = "ADMIN";
+          }
           await db.user.update({
             where: { id: token.id as string },
-            data: { role: "ENTERPRISE" },
+            data: { role },
           });
           session.user.role = "ENTERPRISE";
         }

@@ -6,7 +6,9 @@ import { ProfileLink } from "@/components/profile/profile-link";
 export const AsideFeed = async () => {
   const users = await db.user.findMany();
 
-  const enterprises = users.filter((user: User) => user.role === "ENTERPRISE");
+  const enterprises = users.filter(
+    (user: User) => user.role === ("ENTERPRISE" && "ADMIN"),
+  );
   const students = users.filter((user: User) => user.role === "STUDENT");
 
   return (

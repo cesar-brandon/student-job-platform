@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { AccountSwitcher } from "@/components/studio/account-switcher";
-import { NavGroup } from "@/components/studio/nav-item";
+import { NavGroup } from "@/components/studio/nav-group";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Button, buttonVariants } from "../ui/button";
 import Link from "next/link";
@@ -21,6 +21,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { accounts } from "@/components/studio/data";
 import { User } from "@prisma/client";
 import Image from "next/image";
+import { adminRoles, privateRoles } from "@/config";
 
 interface NavProps {
   defaultCollapsed?: boolean;
@@ -81,57 +82,82 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
 
         {/* <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} /> */}
         <Separator />
-        <NavGroup
-          isCollapsed={isCollapsed}
-          links={[
-            {
-              title: "Puestos",
-              label: "128",
-              href: "/studio",
-              icon: File,
-              variant: "ghost",
-            },
-            {
-              title: "Publicar oferta",
-              href: `/studio/${user.username}/submit`,
-              icon: Send,
-              variant: "ghost",
-            },
-            {
-              title: "Estudiantes",
-              label: "420",
-              href: "/studio/students",
-              icon: Users2,
-              variant: "ghost",
-            },
-          ]}
-        />
+        {privateRoles.includes(user.role) && (
+          <NavGroup
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Puestos",
+                label: "128",
+                href: "/studio",
+                icon: File,
+                variant: "ghost",
+              },
+              {
+                title: "Publicar oferta",
+                href: `/studio/${user.username}/submit`,
+                icon: Send,
+                variant: "ghost",
+              },
+            ]}
+          />
+        )}
+        {adminRoles.includes(user.role) && (
+          <NavGroup
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Estudiantes",
+                label: "420",
+                href: "/studio/students",
+                icon: Users2,
+                variant: "ghost",
+              },
+            ]}
+          />
+        )}
+
         <Separator />
-        <NavGroup
-          isCollapsed={isCollapsed}
-          links={[
-            {
-              title: "Cuenta",
-              href: "/studio/account",
-              icon: Cog,
-              variant: "ghost",
-            },
-            {
-              title: "Encuestas",
-              label: "972",
-              href: "/studio/surveys",
-              icon: Users2,
-              variant: "ghost",
-            },
-            {
-              title: "Anuncios",
-              label: "342",
-              href: "/studio/ads",
-              icon: AlertCircle,
-              variant: "checked",
-            },
-          ]}
-        />
+        {privateRoles.includes(user.role) && (
+          <NavGroup
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Cuenta",
+                href: "/studio/account",
+                icon: Cog,
+                variant: "ghost",
+              },
+              {
+                title: "Anuncios",
+                label: "342",
+                href: "/studio/ads",
+                icon: AlertCircle,
+                variant: "checked",
+              },
+            ]}
+          />
+        )}
+        {adminRoles.includes(user.role) && (
+          <NavGroup
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Encuestas",
+                label: "972",
+                href: "/studio/surveys",
+                icon: Users2,
+                variant: "ghost",
+              },
+              {
+                title: "Administrar",
+                href: "/studio/admin",
+                icon: Cog,
+                variant: "ghost",
+              },
+            ]}
+          />
+        )}
         <div
           className={cn(
             "absolute bottom-10 left-0 w-full",

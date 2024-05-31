@@ -3,6 +3,7 @@ import "../globals.css";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import getSession from "@/lib/getSession";
+import { privateRoles } from "@/config";
 
 export default async function DashboardLayout({
   children,
@@ -14,7 +15,7 @@ export default async function DashboardLayout({
   const collapsed = cookies().get("react-resizable-panels:collapsed");
   const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined;
 
-  if (session && session.user.role === "ENTERPRISE") {
+  if (session && privateRoles.includes(session.user.role)) {
     return (
       <main className="bg-background flex justify-center">
         <Nav defaultCollapsed={defaultCollapsed} user={session.user} />

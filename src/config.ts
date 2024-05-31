@@ -4,6 +4,11 @@ import { CarouselOptions } from "@/types/carousel";
 export const INFINITE_SCROLL_PAGINATION_RESULTS = 4;
 
 // embla carousel
-export const OPTIONS: CarouselOptions = { align: 'start', loop: true }
-export const SLIDE_COUNT = 5
-export const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+export const OPTIONS: CarouselOptions = { align: "start", loop: true };
+export const SLIDE_COUNT = 5;
+export const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+
+// roles
+export const normalRoles = ["STUDENT"];
+export const privateRoles = ["ENTERPRISE", "ADMIN"];
+export const adminRoles = ["ADMIN"];
