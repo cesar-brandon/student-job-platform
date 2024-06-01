@@ -16,6 +16,7 @@ interface BookmarsClientProps {
   initialBookmarksAmt: number;
   initialBookmark?: boolean;
   showBookmarkAmt?: boolean;
+  className?: string;
 }
 
 export function PostBookmarkClient({
@@ -23,6 +24,7 @@ export function PostBookmarkClient({
   initialBookmarksAmt,
   initialBookmark,
   showBookmarkAmt = true,
+  className,
 }: BookmarsClientProps) {
   const [bookmarksAmt, setBookmarksAmt] = useState<number>(initialBookmarksAmt);
   const [currentBookmark, setCurrentBookmark] = useState(initialBookmark);
@@ -70,17 +72,17 @@ export function PostBookmarkClient({
   return (
     <Button
       className={cn(
-        "absolute w-10 top-0 right-0 flex flex-col items-center justify-center gap-2 z-10 bg-card border-none",
-        bookmarksAmt > 0 ? "h-16" : "h-10",
+        "group w-auto px-3 gap-2 hover:bg-amber-500/20 hover:border-amber-500/30",
+        className,
       )}
+      size="icon"
       variant="outline"
       onClick={() => bookmark()}
     >
       <div
         className={cn(
-          "group w-6 h-6 relative flex items-center justify-center",
+          "group w-4 h-4 relative flex items-center justify-center group-hover:text-amber-600",
           currentBookmark && "text-amber-400",
-          showBookmarkAmt && "pt-2",
         )}
       >
         <BookmarkIcon className="absolute" />
@@ -105,9 +107,7 @@ export function PostBookmarkClient({
           <polygon className="stroke-amber-500" points="80,80 70,70"></polygon>
         </svg>
       </div>
-      {showBookmarkAmt && (
-        <p className="text-center">{bookmarksAmt > 0 ? bookmarksAmt : ""}</p>
-      )}
+      {showBookmarkAmt && bookmarksAmt > 0 ? bookmarksAmt : ""}
     </Button>
   );
 }

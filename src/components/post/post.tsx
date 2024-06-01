@@ -1,6 +1,6 @@
 "use client";
 
-import { formatTimeToNow, simplifyName } from "@/lib/utils";
+import { cn, formatTimeToNow, simplifyName } from "@/lib/utils";
 import {
   ClockIcon,
   MapPinIcon,
@@ -17,7 +17,7 @@ import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef, useState } from "react";
 import EditorOutput from "../editor/editor-output";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HistoryIcon } from "@/components/common/icons";
 import { PostBookmarkClient } from "./bookmark/post-bookmark-client";
@@ -42,6 +42,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PostApplyClient } from "./apply/post-apply-client";
 import { HoverProfile } from "../profile/hover-profile";
+import { BookmarkIcon, LinkIcon, MessageSquareText } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -66,11 +68,28 @@ const Post: FC<PostProps> = ({
   authorImage,
   votesAmt: _votesAmt,
   bookmarkAmt: _bookmarkAmt,
+  commentAmt,
   currentVote: _currentVote,
   currentApply: _currentApply,
   currentBookmark,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null);
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/${post.author.username}/post/${post.id}`,
+      );
+      toast({
+        description: "Copiado al portapapeles",
+      });
+    } catch (error) {
+      toast({
+        description: "Error al copiar al portapapeles",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
@@ -84,11 +103,6 @@ const Post: FC<PostProps> = ({
               </AvatarFallback>
             </Avatar>
           </HoverProfile>
-          <PostBookmarkClient
-            postId={post.id}
-            initialBookmarksAmt={_bookmarkAmt}
-            initialBookmark={currentBookmark}
-          />
           <div>
             <div className="max-h-40 relative">
               <Link href={`/${post.author.username}/post/${post.id}`}>
@@ -111,14 +125,7 @@ const Post: FC<PostProps> = ({
               ) : null}
             </div>
             <PostContent post={post} pRef={pRef} _currentApply={_currentApply}>
-              {/* <div className="w-full flex gap-2 overflow-scroll"> */}
-              {/*   <Badge */}
-              {/*     className="text-muted-foreground py-1" */}
-              {/*     variant="secondary" */}
-              {/*   > */}
-              {/*     <MapPinIcon className="h-4 w-4 mr-2" /> */}
-              {/*     <span className="truncate">Direccion de ejemplo</span> */}
-              {/*   </Badge> */}
+              {/* <div className="w-full flex gap-2 overflow-scroll my-2"> */}
               {/*   <Badge */}
               {/*     className="text-muted-foreground py-1" */}
               {/*     variant="secondary" */}
@@ -151,11 +158,29 @@ const Post: FC<PostProps> = ({
 
       <div className="z-20 text-sm px-6 py-4 sm:px-6 flex justify-between">
         <p className="flex items-center gap-2">
-          <HistoryIcon className="w-4 h-4" /> Publicado hace{" "}
+          <HistoryIcon className="w-4 h-4" />
+          <span className="hidden md:block">Publicado hace</span>
           {formatTimeToNow(new Date(post.createdAt))}
         </p>
-        <div className="flex items-center justify-center">
-          <PaperAirplaneIcon className="h-4 w-4" />
+        <div className="flex gap-2">
+          <Link
+            href={`/${post.author.username}/post/${post.id}`}
+            className={cn(
+              buttonVariants({ variant: "outline", size: "icon" }),
+              "w-auto px-3 gap-2",
+            )}
+          >
+            <MessageSquareText className="w-4 h-4" />
+            {commentAmt > 0 ? commentAmt : ""}
+          </Link>
+          <PostBookmarkClient
+            postId={post.id}
+            initialBookmarksAmt={_bookmarkAmt}
+            initialBookmark={currentBookmark}
+          />
+          <Button onClick={copyToClipboard} size="icon" variant="outline">
+            <LinkIcon className="w-4 h-4" />
+          </Button>
         </div>
       </div>
     </div>

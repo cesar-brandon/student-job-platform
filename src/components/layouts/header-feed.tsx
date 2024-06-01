@@ -18,9 +18,9 @@ const HeaderFeed: React.FC<{ className?: string }> = async ({ className }) => {
         className,
       )}
     >
-      <div className="hidden lg:block">
-        <h1 className="font-bold text-xl">Inicio</h1>
-      </div>
+      {/* <div className="hidden lg:block"> */}
+      {/*   <h1 className="font-bold text-xl">Inicio</h1> */}
+      {/* </div> */}
       <div className="flex items-center justify-between lg:hidden">
         <Sheet>
           <SheetTrigger asChild>

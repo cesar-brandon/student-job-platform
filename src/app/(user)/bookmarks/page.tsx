@@ -57,7 +57,7 @@ function BookmarkItem({ bookmark }: { bookmark: ExtendedBookmark }) {
         <p className="text-sm">{"J&R CRM SERVICES"}</p>
         <p className="text-sm dark:font-thin font-light">Lima,Lima</p>
       </Link>
-      <div className="relative w-6 h-6 m-4">
+      <div className="m-4">
         <PostBookmarkServer
           postId={bookmark.postId}
           userId={bookmark.userId}
