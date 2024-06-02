@@ -65,9 +65,8 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
           (vote) => vote.userId === session?.user?.id,
         );
 
-        const bookmarkAmt = (post.bookmarks && post.bookmarks.length) || 0;
+        const bookmarkAmt = post.bookmarks ? post.bookmarks.length : 0;
 
-        //devolver true si el post tiene un bookmark del usuario actual
         const currentBookmark = post.bookmarks?.some(
           (bookmark) => bookmark.userId === session?.user?.id,
         );

@@ -37,6 +37,7 @@ export async function PostBookmarkServer({
   return (
     <PostBookmarkClient
       postId={postId}
+      userId={userId}
       initialBookmarksAmt={_bookmarksAmt}
       initialBookmark
       showBookmarkAmt={showBookmarkAmt}

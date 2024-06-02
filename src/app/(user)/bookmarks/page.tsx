@@ -1,9 +1,8 @@
-import { PostBookmarkServer } from "@/components/post/bookmark/post-bookmark-server";
+import BookmarksList from "@/components/bookmark/bookmark-list";
+import { Skeleton } from "@/components/ui/skeleton";
 import getSession from "@/lib/getSession";
 import { db } from "@/lib/prisma";
-import { ExtendedBookmark } from "@/types/db";
-import { LibraryBig } from "lucide-react";
-import Link from "next/link";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Guardados",
@@ -14,57 +13,40 @@ export default async function BookmarksPage() {
   const session = await getSession();
   if (!session?.user) return null;
 
-  const bookmarks = await db.bookmark.findMany({
+  const bookmarkCount = await db.bookmark.count({
     where: {
       userId: session.user.id,
-    },
-    include: {
-      post: {
-        include: {
-          author: true,
-        },
-      },
     },
   });
 
   return (
     <div className="w-full px-4 sm:p-0 flex flex-col gap-4">
       <h1 className="hidden lg:block font-bold text-xl">Guardados</h1>
-      {bookmarks.length > 0 ? (
-        <div className="flex flex-col gap-4">
-          {bookmarks.map((bookmark: ExtendedBookmark) => (
-            <BookmarkItem key={bookmark.postId} bookmark={bookmark} />
-          ))}
-        </div>
-      ) : (
-        <div className="h-full flex flex-col items-center justify-center mx-auto gap-2 text-accent">
-          <LibraryBig className="h-20 w-20" />
-          <p className="text-accent-foreground">No tienes guardados</p>
-        </div>
-      )}
+      <Suspense fallback={<BookmarkSkeleton count={bookmarkCount} />}>
+        <BookmarksList userId={session.user.id} />
+      </Suspense>
     </div>
   );
 }
 
-function BookmarkItem({ bookmark }: { bookmark: ExtendedBookmark }) {
+function BookmarkSkeleton({ count }: { count: number }) {
   return (
-    <div className="w-full flex justify-between items-center rounded-lg border bg-card text-card-foreground shadow-sm">
-      <Link
-        href={`/${bookmark.post.author.username}/post/${bookmark.postId}`}
-        className="w-full p-4"
-      >
-        {bookmark.post.title}
-        <p className="text-sm">{"J&R CRM SERVICES"}</p>
-        <p className="text-sm dark:font-thin font-light">Lima,Lima</p>
-      </Link>
-      <div className="m-4">
-        <PostBookmarkServer
-          postId={bookmark.postId}
-          userId={bookmark.userId}
-          showBookmarkAmt={false}
-          initialBookmark
-        />
-      </div>
+    <div className="flex flex-col gap-4">
+      {Array.from({ length: count }).map((_, index) => (
+        <div
+          key={index}
+          className="w-full flex justify-between items-center rounded-lg border bg-card text-card-foreground shadow-sm"
+        >
+          <div className="w-full p-4">
+            <Skeleton className="h-4 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-1/2 mb-2" />
+            <Skeleton className="h-4 w-1/4" />
+          </div>
+          <div className="m-4">
+            <Skeleton className="h-6 w-6" />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

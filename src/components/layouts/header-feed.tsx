@@ -1,14 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BellIcon } from "@heroicons/react/24/outline";
-import { getAuthSession } from "@/lib/auth";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { cn, simplifyName } from "@/lib/utils";
 import SidebarNav from "./sidebar-nav";
 import { IfvLoveIcon } from "../common/icons";
 import { Link } from "next-view-transitions";
+import getSession from "@/lib/getSession";
 
 const HeaderFeed: React.FC<{ className?: string }> = async ({ className }) => {
-  const session = await getAuthSession();
+  const session = await getSession();
   const user = session?.user;
 
   return (
