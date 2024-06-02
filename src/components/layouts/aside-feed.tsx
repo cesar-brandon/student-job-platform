@@ -1,10 +1,10 @@
-import { db } from "@/lib/prisma";
 import AsideFeedHeader from "./aside-feed-header";
 import { User } from "@prisma/client";
 import { ProfileLink } from "@/components/profile/profile-link";
+import getUsers from "@/lib/data/getUsers";
 
 export const AsideFeed = async () => {
-  const users = await db.user.findMany();
+  const users = await getUsers();
 
   const enterprises = users.filter(
     (user: User) => user.role === ("ENTERPRISE" && "ADMIN"),

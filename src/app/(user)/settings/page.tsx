@@ -17,18 +17,16 @@ const Page = async () => {
   }
 
   return (
-    <div>
+    <div className="w-full px-4 sm:p-0 flex flex-col gap-4">
       <h1 className="font-bold text-xl">Configuración</h1>
-      <div className="max-w-4xl mx-auto py-12">
-        <div className="grid gap-10">
-          <UserNameForm
-            user={{
-              id: session.user.id,
-              username: session.user.username || "",
-            }}
-          />
-          <NewPasswordForm userId={session.user.id} />
-        </div>
+      <div className="grid gap-10">
+        <UserNameForm
+          user={{
+            id: session.user.id,
+            username: session.user.username || "",
+          }}
+        />
+        <NewPasswordForm userId={session.user.id} />
       </div>
     </div>
   );

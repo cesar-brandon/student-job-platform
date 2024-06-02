@@ -9,7 +9,7 @@ export const metadata = {
   description: "Home page",
 };
 
-const HomePage = async () => {
+export default async function HomePage() {
   const posts = await db.post.findMany({
     orderBy: {
       createdAt: "desc",
@@ -31,6 +31,4 @@ const HomePage = async () => {
       <PostFeed initialPosts={posts} />
     </div>
   );
-};
-
-export default HomePage;
+}

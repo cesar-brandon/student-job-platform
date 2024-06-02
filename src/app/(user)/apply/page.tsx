@@ -1,7 +1,7 @@
 import getSession from "@/lib/getSession";
 import { db } from "@/lib/prisma";
 import { LibraryBig } from "lucide-react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { ExtendedApplyPost } from "@/types/db";
 import { applyStatusColor } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";

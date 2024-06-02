@@ -3,6 +3,8 @@ import { UserProfile } from "@/components/profile/user-profile";
 import getSession from "@/lib/getSession";
 import { db } from "@/lib/prisma";
 import { LibraryBig } from "lucide-react";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const metadata = {
   title: "Profile",
@@ -54,7 +56,11 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
     return <StudentProfile student={student} isOwner={isOwner} />;
   }
 
-  return <UserProfile user={user} isOwner={isOwner} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <UserProfile user={user} isOwner={isOwner} />
+    </Suspense>
+  );
 };
 
 export default ProfilePage;

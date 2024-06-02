@@ -114,7 +114,7 @@ function PasswordInput(props: any) {
     <div className="relative">
       <Input
         type={showPassword ? "text" : "password"}
-        className="w-[400px] pl-6"
+        className="sm:w-[400px] pl-6"
         {...props}
       />
       <Button

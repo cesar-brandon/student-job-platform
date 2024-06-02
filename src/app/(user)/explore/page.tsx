@@ -1,11 +1,11 @@
 import SearchBar from "@/components/common/search-bar";
 import { ProfileLink } from "@/components/profile/profile-link";
-import { db } from "@/lib/prisma";
 import { User } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
+import getUsers from "@/lib/data/getUsers";
 
 const ExplorePage = async () => {
-  const users = await db.user.findMany();
+  const users = await getUsers();
 
   if (!users) return null;
 
