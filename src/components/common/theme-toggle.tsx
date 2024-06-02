@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 
-export function ThemeToggle() {
+export default function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const [_, startTransition] = React.useTransition();
 

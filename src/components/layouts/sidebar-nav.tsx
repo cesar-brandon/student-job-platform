@@ -12,7 +12,6 @@ import {
 } from "@heroicons/react/24/solid";
 import ButtonLink from "../common/button-link";
 import { user } from "@/types/next-auth";
-import { ThemeToggle } from "../common/theme-toggle";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -25,6 +24,9 @@ import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { privateRoles } from "@/config";
+import dynamic from "next/dynamic";
+
+const ThemeToggle = dynamic(() => import("../common/theme-toggle"));
 
 interface Props {
   user: user;
