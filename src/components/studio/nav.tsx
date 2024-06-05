@@ -2,6 +2,7 @@
 import * as React from "react";
 import {
   AlertCircle,
+  Building,
   ChevronLeft,
   ChevronRight,
   CircleArrowLeft,
@@ -12,13 +13,11 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
-import { AccountSwitcher } from "@/components/studio/account-switcher";
 import { NavGroup } from "@/components/studio/nav-group";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Button, buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { accounts } from "@/components/studio/data";
 import { User } from "@prisma/client";
 import Image from "next/image";
 import { adminRoles, privateRoles } from "@/config";
@@ -102,6 +101,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
             ]}
           />
         )}
+        <Separator />
         {adminRoles.includes(user.role) && (
           <NavGroup
             isCollapsed={isCollapsed}
@@ -111,6 +111,13 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
                 label: "420",
                 href: "/studio/students",
                 icon: Users2,
+                variant: "ghost",
+              },
+              {
+                title: "Empresas",
+                label: "42",
+                href: "/studio/enterprises",
+                icon: Building,
                 variant: "ghost",
               },
             ]}
@@ -138,6 +145,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
             ]}
           />
         )}
+        <Separator />
         {adminRoles.includes(user.role) && (
           <NavGroup
             isCollapsed={isCollapsed}
@@ -147,12 +155,6 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
                 label: "972",
                 href: "/studio/surveys",
                 icon: Users2,
-                variant: "ghost",
-              },
-              {
-                title: "Administrar",
-                href: "/studio/admin",
-                icon: Cog,
                 variant: "ghost",
               },
             ]}

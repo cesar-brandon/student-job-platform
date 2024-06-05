@@ -22,6 +22,7 @@ import { PostDisplay } from "./post-display";
 import { usePostStore } from "@/store/post";
 import { ScrollArea } from "../ui/scroll-area";
 import type { User } from "@prisma/client";
+import { NoItems } from "../common/no-items";
 
 interface MailProps {
   initialPosts: ExtendedPostApply[];
@@ -98,23 +99,25 @@ export function Studio({
             </div>
             <TabsContent value="all" className="m-0">
               <ScrollArea className="min-h-screen">
-                {myPosts ? (
+                {myPosts && myPosts.length > 0 ? (
                   <Suspense fallback={<p>Cargando posts...</p>}>
                     <PostList items={myPosts} />
                   </Suspense>
                 ) : (
-                  <p>No tienes ofertas</p>
+                  <NoItems text="No tienes ofertas publicadas" />
                 )}
               </ScrollArea>
             </TabsContent>
             <TabsContent value="unread" className="m-0">
-              {myPosts ? (
-                <Suspense fallback={<p>Cargando posts...</p>}>
-                  <PostList items={allPosts.filter((item) => !item.read)} />
-                </Suspense>
-              ) : (
-                <p>No hay ofertas</p>
-              )}
+              <ScrollArea className="min-h-screen">
+                {myPosts && myPosts.length > 0 ? (
+                  <Suspense fallback={<p>Cargando posts...</p>}>
+                    <PostList items={allPosts.filter((item) => !item.read)} />
+                  </Suspense>
+                ) : (
+                  <NoItems text="No hay ofertas publicadas" />
+                )}
+              </ScrollArea>
             </TabsContent>
           </Tabs>
         </ResizablePanel>

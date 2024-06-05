@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
             where: { id: token.id as string },
             data: { role },
           });
-          session.user.role = "ENTERPRISE";
+          session.user.role = role;
         }
 
         if (student) {

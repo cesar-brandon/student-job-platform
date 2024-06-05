@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef } from "react";
 import Post from "./post";
 import { Skeleton } from "../ui/skeleton";
+import { NoItems } from "../common/no-items";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -51,6 +52,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 
   if (!posts) return <p>No hay ofertas</p>;
+  if (posts.length === 0) return <NoItems text="No hay ofertas actualmente" />;
 
   return (
     <ul className="flex flex-col col-span-2 space-y-0 sm:space-y-6 ">

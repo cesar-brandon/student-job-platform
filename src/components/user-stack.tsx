@@ -22,7 +22,7 @@ export function UserStack({ applies, setDisplay }: UserStackProps) {
   return (
     <div className="flex items-center gap-2">
       <div className="h-full flex -space-x-2 overflow-hidden">
-        {applies.map((apply) => (
+        {applies.slice(0, 3).map((apply) => (
           <Avatar key={apply.userId}>
             <AvatarImage
               className="ring-2 ring-white"
@@ -35,7 +35,7 @@ export function UserStack({ applies, setDisplay }: UserStackProps) {
           </Avatar>
         ))}
         {applies.length > 3 && (
-          <div className="flex items-center justify-center h-10 w-10 rounded-full ring bg-muted z-20">
+          <div className="flex items-center justify-center h-10 w-10 rounded-full border border-primary bg-muted z-20">
             +{applies.length - 3}
           </div>
         )}
