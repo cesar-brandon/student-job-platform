@@ -32,12 +32,12 @@ import {
 } from "@/components/ui/table";
 import { enterpriseColumns } from "./columns";
 import type { Enterprise } from "@prisma/client";
-import { EnterpriseForm } from "./form";
+import { EnterpriseModal } from "./modal";
 
 const columnLabels: { [key: string]: string } = {
   name: "Nombre",
   email: "Email",
-  direction: "Dirección",
+  address: "Dirección",
   phone: "Número de teléfono",
 };
 
@@ -81,7 +81,7 @@ export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
             }
             className="max-w-sm py-6"
           />
-          <EnterpriseForm />
+          <EnterpriseModal />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

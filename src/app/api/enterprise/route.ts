@@ -4,6 +4,8 @@ import { db } from "@/lib/prisma";
 interface RequestBody {
   name: string;
   email: string;
+  address: string;
+  phone: string;
 }
 
 const POST = async (request: Request) => {
@@ -18,13 +20,28 @@ const POST = async (request: Request) => {
       data: {
         name: body.name,
         email: body.email,
+        address: body.address,
+        phone: body.phone,
       },
     });
 
     return new Response(JSON.stringify(enterprise));
   } catch (error) {
-    return new Response("Error", { status: 500 });
+    return new Response("ERROR_CREATING_ENTERPRISE", { status: 500 });
   }
 };
 
-export { POST };
+const GET = async (request: Request) => {
+  try {
+    const session = await getAuthSession();
+    if (!session?.user) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    const enterprises = await db.enterprise.findMany();
+    return new Response(JSON.stringify(enterprises));
+  } catch (error) {
+    return new Response("ERROR_GETTING_ENTERPRISES", { status: 500 });
+  }
+};
+
+export { POST, GET };

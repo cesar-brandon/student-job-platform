@@ -1,29 +1,12 @@
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { Pencil, Trash2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
 import type { Enterprise } from "@prisma/client";
-import { EnterpriseForm } from "./form";
+import { EnterpriseModal } from "./modal";
+import { EnterpriseDeleteDialog } from "./delete-dialog";
 
 export const enterpriseColumns: ColumnDef<Enterprise>[] = [
   {
@@ -79,7 +62,7 @@ export const enterpriseColumns: ColumnDef<Enterprise>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "direction",
+    accessorKey: "address",
     header: ({ column }) => {
       return (
         <Button
@@ -91,7 +74,7 @@ export const enterpriseColumns: ColumnDef<Enterprise>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("direction")}</div>,
+    cell: ({ row }) => <div>{row.getValue("address")}</div>,
   },
   {
     accessorKey: "phone",
@@ -113,38 +96,12 @@ export const enterpriseColumns: ColumnDef<Enterprise>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const item = row.original;
-      console.log(item);
 
       return (
         <div className="flex items-center p-2">
-          <EnterpriseForm item={item} />
+          <EnterpriseModal item={item} />
           <Separator orientation="vertical" className="mx-1 h-6" />
-          <AlertDialog>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <Trash2 className="h-4 w-4" />
-                    <span className="sr-only">Eliminar</span>
-                  </Button>
-                </AlertDialogTrigger>
-              </TooltipTrigger>
-              <TooltipContent>Eliminar</TooltipContent>
-            </Tooltip>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <EnterpriseDeleteDialog item={item} />
         </div>
       );
     },

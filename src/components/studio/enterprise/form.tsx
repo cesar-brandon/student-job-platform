@@ -1,54 +1,154 @@
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Pencil, Plus } from "lucide-react";
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import type { Enterprise } from "@prisma/client";
+  EnterpriseCreationRequest,
+  EnterpriseValidator,
+} from "@/lib/validators/enterprise";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Enterprise } from "@prisma/client";
 
 interface EnterpriseFormProps {
   item?: Enterprise;
+  setOpen: (open: boolean) => void;
 }
 
-export function EnterpriseForm({ item }: EnterpriseFormProps) {
+export default function EnterpriseForm({ item, setOpen }: EnterpriseFormProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const form = useForm<EnterpriseCreationRequest>({
+    resolver: zodResolver(EnterpriseValidator),
+    defaultValues: {
+      name: item?.name ?? "",
+      email: item?.email ?? "",
+      address: item?.address ?? "",
+      phone: item?.phone ?? "",
+    },
+  });
+
+  const onSubmit = async (data: EnterpriseCreationRequest) => {
+    setIsLoading(true);
+    try {
+      if (item) {
+        await axios.put("/api/enterprise/" + item.id, data);
+      } else {
+        await axios.post("/api/enterprise", data);
+      }
+      queryClient.invalidateQueries(["enterprises"]);
+
+      toast({
+        title: "Empresa guardada",
+        description: `La empresa ha sido ${
+          item ? "editada" : "creada"
+        } con éxito`,
+      });
+      setOpen(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: `Hubo un error al ${item ? "editar" : "crear"} la empresa`,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <Dialog>
-      {item ? (
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Pencil className="h-4 w-4" />
-                <span className="sr-only">Editar</span>
-              </Button>
-            </DialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent>Editar</TooltipContent>
-        </Tooltip>
-      ) : (
-        <DialogTrigger asChild>
-          <Button>
-            Crear empresa
-            <Plus className="ml-2 h-4 w-4" />
-          </Button>
-        </DialogTrigger>
-      )}
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            {item ? `Editar ${item.name}` : "Crear empresa"}
-          </DialogTitle>
-        </DialogHeader>
-        hello
-      </DialogContent>
-    </Dialog>
+    <>
+      <Form {...form}>
+        <form
+          className="flex flex-col gap-4"
+          id="enterprise-form"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nombre de la empresa</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="ej. Mi empresa" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Correo electrónico</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="ej. correo@gmail.com" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Dirección</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="ej. Calle 123" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Teléfono</FormLabel>
+                <FormControl>
+                  <Input
+                    onInput={(e) =>
+                      (e.currentTarget.value = e.currentTarget.value.replace(
+                        /[^0-9.]/g,
+                        "",
+                      ))
+                    }
+                    {...field}
+                    placeholder="ej. 1234567890"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
+      <DialogFooter>
+        <DialogClose asChild>
+          <Button variant="outline">Cancelar</Button>
+        </DialogClose>
+        <Button type="submit" form="enterprise-form" disabled={isLoading}>
+          {isLoading ? <Loader2 className="animate-spin w-4 h-4" /> : "Guardar"}
+        </Button>
+      </DialogFooter>
+    </>
   );
 }
