@@ -30,18 +30,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { enterpriseColumns } from "./columns";
-import type { Enterprise } from "@prisma/client";
-import { EnterpriseModal } from "./modal";
+import { studentColumns } from "./columns";
+import type { Student } from "@prisma/client";
 
 const columnLabels: { [key: string]: string } = {
   name: "Nombre",
+  lastname: "Apellido",
+  career: "Especialidad",
+  code: "Código",
   email: "Email",
-  address: "Dirección",
-  phone: "Teléfono",
+  phoneNumber: "Teléfono",
 };
 
-export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
+export function StudentDataTable({ data }: { data: Student[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -52,7 +53,7 @@ export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
 
   const table = useReactTable({
     data,
-    columns: enterpriseColumns,
+    columns: studentColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -72,17 +73,14 @@ export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <div className="flex items-center gap-4">
-          <Input
-            placeholder="Buscar por palabra clave"
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm py-6"
-          />
-          <EnterpriseModal />
-        </div>
+        <Input
+          placeholder="Buscar por palabra clave"
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("email")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm py-6"
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -150,7 +148,7 @@ export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={enterpriseColumns.length}
+                  colSpan={studentColumns.length}
                   className="h-24 text-center"
                 >
                   No results.
