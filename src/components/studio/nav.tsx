@@ -8,6 +8,7 @@ import {
   CircleArrowLeft,
   Cog,
   File,
+  PieChart,
   Send,
   Users2,
 } from "lucide-react";
@@ -25,9 +26,15 @@ import { adminRoles, privateRoles } from "@/config";
 interface NavProps {
   defaultCollapsed?: boolean;
   user: User;
+  counters: {
+    userCount: number;
+    studentCount: number;
+    enterpriseCount: number;
+    postCount: number;
+  };
 }
 
-export function Nav({ defaultCollapsed, user }: NavProps) {
+export function Nav({ defaultCollapsed, user, counters }: NavProps) {
   const [isCollapsed, setIsCollapsed] = React.useState<boolean>(
     defaultCollapsed || false,
   );
@@ -87,7 +94,7 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
             links={[
               {
                 title: "Puestos",
-                label: "128",
+                label: counters.postCount || "",
                 href: "/studio",
                 icon: File,
                 variant: "ghost",
@@ -107,15 +114,22 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
             isCollapsed={isCollapsed}
             links={[
               {
+                title: "Usuarios",
+                label: counters.userCount,
+                href: "/studio/users",
+                icon: Users2,
+                variant: "ghost",
+              },
+              {
                 title: "Estudiantes",
-                label: "420",
+                label: counters.studentCount,
                 href: "/studio/students",
                 icon: Users2,
                 variant: "ghost",
               },
               {
                 title: "Empresas",
-                label: "42",
+                label: counters.enterpriseCount,
                 href: "/studio/enterprises",
                 icon: Building,
                 variant: "ghost",
@@ -135,31 +149,31 @@ export function Nav({ defaultCollapsed, user }: NavProps) {
                 icon: Cog,
                 variant: "ghost",
               },
-              {
-                title: "Anuncios",
-                label: "342",
-                href: "/studio/ads",
-                icon: AlertCircle,
-                variant: "checked",
-              },
+              // {
+              //   title: "Anuncios",
+              //   label: 22,
+              //   href: "/studio/ads",
+              //   icon: AlertCircle,
+              //   variant: "checked",
+              // },
             ]}
           />
         )}
-        <Separator />
-        {adminRoles.includes(user.role) && (
-          <NavGroup
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Encuestas",
-                label: "972",
-                href: "/studio/surveys",
-                icon: Users2,
-                variant: "ghost",
-              },
-            ]}
-          />
-        )}
+        {/* <Separator /> */}
+        {/* {adminRoles.includes(user.role) && ( */}
+        {/*   <NavGroup */}
+        {/*     isCollapsed={isCollapsed} */}
+        {/*     links={[ */}
+        {/*       { */}
+        {/*         title: "Encuestas", */}
+        {/*         label: 2, */}
+        {/*         href: "/studio/surveys", */}
+        {/*         icon: PieChart, */}
+        {/*         variant: "ghost", */}
+        {/*       }, */}
+        {/*     ]} */}
+        {/*   /> */}
+        {/* )} */}
         <div
           className={cn(
             "absolute bottom-10 left-0 w-full",

@@ -16,7 +16,7 @@ interface NavProps {
   isCollapsed: boolean;
   links: {
     title: string;
-    label?: string;
+    label?: number | string;
     href: string;
     icon: LucideIcon;
     variant: "default" | "ghost" | "checked";

@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import { badgeVariants } from "@/components/ui/badge";
 import { VariantProps } from "class-variance-authority";
+import type { UserRole } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -148,5 +149,26 @@ export const applyStatusColor: {
   REJECTED: {
     name: "Descartado",
     variant: "error",
+  },
+};
+
+export const roleData: {
+  [key in UserRole]: {
+    name: string;
+    description?: string;
+    variant: BadgeVariant;
+  };
+} = {
+  STUDENT: {
+    name: "Estudiante",
+    variant: "success",
+  },
+  ADMIN: {
+    name: "Administrador",
+    variant: "error",
+  },
+  ENTERPRISE: {
+    name: "Empresa",
+    variant: "warning",
   },
 };
