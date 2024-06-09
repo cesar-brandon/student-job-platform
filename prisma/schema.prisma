@@ -79,6 +79,7 @@ model User {
   Apply         Apply[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  Feedback      Feedback[]
 }
 
 model VerificationToken {
@@ -223,4 +224,14 @@ model Apply {
   Post      Post        @relation(fields: [postId], references: [id], map: "post")
 
   @@id([userId, postId])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  score     Int
+  text      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
 }

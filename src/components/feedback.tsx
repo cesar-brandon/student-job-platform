@@ -26,19 +26,23 @@ import {
   DrawerTrigger,
 } from "./ui/drawer";
 import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { toast } from "@/hooks/use-toast";
+import axios from "axios";
 
 const feedbackOptions = ["🤩", "😀", "😕", "😭"];
 
-export function Feedback() {
+export function Feedback({ userId }: { userId: string }) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(true);
+  const [loading, setLoading] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (!visible) return null;
 
   if (isDesktop) {
     return (
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger>
           <FeedbackTrigger setVisible={setVisible} />
         </DialogTrigger>
@@ -49,15 +53,25 @@ export function Feedback() {
               Proporcione su opinión sobre la aplicación
             </DialogDescription>
           </DialogHeader>
-          <FeedbackForm />
+          <FeedbackForm
+            userId={userId}
+            setOpen={setOpen}
+            setLoading={setLoading}
+          />
           <DialogFooter>
             <DialogClose asChild>
               <Button className="w-full" variant="outline">
                 Cancelar
               </Button>
             </DialogClose>
-            <Button className="w-full" variant="secondary">
-              Enviar
+            <Button
+              type="submit"
+              form="feedback-form"
+              className="w-full"
+              variant="secondary"
+              disabled={loading}
+            >
+              {loading ? "Enviando..." : "Enviar"}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -66,7 +80,7 @@ export function Feedback() {
   }
 
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
         <FeedbackTrigger setVisible={setVisible} />
       </DrawerTrigger>
@@ -77,15 +91,25 @@ export function Feedback() {
             Proporcione su opinión sobre la aplicación
           </DrawerDescription>
         </DrawerHeader>
-        <FeedbackForm />
+        <FeedbackForm
+          userId={userId}
+          setOpen={setOpen}
+          setLoading={setLoading}
+        />
         <DrawerFooter>
           <DrawerClose asChild>
             <Button className="w-full" variant="outline">
               Cancelar
             </Button>
           </DrawerClose>
-          <Button className="w-full" variant="secondary">
-            Enviar
+          <Button
+            type="submit"
+            form="feedback-form"
+            className="w-full"
+            variant="secondary"
+            disabled={loading}
+          >
+            {loading ? "Enviando..." : "Enviar"}
           </Button>
         </DrawerFooter>
       </DrawerContent>
@@ -120,15 +144,55 @@ function FeedbackTrigger({
   );
 }
 
-function FeedbackForm() {
+function FeedbackForm({
+  userId,
+  setOpen,
+  setLoading,
+}: {
+  userId: string;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [score, setScore] = useState(1);
+  const [text, setText] = useState("");
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post("/api/feedback", {
+        userId,
+        score,
+        text,
+      });
+
+      toast({
+        description: "Feedback enviado",
+      });
+      setOpen(false);
+    } catch (error) {
+      toast({
+        description: "Error al enviar el feedback",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <>
+    <form id="feedback-form" onSubmit={onSubmit}>
       <div className="flex gap-4 items-center justify-center">
-        {feedbackOptions.map((option) => (
+        {feedbackOptions.map((option, index) => (
           <Button
-            key={option}
-            className="text-3xl hover:text-4xl focus:text-4xl rounded-full w-12 h-12
-              focus:border border-orange bg-background hover:bg-orange/20 focus:bg-orange/20 hover:text-accent-foreground"
+            type="button"
+            key={index}
+            onClick={() => setScore(index + 1)}
+            className={cn(
+              `text-3xl hover:text-4xl rounded-full w-12 h-12 bg-background hover:bg-orange/20`,
+              score === index + 1 &&
+                "border border-orange text-orange bg-orange/20 text-4xl",
+            )}
           >
             {option}
           </Button>
@@ -136,8 +200,13 @@ function FeedbackForm() {
       </div>
       <div className="md:mx-4 flex flex-col gap-2">
         <Label htmlFor="comment">Comentario</Label>
-        <Textarea id="comment" placeholder="Escribe tu comentario" />
+        <Textarea
+          id="comment"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Escribe tu comentario"
+        />
       </div>
-    </>
+    </form>
   );
 }

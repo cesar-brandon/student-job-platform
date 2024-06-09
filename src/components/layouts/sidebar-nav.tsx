@@ -122,7 +122,7 @@ const SidebarNav: React.FC<Props> = ({ user, className, isSheet = false }) => {
         />
       )}
 
-      <Feedback />
+      <Feedback userId={user.id} />
     </div>
   );
 };

@@ -35,7 +35,7 @@ export default async function DashboardLayout({
         />
         <div className="min-h-screen w-full">{children}</div>
         <div className="fixed right-10 bottom-10 z-10">
-          <Feedback />
+          <Feedback userId={session.user.id} />
         </div>
       </main>
     );
