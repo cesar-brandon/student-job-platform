@@ -25,6 +25,7 @@ import { LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { privateRoles } from "@/config";
 import dynamic from "next/dynamic";
+import { Feedback } from "../feedback";
 
 const ThemeToggle = dynamic(() => import("../common/theme-toggle"));
 
@@ -120,6 +121,8 @@ const SidebarNav: React.FC<Props> = ({ user, className, isSheet = false }) => {
           isSheet={isSheet}
         />
       )}
+
+      <Feedback />
     </div>
   );
 };
