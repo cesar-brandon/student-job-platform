@@ -5,8 +5,7 @@ import AppBar from "@/components/layouts/app-bar";
 export const metadata = {
   title: "Plataforma",
   description: "Plataforma de empleo de IFV",
-}
-
+};
 
 export default function LandingLayout({
   children,

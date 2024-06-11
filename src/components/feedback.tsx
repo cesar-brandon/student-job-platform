@@ -155,11 +155,16 @@ function FeedbackForm({
 }) {
   const [score, setScore] = useState(1);
   const [text, setText] = useState("");
+  const [error, setError] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
+      if (!text) {
+        setError(true);
+        return;
+      }
       await axios.post("/api/feedback", {
         userId,
         score,
@@ -198,7 +203,7 @@ function FeedbackForm({
           </Button>
         ))}
       </div>
-      <div className="md:mx-4 flex flex-col gap-2">
+      <div className="mx-4 mt-8 md:mx-0 md:mt-4 flex flex-col gap-2">
         <Label htmlFor="comment">Comentario</Label>
         <Textarea
           id="comment"
@@ -206,6 +211,11 @@ function FeedbackForm({
           onChange={(e) => setText(e.target.value)}
           placeholder="Escribe tu comentario"
         />
+        {error && !text && (
+          <span className="text-sm text-destructive">
+            Por favor ingrese sus comentarios
+          </span>
+        )}
       </div>
     </form>
   );

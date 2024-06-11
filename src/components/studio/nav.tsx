@@ -56,8 +56,8 @@ export function Nav({ defaultCollapsed, user, counters }: NavProps) {
               !isCollapsed,
             )}`;
           }}
-          className="absolute -right-2 top-1/2 transform -translate-y-1/2
-          z-10 flex w-7"
+          className="absolute -right-4 top-1/2 transform -translate-y-1/2
+          z-10 flex rounded-full"
         >
           {isCollapsed ? (
             <ChevronRight className="h-5 w-5" />
@@ -144,8 +144,8 @@ export function Nav({ defaultCollapsed, user, counters }: NavProps) {
             isCollapsed={isCollapsed}
             links={[
               {
-                title: "Cuenta",
-                href: "/studio/account",
+                title: "Configuración",
+                href: "/studio/settings",
                 icon: Cog,
                 variant: "ghost",
               },
