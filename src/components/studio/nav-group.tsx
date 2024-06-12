@@ -26,6 +26,10 @@ interface NavProps {
 export function NavGroup({ links, isCollapsed }: NavProps) {
   const pathname = usePathname();
 
+  const isActive = (href: string) => {
+    return href === pathname || href.split("/")[2] === pathname.split("/")[2];
+  };
+
   return (
     <div
       data-collapsed={isCollapsed}
@@ -68,7 +72,7 @@ export function NavGroup({ links, isCollapsed }: NavProps) {
               href={link.href || "#"}
               className={cn(
                 buttonVariants({
-                  variant: pathname === link.href ? "default" : link.variant,
+                  variant: isActive(link.href) ? "default" : link.variant,
                   size: "sm",
                 }),
                 link.variant === "default" &&

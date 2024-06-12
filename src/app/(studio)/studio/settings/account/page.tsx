@@ -1,20 +1,29 @@
-import { Separator } from "@/components/ui/separator";
+import { NewPasswordForm } from "@/components/new-password-form";
+import UserNameForm from "@/components/username-form";
+import { authOptions } from "@/lib/auth";
+import getSession from "@/lib/getSession";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Configuración",
   description: "Página de configuración de cuenta",
 };
 
-export default function Page() {
+export default async function Page() {
+  const session = await getSession();
+
+  if (!session?.user) {
+    redirect(authOptions.pages?.signIn || "/login");
+  }
   return (
     <div className="space-y-6 w-full">
-      <div>
-        <h3 className="text-lg font-medium">Cuenta</h3>
-        <p className="text-sm text-muted-foreground">
-          Cambia tu nombre de usuario o contraseña.
-        </p>
-      </div>
-      <Separator />
+      <UserNameForm
+        user={{
+          id: session.user.id,
+          username: session.user.username || "",
+        }}
+      />
+      <NewPasswordForm userId={session.user.id} />
     </div>
   );
 }

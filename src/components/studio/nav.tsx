@@ -12,7 +12,7 @@ import {
   Send,
   Users2,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, simplifyName } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { NavGroup } from "@/components/studio/nav-group";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
@@ -22,6 +22,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { User } from "@prisma/client";
 import Image from "next/image";
 import { adminRoles, privateRoles } from "@/config";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface NavProps {
   defaultCollapsed?: boolean;
@@ -72,15 +73,12 @@ export function Nav({ defaultCollapsed, user, counters }: NavProps) {
             isCollapsed ? "h-[56px] justify-center" : "px-4 justify-start",
           )}
         >
-          <div className="h-9 w-9 overflow-hidden flex items-center justify-center rounded-sm">
-            <Image
-              src={user.image || ""}
-              alt="Avatar"
-              width={40}
-              height={40}
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <Avatar>
+            <AvatarImage src={user.image || ""} alt="Foto de perfil" />
+            <AvatarFallback>
+              {simplifyName(user.name.toUpperCase())}
+            </AvatarFallback>
+          </Avatar>
           <span className={cn("max-w-40 truncate", isCollapsed && "hidden")}>
             {user.name}
           </span>

@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator";
+import { AppearanceForm } from "@/components/studio/settings/appearance-form";
 
 export const metadata = {
   title: "Configuración",
@@ -8,13 +8,7 @@ export const metadata = {
 export default function Page() {
   return (
     <div className="space-y-6 w-full">
-      <div>
-        <h3 className="text-lg font-medium">Apariencia</h3>
-        <p className="text-sm text-muted-foreground">
-          Cambia el tema de la interfaz.
-        </p>
-      </div>
-      <Separator />
+      <AppearanceForm />
     </div>
   );
 }

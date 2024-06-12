@@ -63,7 +63,9 @@ export function NewPasswordForm({ userId }: { userId: string }) {
       <form onSubmit={form.handleSubmit((data) => updatePassword(data))}>
         <Card>
           <CardHeader>
-            <CardTitle>Cambia tu contraseña</CardTitle>
+            <CardTitle className="text-xl font-medium">
+              Cambia tu contraseña
+            </CardTitle>
             <CardDescription>
               Por favor, introduce tu nueva contraseña.
             </CardDescription>

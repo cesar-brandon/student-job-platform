@@ -21,6 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { Separator } from "./ui/separator";
 
 interface Props {
   user: Pick<User, "id" | "username">;
@@ -75,7 +76,9 @@ const UserNameForm: FC<Props> = ({ user }) => {
     <form onSubmit={handleSubmit((e) => updateUserName(e))}>
       <Card>
         <CardHeader>
-          <CardTitle>Cambiar nombre de usuario</CardTitle>
+          <CardTitle className="text-xl font-medium">
+            Cambiar nombre de usuario
+          </CardTitle>
           <CardDescription>
             Ingrese un nombre de usuario con el que se sienta cómodo.
           </CardDescription>
@@ -96,7 +99,7 @@ const UserNameForm: FC<Props> = ({ user }) => {
             {...register("name")}
           />
           {errors?.name && (
-            <p className="px-1 pt-2 text-xs text-red-600">
+            <p className="px-1 pt-2 font-medium text-sm text-destructive">
               {errors.name.type === "too_small"
                 ? "El nombre de usuario debe tener al menos 3 caracteres."
                 : errors.name.type === "too_big"
