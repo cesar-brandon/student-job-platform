@@ -58,8 +58,8 @@ function BookmarkItem({ bookmark }: { bookmark: ExtendedBookmark }) {
         className="w-full p-4"
       >
         {bookmark.post.title}
-        <p className="text-sm">{"J&R CRM SERVICES"}</p>
-        <p className="text-sm dark:font-thin font-light">Lima,Lima</p>
+        <p className="text-sm">{"Nombre de la empresa"}</p>
+        <p className="text-sm dark:font-thin font-light">Dirección</p>
       </Link>
       <div className="m-4">
         <PostBookmarkServer

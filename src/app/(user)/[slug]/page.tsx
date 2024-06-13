@@ -7,8 +7,8 @@ import { Suspense } from "react";
 import Loading from "./loading";
 
 export const metadata = {
-  title: "Profile",
-  description: "User profile",
+  title: "Perfil",
+  description: "Página de perfil de usuario",
 };
 
 interface ProfilePageProps {

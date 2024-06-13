@@ -3,8 +3,10 @@ import { StudentProfileFallback } from "./student-profile-fallback";
 import { User } from "@prisma/client";
 import { ProfileTabs } from "@/components/profile/profile-tabs";
 import BlurImage from "../common/blur-image";
-import { ProfileEditForm } from "./profile-edit-form";
 import { simplifyName } from "@/lib/utils";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { buttonVariants } from "../ui/button";
 
 export function UserProfile({
   user,
@@ -47,10 +49,16 @@ export function UserProfile({
           </div>
         </div>
       </CareerCard>
-      <div className="flex items-start justify-between">
-        <ProfileTabs />
-        {isOwner && <ProfileEditForm user={user} />}
-      </div>
+      {isOwner && (
+        <Link
+          href="/studio/settings"
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Editar perfil
+          <ArrowUpRight className="h-4 w-4 ml-2" />
+        </Link>
+      )}
+      <ProfileTabs userId={user.id} />
     </div>
   );
 }

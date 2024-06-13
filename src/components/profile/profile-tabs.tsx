@@ -1,40 +1,23 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PostCardList } from "../post/post-card-list";
 
-export function ProfileTabs() {
+export function ProfileTabs({ userId }: { userId: string }) {
   return (
-    <Tabs defaultValue="skills">
-      <TabsList>
-        <TabsTrigger value="about">Acerca de</TabsTrigger>
-        <TabsTrigger value="skills">Habilidades</TabsTrigger>
-        <TabsTrigger value="experience">Experiencia</TabsTrigger>
-        <TabsTrigger value="projects">Proyectos</TabsTrigger>
+    <Tabs defaultValue="about" className="w-full">
+      <TabsList className="grid w-full grid-cols-2">
+        <TabsTrigger value="about">La empresa</TabsTrigger>
+        <TabsTrigger value="posts">Ofertas</TabsTrigger>
       </TabsList>
-      <TabsContent value="about">
-        <div className="p-4">
-          <p>Nombre: John Doe</p>
-          <p>Edad: 25</p>
-          <p>País: México</p>
-        </div>
+      <TabsContent value="about" className="flex flex-col gap-2">
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam
+          porro expedita non id mollitia, unde quia veritatis error! Eligendi
+          dignissimos illum eius aliquid quaerat tempore dicta delectus!
+          Dignissimos, possimus aliquid.
+        </p>
       </TabsContent>
-      <TabsContent value="skills">
-        <div className="p-4">
-          <p>HTML</p>
-          <p>CSS</p>
-          <p>JavaScript</p>
-        </div>
-      </TabsContent>
-      <TabsContent value="experience">
-        <div className="p-4">
-          <p>Frontend Developer</p>
-          <p>Backend Developer</p>
-        </div>
-      </TabsContent>
-      <TabsContent value="projects">
-        <div className="p-4">
-          <p>Project 1</p>
-          <p>Project 2</p>
-          <p>Project 3</p>
-        </div>
+      <TabsContent value="posts">
+        <PostCardList userId={userId} />
       </TabsContent>
     </Tabs>
   );

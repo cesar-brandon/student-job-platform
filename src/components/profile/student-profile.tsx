@@ -1,10 +1,10 @@
 import CareerCard from "@/components/common/career-card";
-import { ProfileTabs } from "./profile-tabs";
 import { StudentProfileFallback } from "./student-profile-fallback";
 import BlurImage from "../common/blur-image";
 import { ExtendedStudent } from "@/types/student";
 import { ProfileEditForm } from "./profile-edit-form";
 import { simplifyName } from "@/lib/utils";
+import { StudentProfileTabs } from "./student-profile-tabs";
 
 export function StudentProfile({
   student,
@@ -53,7 +53,7 @@ export function StudentProfile({
         </div>
       </CareerCard>
       <div className="flex items-start justify-between">
-        <ProfileTabs />
+        <StudentProfileTabs />
         {isOwner && <ProfileEditForm user={student.User} />}
       </div>
     </div>
