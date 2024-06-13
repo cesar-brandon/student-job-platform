@@ -1,3 +1,4 @@
+import { DisplayNameForm } from "@/components/forms/display-name-form";
 import { AvatarForm } from "@/components/studio/settings/avatar-form";
 import { ProfileForm } from "@/components/studio/settings/profile-form";
 import { authOptions } from "@/lib/auth";
@@ -19,6 +20,7 @@ export default async function Page() {
   return (
     <div className="space-y-6 w-full">
       <AvatarForm user={session.user} />
+      <DisplayNameForm userId={session.user.id} name={session.user.name} />
       <ProfileForm />
     </div>
   );
