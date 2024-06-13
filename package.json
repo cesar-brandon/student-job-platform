@@ -43,7 +43,7 @@
     "@react-email/tailwind": "^0.0.14",
     "@tanstack/react-query": "^4.32.0",
     "@tanstack/react-table": "^8.17.3",
-    "@uploadthing/react": "^5.2.0",
+    "@uploadthing/react": "^6.6.0",
     "@upstash/redis": "^1.30.0",
     "@vercel/kv": "^0.2.2",
     "@vercel/postgres": "^0.4.1",
@@ -75,7 +75,7 @@
     "resend": "^3.2.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^5.2.1",
+    "uploadthing": "^6.12.0",
     "vaul": "^0.1.2",
     "zod": "^3.23.8",
     "zustand": "^4.4.1"

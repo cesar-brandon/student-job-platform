@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { LoaderCircleIcon } from "../common/icons";
+import { useUploadThing } from "@/lib/uploadthing";
 
 interface EditorProps {
   id?: string;
@@ -37,6 +38,8 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   const _titleRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { startUpload } = useUploadThing("imageUploader");
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
@@ -68,14 +71,14 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
               uploader: {
                 async uploadByFile(file: File) {
                   try {
-                    const [res] = await uploadFiles({
-                      endpoint: "imageUploader",
-                      files: [file],
-                    });
+                    const res = await startUpload([file]);
+                    if (!res) {
+                      return;
+                    }
                     return {
                       success: 1,
                       file: {
-                        url: res.fileUrl,
+                        url: res[0].url,
                       },
                     };
                   } catch (error: any) {
@@ -94,7 +97,7 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
         },
       });
     }
-  }, []);
+  }, [startUpload]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
