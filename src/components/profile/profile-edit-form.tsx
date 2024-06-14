@@ -1,14 +1,3 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -24,20 +13,20 @@ import { Textarea } from "../ui/textarea";
 import { User } from "@prisma/client";
 import { AvatarUploader } from "../studio/settings/avatar-form";
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
 import axios from "axios";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export function ProfileEditForm({
   user,
-  className,
+  setIsLoading,
+  setOpen,
 }: {
   user: User;
-  className: string;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
-
+  const router = useRouter();
   const form = useForm<ProfileRequest>({
     resolver: zodResolver(ProfileValidator),
     defaultValues: {
@@ -54,6 +43,7 @@ export function ProfileEditForm({
         description: "Tu perfil ha sido actualizado con éxito",
       });
       setOpen(false);
+      router.refresh();
     } catch (error) {
       return toast({
         title: "Algo salió mal",
@@ -66,89 +56,66 @@ export function ProfileEditForm({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="lg" className={className}>
-          Editar Pefil
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Editar Perfil</DialogTitle>
-        </DialogHeader>
+    <Form {...form}>
+      <form
+        id="profile-edit-form"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-6 mt-4"
+      >
+        <div className="w-full flex justify-center">
+          <AvatarUploader user={user} />
+        </div>
+        {/* <div className="group relative w-24 h-28 rounded-lg overflow-hidden"> */}
+        {/*   {user.image === null ? ( */}
+        {/*     <div className="w-full h-full bg-muted-foreground dark:bg-background flex items-center justify-center"> */}
+        {/*       <p className="text-white"> */}
+        {/*         {simplifyName(user.name.toUpperCase())} */}
+        {/*       </p> */}
+        {/*     </div> */}
+        {/*   ) : ( */}
+        {/*     <Image */}
+        {/*       src={user.image} */}
+        {/*       alt="imagen de perfil" */}
+        {/*       className="object-cover w-full h-full" */}
+        {/*       width={100} */}
+        {/*       height={100} */}
+        {/*     /> */}
+        {/*   )} */}
+        {/*   <div */}
+        {/*     className="absolute top-0 left-0 w-full h-full bg-background/50 backdrop-blur  */}
+        {/*     opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity duration-300" */}
+        {/*   > */}
+        {/*     <SquarePlus className="w-6 h-6 text-accent-foreground" /> */}
+        {/*   </div> */}
+        {/* </div> */}
 
-        <Form {...form}>
-          <form
-            id="profile-edit-form"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6 mt-4"
-          >
-            <AvatarUploader user={user} />
-            {/* <div className="group relative w-24 h-28 rounded-lg overflow-hidden"> */}
-            {/*   {user.image === null ? ( */}
-            {/*     <div className="w-full h-full bg-muted-foreground dark:bg-background flex items-center justify-center"> */}
-            {/*       <p className="text-white"> */}
-            {/*         {simplifyName(user.name.toUpperCase())} */}
-            {/*       </p> */}
-            {/*     </div> */}
-            {/*   ) : ( */}
-            {/*     <Image */}
-            {/*       src={user.image} */}
-            {/*       alt="imagen de perfil" */}
-            {/*       className="object-cover w-full h-full" */}
-            {/*       width={100} */}
-            {/*       height={100} */}
-            {/*     /> */}
-            {/*   )} */}
-            {/*   <div */}
-            {/*     className="absolute top-0 left-0 w-full h-full bg-background/50 backdrop-blur  */}
-            {/*     opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity duration-300" */}
-            {/*   > */}
-            {/*     <SquarePlus className="w-6 h-6 text-accent-foreground" /> */}
-            {/*   </div> */}
-            {/* </div> */}
-
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field }) => (
-                <FormItem className="relative">
-                  <FormLabel>Presentación</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Escribe una presentación corta sobre ti"
-                      className="resize-none"
-                      {...field}
-                    />
-                  </FormControl>
-                  <span
-                    className={cn(
-                      `absolute bottom-2 right-2 text-sm text-foreground/40 bg-background/30 backdrop-blur-md
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem className="relative">
+              <FormLabel>Presentación</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Escribe una presentación corta sobre ti"
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <span
+                className={cn(
+                  `absolute bottom-2 right-2 text-sm text-foreground/40 bg-background/30 backdrop-blur-md
                       rounded-[0.5rem] px-2 py-1 border`,
-                      field.value.length > 160 && "text-destructive",
-                    )}
-                  >
-                    {`${field.value.length}/160`}
-                  </span>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-
-        <DialogFooter>
-          <Button
-            type="submit"
-            form="profile-edit-form"
-            variant="secondary"
-            className="w-full"
-            isLoading={isLoading}
-          >
-            Listo
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+                  field.value.length > 160 && "text-destructive",
+                )}
+              >
+                {`${field.value.length}/160`}
+              </span>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
   );
 }

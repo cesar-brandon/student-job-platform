@@ -1,10 +1,10 @@
 import { StudentProfile } from "@/components/profile/student-profile";
 import { UserProfile } from "@/components/profile/user-profile";
+import { UserProfileFallback } from "@/components/profile/user-profile-fallback";
 import getSession from "@/lib/getSession";
 import { db } from "@/lib/prisma";
 import { LibraryBig } from "lucide-react";
 import { Suspense } from "react";
-import Loading from "./loading";
 
 export const metadata = {
   title: "Perfil",
@@ -59,7 +59,7 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   }
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<UserProfileFallback />}>
       <UserProfile user={user} isOwner={isOwner} />
     </Suspense>
   );

@@ -2,7 +2,7 @@ import CareerCard from "@/components/common/career-card";
 import { StudentProfileFallback } from "./student-profile-fallback";
 import BlurImage from "../common/blur-image";
 import { ExtendedStudent } from "@/types/student";
-import { ProfileEditForm } from "./profile-edit-form";
+import { ProfileEditModal } from "./profile-edit-modal";
 import { simplifyName } from "@/lib/utils";
 import { StudentProfileTabs } from "./student-profile-tabs";
 import { buttonVariants } from "../ui/button";
@@ -55,18 +55,20 @@ export function StudentProfile({
           </i>
         </div>
         {isOwner && (
-          <ProfileEditForm
+          <ProfileEditModal
             user={student.User}
             className="absolute right-5 top-5 z-10 bg-background/70 hover:bg-background backdrop-blur-md h-10"
           />
         )}
       </CareerCard>
-      <Link
-        href="/studio/settings"
-        className={buttonVariants({ variant: "outline", size: "lg" })}
-      >
-        Enviar CV
-      </Link>
+      {isOwner && (
+        <Link
+          href={`/${student.User.username}/cv-options`}
+          className={buttonVariants({ variant: "outline", size: "lg" })}
+        >
+          Enviar CV
+        </Link>
+      )}
       <StudentProfileTabs />
     </div>
   );
