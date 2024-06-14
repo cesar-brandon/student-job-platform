@@ -5,6 +5,8 @@ import { ExtendedStudent } from "@/types/student";
 import { ProfileEditForm } from "./profile-edit-form";
 import { simplifyName } from "@/lib/utils";
 import { StudentProfileTabs } from "./student-profile-tabs";
+import { buttonVariants } from "../ui/button";
+import { Link } from "next-view-transitions";
 
 export function StudentProfile({
   student,
@@ -19,7 +21,7 @@ export function StudentProfile({
     <div className="flex flex-col gap-4">
       <CareerCard
         career={student.career || "ENTERPRISE"}
-        className="min-h-[20rem] w-full flex flex-row items-start gap-4 px-4 rounded-3xl"
+        className="relative min-h-[20rem] w-full flex flex-row items-start gap-4 px-4 rounded-3xl"
         classNameIcon="right-[-5rem] scale-125"
       >
         <div className="w-[14rem] h-full flex items-center gap-4 z-10">
@@ -48,14 +50,24 @@ export function StudentProfile({
 
         <div className="w-full h-full flex items-end text-right p-2">
           <i className="text-white font-semibold text-lg">
-            &quot;Si te caes siete veces, levántate ocho.&quot;
+            {/* &quot;Si te caes siete veces, levántate ocho.&quot; */}
+            {student.User.bio}
           </i>
         </div>
+        {isOwner && (
+          <ProfileEditForm
+            user={student.User}
+            className="absolute right-5 top-5 z-10 bg-background/70 hover:bg-background backdrop-blur-md h-10"
+          />
+        )}
       </CareerCard>
-      <div className="flex items-start justify-between">
-        <StudentProfileTabs />
-        {isOwner && <ProfileEditForm user={student.User} />}
-      </div>
+      <Link
+        href="/studio/settings"
+        className={buttonVariants({ variant: "outline", size: "lg" })}
+      >
+        Enviar CV
+      </Link>
+      <StudentProfileTabs />
     </div>
   );
 }

@@ -45,9 +45,11 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
       include: {
         User: {
           select: {
+            id: true,
             image: true,
             username: true,
             name: true,
+            bio: true,
           },
         },
       },

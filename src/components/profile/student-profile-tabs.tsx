@@ -2,8 +2,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function StudentProfileTabs() {
   return (
-    <Tabs defaultValue="skills">
-      <TabsList>
+    <Tabs defaultValue="skills" className="w-full">
+      <TabsList className="grid w-full grid-cols-4">
         <TabsTrigger value="about">Acerca de</TabsTrigger>
         <TabsTrigger value="skills">Habilidades</TabsTrigger>
         <TabsTrigger value="experience">Experiencia</TabsTrigger>

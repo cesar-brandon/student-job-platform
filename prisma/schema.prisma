@@ -64,8 +64,11 @@ model User {
   email         String         @unique
   emailVerified DateTime?
   image         String?
+  bio           String?
   password      String?
   role          UserRole       @default(STUDENT)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   Post          Post[]
   Student       Student[]
   Enterprise    Enterprise[]
@@ -77,8 +80,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Apply         Apply[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
   Feedback      Feedback[]
 }
 
