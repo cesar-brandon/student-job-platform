@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,6 +12,7 @@ import { PDFUploader } from "@/components/pdf-uploader";
 
 export default function ResumeImportPage() {
   const router = useRouter();
+  const username = usePathname().split("/")[1];
 
   const {
     data,
@@ -64,7 +65,7 @@ export default function ResumeImportPage() {
         <Button
           className="w-full"
           variant="outline"
-          onClick={() => router.back()}
+          onClick={() => router.push(`/${username}/cv-options`)}
         >
           volver
         </Button>

@@ -1,5 +1,5 @@
+import Modal from "@/components/profile/resume/resume-modal";
 import ResumeImportPage from "../../cv-import/page";
-import Modal from "./modal";
 
 export default function ResumeImportModal() {
   return (

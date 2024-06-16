@@ -16,12 +16,14 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ResumeCreatePage() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+
+  const username = usePathname().split("/")[1];
 
   useEffect(() => {
     if (!api) {
@@ -68,7 +70,7 @@ export default function ResumeCreatePage() {
         </Carousel>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => router.back()}>
+        <Button variant="outline" onClick={() => router.push(`/${username}`)}>
           Cancelar
         </Button>
         <Button variant="secondary">Continuar</Button>
