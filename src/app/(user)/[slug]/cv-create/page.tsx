@@ -1,4 +1,5 @@
 "use client";
+import { DotButton, useDotButton } from "@/components/common/dot-button";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,18 +9,47 @@ import {
 } from "@/components/ui/card";
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ResumeCreatePage() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    setCurrent(api.selectedScrollSnap() + 1);
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
+
   const router = useRouter();
   return (
     <Card className="h-fit w-full bg-background">
-      <CardHeader>Steps</CardHeader>
+      <div className="flex gap-2 w-full h-[1rem] px-6 py-8">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <DotButton
+            key={index}
+            className={cn(
+              "flex-1 h-2 rounded-sm bg-muted",
+              current === index ? "bg-primary" : "",
+            )}
+            onClick={() => onDotButtonClick(index)}
+          />
+        ))}
+      </div>
       <CardContent>
         <Carousel>
           <CarouselContent>
