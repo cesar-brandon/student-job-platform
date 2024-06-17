@@ -82,31 +82,43 @@ export function formatTimeToNow(date: Date): string {
 }
 
 export const careerData: {
-  [key: string]: { name: string; color: string };
+  [key: string]: {
+    name: string;
+    color: string;
+    hoverColor: string;
+    textColor?: string;
+  };
 } = {
   ET: {
     name: "Enfermería Técnica",
     color: "bg-emerald-500",
+    hoverColor: "bg-emerald-600",
   },
   FT: {
     name: "Farmacia Técnica",
     color: "bg-sky-400",
+    hoverColor: "bg-sky-500",
   },
   AE: {
     name: "Administración Empresas",
     color: "bg-indigo-400",
+    hoverColor: "bg-indigo-500",
   },
   CF: {
     name: "Contabilidad con Mención en Finanzas",
     color: "bg-red-500",
+    hoverColor: "bg-red-600",
   },
   DS: {
     name: "Desarrollo de Sistemas de Información",
     color: "bg-yellow-400",
+    hoverColor: "bg-yellow-500",
+    textColor: "text-foreground dark:text-background",
   },
   ENTERPRISE: {
     name: "Empresa",
     color: "bg-[#fba124]",
+    hoverColor: "bg-[#fba124]/90",
   },
 };
 

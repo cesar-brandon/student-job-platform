@@ -76,6 +76,24 @@ const config = {
           DEFAULT: "hsl(var(--orange))",
           foreground: "hsl(var(--orange-foreground))",
         },
+        ET: {
+          DEFAULT: "#10b981",
+        },
+        FT: {
+          DEFAULT: "#38bdf8",
+        },
+        AE: {
+          DEFAULT: "#818cf8",
+        },
+        CF: {
+          DEFAULT: "#ef4444",
+        },
+        DS: {
+          DEFAULT: "#facc15",
+        },
+        ENTERPRISE: {
+          DEFAULT: "#fba124",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

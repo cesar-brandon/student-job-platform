@@ -167,3 +167,11 @@ a {
     box-shadow: 0 3px 15px -3px hsl(var(--border));
   }
 }
+
+#editor-professional-summary .ce-toolbar {
+  display: none !important;
+}
+
+#editor-professional-summary .codex-editor {
+  height: 150px;
+}
