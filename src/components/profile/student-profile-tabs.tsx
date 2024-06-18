@@ -22,14 +22,15 @@ export function StudentProfileTabs({ student }: { student: Student }) {
         <TabsTrigger value="projects">Proyectos</TabsTrigger>
       </TabsList>
       <TabsContent value="about">
-        <EditorOutput content={professionalSummary} />
+        {professionalSummary && <EditorOutput content={professionalSummary} />}
       </TabsContent>
       <TabsContent value="skills">
-        {skills.map((skill: { name: string }) => (
-          <Badge key={skill.name} className="m-1">
-            {skill.name}
-          </Badge>
-        ))}
+        {skills &&
+          skills.map((skill: { name: string }) => (
+            <Badge key={skill.name} className="m-1">
+              {skill.name}
+            </Badge>
+          ))}
       </TabsContent>
       <TabsContent value="experience">
         <div className="p-4">
