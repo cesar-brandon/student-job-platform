@@ -69,7 +69,7 @@ export function StudentProfile({
           Enviar CV
         </Link>
       )}
-      <StudentProfileTabs />
+      <StudentProfileTabs student={student} />
     </div>
   );
 }
