@@ -89,7 +89,7 @@ export default function ResumeCreateCard({ user }: { user: user }) {
   return (
     <Card className="h-fit w-full bg-background">
       <div className="flex gap-2 w-full h-[1rem] px-6 py-8">
-        {Array.from({ length: 4 }).map((_, index) => (
+        {Array.from({ length: 5 }).map((_, index) => (
           <DotButton
             key={index}
             className={cn(
@@ -112,10 +112,11 @@ export default function ResumeCreateCard({ user }: { user: user }) {
                   />
                 </CarouselItem>
                 <CarouselItem>
-                  <SelectSkills />
+                  <SelectSkills form={form} career={user.career || ""} />
                 </CarouselItem>
                 <CarouselItem>experiencia</CarouselItem>
                 <CarouselItem>proyectos</CarouselItem>
+                <CarouselItem>PDF</CarouselItem>
               </CarouselContent>
               {/* <CarouselPrevious /> */}
               {/* <CarouselNext /> */}
@@ -132,6 +133,7 @@ export default function ResumeCreateCard({ user }: { user: user }) {
           form="resume-form"
           type="submit"
           isLoading={isLoading}
+          disabled
         >
           Continuar
         </Button>
