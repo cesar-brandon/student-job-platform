@@ -1,6 +1,5 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
-import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
 import { PostCreationRequest } from "@/lib/validators/post";
 import { FieldErrors } from "react-hook-form";
@@ -67,18 +66,9 @@ const ProfessionalSummary = forwardRef<
         ¡Escriba de 2 a 4 oraciones para aumentar las posibilidades de una
         entrevista!
       </p>
-      <FormField
-        name="professionalSummary"
-        render={({ field }) => (
-          <FormItem>
-            <FormControl className="p-4">
-              <div
-                id="editor-professional-summary"
-                className="border rounded-md overflow-hidden overflow-y-auto min-h-[150px]"
-              />
-            </FormControl>
-          </FormItem>
-        )}
+      <div
+        id="editor-professional-summary"
+        className="border rounded-md overflow-hidden overflow-y-auto min-h-[150px] px-4 py-1"
       />
     </section>
   );

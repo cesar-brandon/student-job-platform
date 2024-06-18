@@ -28,6 +28,7 @@ export default function ResumeCreateCard({ user }: { user: user }) {
   const ref = useRef<EditorJS>();
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
   const username = usePathname().split("/")[1];
 
@@ -45,13 +46,12 @@ export default function ResumeCreateCard({ user }: { user: user }) {
     if (!api) {
       return;
     }
+    setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1);
     });
-  }, [api, current]);
-
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
+  }, [api]);
 
   const router = useRouter();
 
@@ -89,21 +89,26 @@ export default function ResumeCreateCard({ user }: { user: user }) {
   return (
     <Card className="h-fit w-full bg-background">
       <div className="flex gap-2 w-full h-[1rem] px-6 py-8">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <DotButton
+        {Array.from({ length: count }).map((_, index) => (
+          <span
             key={index}
             className={cn(
-              "flex-1 h-2 rounded-sm bg-muted",
-              current === index ? `bg-primary` : "",
+              "flex-1 h-2 rounded-sm bg-muted hover:opacity-80 cursor-pointer transition-all",
+              current > index ? `bg-primary` : "",
             )}
-            onClick={() => onDotButtonClick(index)}
+            onClick={() => api && api.scrollTo(index)}
           />
         ))}
       </div>
       <CardContent>
         <Form {...form}>
-          <form id="resume-form" onSubmit={form.handleSubmit(onSubmit)}>
-            <Carousel>
+          <form>
+            <Carousel
+              setApi={setApi}
+              opts={{
+                watchDrag: false,
+              }}
+            >
               <CarouselContent>
                 <CarouselItem>
                   <ProfessionalSummary
@@ -125,17 +130,25 @@ export default function ResumeCreateCard({ user }: { user: user }) {
         </Form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => router.push(`/${username}`)}>
-          Cancelar
+        <Button
+          variant="outline"
+          onClick={() => {
+            if (current === 1) return router.push(`/${username}`);
+            if (api) api.scrollTo(current - 2);
+          }}
+        >
+          {current === 1 ? "Cancelar" : "Atrás"}
         </Button>
         <Button
-          variant="secondary"
-          form="resume-form"
-          type="submit"
+          variant={current === count ? "default" : "outline"}
+          type={"button"}
           isLoading={isLoading}
-          disabled
+          onClick={() => {
+            if (current === count) return form.handleSubmit(onSubmit)();
+            if (api) api.scrollTo(current);
+          }}
         >
-          Continuar
+          {current === count ? "Crear currículum" : "Siguiente"}
         </Button>
       </CardFooter>
     </Card>

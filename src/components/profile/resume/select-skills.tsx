@@ -151,18 +151,20 @@ export function SelectSkills({ form, career }: { form: any; career: string }) {
             </Command>
           </PopoverContent>
         </Popover>
-        <div className="w-full h-[10rem] border rounded-md p-4 overflow-y-auto">
-          {selectedLabels.map((label, i) => (
-            <Badge key={i} className="rounded-sm p-2 m-1">
-              {label}
-              <X
-                className="ml-2 w-4 h-4"
-                onClick={() => {
-                  handleSelect(label);
-                }}
-              />
-            </Badge>
-          ))}
+        <div className="w-full border rounded-md p-2">
+          <ScrollArea className="h-[10rem]">
+            {selectedLabels.map((label, i) => (
+              <Badge key={i} className="rounded-sm p-2 m-1">
+                {label}
+                <X
+                  className="ml-2 w-4 h-4"
+                  onClick={() => {
+                    handleSelect(label);
+                  }}
+                />
+              </Badge>
+            ))}
+          </ScrollArea>
         </div>
       </div>
     </section>
