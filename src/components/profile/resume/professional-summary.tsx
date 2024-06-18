@@ -1,20 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
 import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
+import { PostCreationRequest } from "@/lib/validators/post";
+import { FieldErrors } from "react-hook-form";
 
-export function ProfessionalSummary({
-  errors,
-}: {
-  errors: Record<string, string>;
-}) {
-  const ref = useRef<EditorJS>();
+const ProfessionalSummary = forwardRef<
+  EditorJS | undefined | null,
+  { errors: FieldErrors<PostCreationRequest> }
+>(({ errors }, ref) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
-    if (!ref.current) {
+    if (ref && "current" in ref && !ref.current) {
       const editor = new EditorJS({
         holder: "editor-professional-summary",
         onReady() {
@@ -25,7 +24,7 @@ export function ProfessionalSummary({
         // data: { blocks: [] },
       });
     }
-  }, []);
+  }, [ref]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -53,11 +52,13 @@ export function ProfessionalSummary({
     if (isMounted) {
       init();
       return () => {
-        ref.current?.destroy();
-        ref.current = undefined;
+        if (ref && "current" in ref && ref.current) {
+          ref.current?.destroy();
+          ref.current = undefined;
+        }
       };
     }
-  }, [isMounted, initializeEditor]);
+  }, [isMounted, initializeEditor, ref]);
 
   return (
     <section className="space-y-4">
@@ -81,4 +82,8 @@ export function ProfessionalSummary({
       />
     </section>
   );
-}
+});
+
+ProfessionalSummary.displayName = "ProfessionalSummary";
+
+export default ProfessionalSummary;

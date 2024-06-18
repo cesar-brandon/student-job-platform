@@ -2,19 +2,12 @@
 
 import { DotButton, useDotButton } from "@/components/common/dot-button";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Form } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
@@ -22,12 +15,17 @@ import { ResumeRequest, ResumeValidator } from "@/lib/validators/resume";
 import { user } from "@/types/next-auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ProfessionalSummary } from "./professional-summary";
+import ProfessionalSummary from "./professional-summary";
 import { SelectSkills } from "./select-skills";
+import type EditorJS from "@editorjs/editorjs";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
 
 export default function ResumeCreateCard({ user }: { user: user }) {
+  const ref = useRef<EditorJS>();
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -48,7 +46,6 @@ export default function ResumeCreateCard({ user }: { user: user }) {
       return;
     }
     setCurrent(api.selectedScrollSnap() + 1);
-    console.log(current);
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1);
     });
@@ -58,8 +55,35 @@ export default function ResumeCreateCard({ user }: { user: user }) {
 
   const router = useRouter();
 
+  const { mutate: craeteResume, isLoading } = useMutation({
+    mutationFn: async (payload: ResumeRequest) => {
+      const { data } = await axios.post(`/api/user/${user.id}/resume`, payload);
+      return data;
+    },
+    onError: () => {
+      return toast({
+        title: "Algo salió mal",
+        description:
+          "Tu currículum no se pudo crear, por favor intenta de nuevo más tarde",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      router.push(`/${username}`);
+      return toast({
+        description: "Tu currículum resumen ha sido creado.",
+      });
+    },
+  });
+
   const onSubmit = async (data: ResumeRequest) => {
-    console.log(data);
+    const blocks = await ref.current?.save();
+    if (!blocks) return;
+    const payload: ResumeRequest = {
+      ...data,
+      professionalSummary: blocks,
+    };
+    craeteResume(payload);
   };
 
   return (
@@ -78,15 +102,20 @@ export default function ResumeCreateCard({ user }: { user: user }) {
       </div>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form id="resume-form" onSubmit={form.handleSubmit(onSubmit)}>
             <Carousel>
               <CarouselContent>
                 <CarouselItem>
-                  <ProfessionalSummary errors={form.formState.errors} />
+                  <ProfessionalSummary
+                    errors={form.formState.errors}
+                    ref={ref}
+                  />
                 </CarouselItem>
                 <CarouselItem>
                   <SelectSkills />
                 </CarouselItem>
+                <CarouselItem>experiencia</CarouselItem>
+                <CarouselItem>proyectos</CarouselItem>
               </CarouselContent>
               {/* <CarouselPrevious /> */}
               {/* <CarouselNext /> */}
@@ -98,7 +127,14 @@ export default function ResumeCreateCard({ user }: { user: user }) {
         <Button variant="outline" onClick={() => router.push(`/${username}`)}>
           Cancelar
         </Button>
-        <Button variant="secondary">Continuar</Button>
+        <Button
+          variant="secondary"
+          form="resume-form"
+          type="submit"
+          isLoading={isLoading}
+        >
+          Continuar
+        </Button>
       </CardFooter>
     </Card>
   );

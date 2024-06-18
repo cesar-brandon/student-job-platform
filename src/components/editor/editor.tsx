@@ -19,6 +19,8 @@ interface EditorProps {
   filters: string[];
 }
 
+//NOTE: add is pending in useMutation
+
 const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   const {
     register,
