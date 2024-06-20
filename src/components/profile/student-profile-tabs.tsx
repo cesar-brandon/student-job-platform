@@ -2,6 +2,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Student } from "@prisma/client";
 import EditorOutput from "../editor/editor-output";
 import { Badge } from "../ui/badge";
+import { Accordion } from "../ui/accordion";
+import { ExperienceItem } from "./resume/experience-item";
 
 interface Resume {
   professionalSummary: string;
@@ -12,6 +14,7 @@ export function StudentProfileTabs({ student }: { student: Student }) {
   const professionalSummary = (student.resume as any)
     ?.professionalSummary as string;
   const skills = (student.resume as any)?.skills;
+  const experience = (student.resume as any)?.experience;
 
   return (
     <Tabs defaultValue="about" className="w-full">
@@ -33,10 +36,13 @@ export function StudentProfileTabs({ student }: { student: Student }) {
           ))}
       </TabsContent>
       <TabsContent value="experience">
-        <div className="p-4">
-          <p>Frontend Developer</p>
-          <p>Backend Developer</p>
-        </div>
+        {experience && (
+          <Accordion type="multiple">
+            {experience.map((item: any, index: number) => (
+              <ExperienceItem key={index} experience={item} index={index} />
+            ))}
+          </Accordion>
+        )}
       </TabsContent>
       <TabsContent value="projects">
         <div className="p-4">

@@ -34,7 +34,7 @@ export default function ResumeCreateCard({ user }: { user: user }) {
   const username = usePathname().split("/")[1];
 
   const form = useForm<ResumeRequest>({
-    mode: "onChange",
+    mode: "onSubmit",
     resolver: zodResolver(ResumeValidator),
     defaultValues: {
       professionalSummary: null,
@@ -86,8 +86,7 @@ export default function ResumeCreateCard({ user }: { user: user }) {
       ...data,
       professionalSummary: blocks,
     };
-    console.log(payload);
-    // craeteResume(payload);
+    craeteResume(payload);
   };
 
   return (
