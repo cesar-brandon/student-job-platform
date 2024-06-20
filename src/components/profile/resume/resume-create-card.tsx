@@ -23,6 +23,7 @@ import type EditorJS from "@editorjs/editorjs";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "@/hooks/use-toast";
+import { AddExperience } from "./add-experience";
 
 export default function ResumeCreateCard({ user }: { user: user }) {
   const ref = useRef<EditorJS>();
@@ -33,6 +34,7 @@ export default function ResumeCreateCard({ user }: { user: user }) {
   const username = usePathname().split("/")[1];
 
   const form = useForm<ResumeRequest>({
+    mode: "onChange",
     resolver: zodResolver(ResumeValidator),
     defaultValues: {
       professionalSummary: null,
@@ -70,9 +72,10 @@ export default function ResumeCreateCard({ user }: { user: user }) {
     },
     onSuccess: () => {
       router.push(`/${username}`);
-      return toast({
+      toast({
         description: "Tu currículum resumen ha sido creado.",
       });
+      router.refresh();
     },
   });
 
@@ -83,7 +86,8 @@ export default function ResumeCreateCard({ user }: { user: user }) {
       ...data,
       professionalSummary: blocks,
     };
-    craeteResume(payload);
+    console.log(payload);
+    // craeteResume(payload);
   };
 
   return (
@@ -119,12 +123,12 @@ export default function ResumeCreateCard({ user }: { user: user }) {
                 <CarouselItem>
                   <SelectSkills form={form} career={user.career || ""} />
                 </CarouselItem>
-                <CarouselItem>experiencia</CarouselItem>
-                <CarouselItem>proyectos</CarouselItem>
-                <CarouselItem>PDF</CarouselItem>
+                <CarouselItem>
+                  <AddExperience form={form} />
+                </CarouselItem>
+                {/* <CarouselItem>proyectos</CarouselItem> */}
+                {/* <CarouselItem>PDF</CarouselItem> */}
               </CarouselContent>
-              {/* <CarouselPrevious /> */}
-              {/* <CarouselNext /> */}
             </Carousel>
           </form>
         </Form>

@@ -1,12 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Check, ChevronsUpDown, X } from "lucide-react";
 import { studentSkills } from "./mock-skills";
 import {
@@ -28,8 +21,16 @@ import {
   ScrollThumb,
 } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { UseFormReturn } from "react-hook-form";
+import { ResumeRequest } from "@/lib/validators/resume";
 
-export function SelectSkills({ form, career }: { form: any; career: string }) {
+export function SelectSkills({
+  form,
+  career,
+}: {
+  form: UseFormReturn<ResumeRequest>;
+  career: string;
+}) {
   const [open, setOpen] = useState(false);
   const [commandValue, setCommandValue] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
@@ -65,20 +66,18 @@ export function SelectSkills({ form, career }: { form: any; career: string }) {
       <div className="flex flex-col gap-2">
         <Popover>
           <PopoverTrigger asChild>
-            <FormControl>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-full justify-between"
-                onClick={handlePopoverToggle}
-              >
-                {selectedLabels.length > 0
-                  ? `${selectedLabels.length} elementos seleccionados`
-                  : "Selecciona los elementos..."}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </FormControl>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-full justify-between"
+              onClick={handlePopoverToggle}
+            >
+              {selectedLabels.length > 0
+                ? `${selectedLabels.length} elementos seleccionados`
+                : "Selecciona los elementos..."}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
           </PopoverTrigger>
           <PopoverContent className="sm:w-[20rem] p-0">
             <Command>

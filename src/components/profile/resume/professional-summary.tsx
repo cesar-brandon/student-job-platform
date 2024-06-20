@@ -4,6 +4,8 @@ import { toast } from "@/hooks/use-toast";
 import { PostCreationRequest } from "@/lib/validators/post";
 import { FieldErrors } from "react-hook-form";
 
+//FIX: Controlar sol el error del editor y no de todo el form
+
 const ProfessionalSummary = forwardRef<
   EditorJS | undefined | null,
   { errors: FieldErrors<PostCreationRequest> }
@@ -31,18 +33,18 @@ const ProfessionalSummary = forwardRef<
     }
   }, []);
 
-  useEffect(() => {
-    if (Object.keys(errors).length) {
-      for (const [_key, value] of Object.entries(errors)) {
-        toast({
-          title: "Algo salió mal",
-          description:
-            "Error al usar el editor de texto. Inténtalo de nuevo más tarde.",
-          variant: "destructive",
-        });
-      }
-    }
-  }, [errors]);
+  // useEffect(() => {
+  //   if (Object.keys(errors).length) {
+  //     for (const [_key, value] of Object.entries(errors)) {
+  //       toast({
+  //         title: "Algo salió mal",
+  //         description:
+  //           "Error al usar el editor de texto. Inténtalo de nuevo más tarde.",
+  //         variant: "destructive",
+  //       });
+  //     }
+  //   }
+  // }, [errors]);
 
   useEffect(() => {
     const init = async () => {
