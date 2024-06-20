@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
@@ -141,6 +141,7 @@ const config = {
     addVariant("child", "& > *");
     addVariant("child-hover", "& > *:hover");
   },
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 
 export default config;
