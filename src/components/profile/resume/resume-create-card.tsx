@@ -25,6 +25,7 @@ import axios from "axios";
 import { toast } from "@/hooks/use-toast";
 import { AddExperience } from "./add-experience";
 import { AddProject } from "./add-project";
+import { AddResumePdf } from "./add-resume-pdf";
 
 export default function ResumeCreateCard({ user }: { user: user }) {
   const ref = useRef<EditorJS>();
@@ -129,7 +130,9 @@ export default function ResumeCreateCard({ user }: { user: user }) {
                 <CarouselItem>
                   <AddProject form={form} />
                 </CarouselItem>
-                {/* <CarouselItem>PDF</CarouselItem> */}
+                <CarouselItem>
+                  <AddResumePdf />
+                </CarouselItem>
               </CarouselContent>
             </Carousel>
           </form>

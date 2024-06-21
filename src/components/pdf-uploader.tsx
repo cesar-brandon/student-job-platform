@@ -7,7 +7,7 @@ import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
 import { toast } from "@/hooks/use-toast";
 
-export function PDFUploader({ sectionCv }: { sectionCv: any }) {
+export function PDFUploader({ sectionCv }: { sectionCv?: any }) {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
 

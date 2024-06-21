@@ -24,7 +24,20 @@ export const ourFileRouter = {
     }),
   pdfUploader: f({ pdf: { maxFileSize: "2MB" } })
     .middleware(auth)
-    .onUploadComplete(async ({ metadata, file }) => {}),
+    .onUploadComplete(async ({ metadata, file }) => {
+      const student = await db.student.findFirst({
+        where: {
+          userId: metadata.userId,
+        },
+      });
+
+      if (!student) throw new Error("Student not found");
+
+      await db.student.update({
+        where: { id: student.id },
+        data: { resumeUrl: `https://utfs.io/f/${file.key}` },
+      });
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

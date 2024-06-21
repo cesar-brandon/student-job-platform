@@ -3,10 +3,10 @@ import { StudentProfileFallback } from "./student-profile-fallback";
 import BlurImage from "../common/blur-image";
 import { ExtendedStudent } from "@/types/student";
 import { ProfileEditModal } from "./profile-edit-modal";
-import { simplifyName } from "@/lib/utils";
+import { cn, simplifyName } from "@/lib/utils";
 import { StudentProfileTabs } from "./student-profile-tabs";
-import { buttonVariants } from "../ui/button";
-import { Link } from "next-view-transitions";
+import { Button, buttonVariants } from "../ui/button";
+import Link from "next/link";
 
 export function StudentProfile({
   student,
@@ -49,17 +49,28 @@ export function StudentProfile({
         </div>
 
         <div className="w-full h-full flex items-end text-right p-2">
-          <i className="text-white font-semibold text-lg">
-            {/* &quot;Si te caes siete veces, levántate ocho.&quot; */}
-            {student.User.bio}
-          </i>
+          <i className="text-white font-semibold text-lg">{student.User.bio}</i>
         </div>
-        {isOwner && (
-          <ProfileEditModal
-            user={student.User}
-            className="absolute right-5 top-5 z-10 bg-background/70 hover:bg-background backdrop-blur-md h-10"
-          />
-        )}
+        <div className="absolute flex flex-col gap-4 right-5 top-5 z-10">
+          {isOwner && (
+            <ProfileEditModal
+              user={student.User}
+              className="bg-background/70 hover:bg-background backdrop-blur-md h-10"
+            />
+          )}
+          {student.resumeUrl && (
+            <Link
+              href={student.resumeUrl}
+              target="_blank"
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "lg" }),
+                "bg-background/70 hover:bg-background backdrop-blur-md h-10",
+              )}
+            >
+              Ver CV
+            </Link>
+          )}
+        </div>
       </CareerCard>
       {isOwner && (
         <Link

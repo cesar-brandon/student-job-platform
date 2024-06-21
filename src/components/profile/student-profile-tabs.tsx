@@ -18,6 +18,7 @@ export function StudentProfileTabs({ student }: { student: Student }) {
   const experience = (student.resume as any)?.experience;
   const firstExperienceSlug =
     experience &&
+    experience[0] &&
     `experience-0-${experience[0].title.toLowerCase().replace(/\s/g, "-")}`;
   const projects = (student.resume as any)?.projects;
 

@@ -37,7 +37,7 @@ export function ProfileEditModal({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="lg" className={className}>
+          <Button variant="ghost" size="lg" className={className}>
             Editar Pefil
           </Button>
         </DialogTrigger>
