@@ -9,11 +9,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { ResumeRequest } from "@/lib/validators/resume";
 import { Minus, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UseFormReturn, useFieldArray, useFormContext } from "react-hook-form";
 import { ExperienceItem } from "./experience-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -35,18 +34,11 @@ export function AddExperience({
   form: UseFormReturn<ResumeRequest>;
 }) {
   const [experiences, setExperiences] = useState<Experience[]>([]);
-  const { control, register } = useFormContext();
+  const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "experience",
   });
-
-  useEffect(() => {
-    console.log(fields.length);
-    form.getValues().experience.forEach((experience: Experience) => {
-      console.log(experience);
-    });
-  }, [fields, form]);
 
   return (
     <section className="space-y-4">
@@ -172,7 +164,7 @@ export function AddExperience({
           size="icon"
           type="button"
           variant="outline"
-          className="mt-2"
+          className="mt-4"
           onClick={async () => {
             if (fields.length === 0) {
               return append({

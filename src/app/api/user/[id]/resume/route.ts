@@ -40,8 +40,6 @@ export async function POST(req: Request) {
           projects: projects.map((project) => ({
             name: project.name,
             description: project.description,
-            startDate: new Date(project.startDate),
-            endDate: new Date(project.endDate),
             url: project.url,
           })),
         },

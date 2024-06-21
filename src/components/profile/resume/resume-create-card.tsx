@@ -24,6 +24,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "@/hooks/use-toast";
 import { AddExperience } from "./add-experience";
+import { AddProject } from "./add-project";
 
 export default function ResumeCreateCard({ user }: { user: user }) {
   const ref = useRef<EditorJS>();
@@ -125,7 +126,9 @@ export default function ResumeCreateCard({ user }: { user: user }) {
                 <CarouselItem>
                   <AddExperience form={form} />
                 </CarouselItem>
-                {/* <CarouselItem>proyectos</CarouselItem> */}
+                <CarouselItem>
+                  <AddProject form={form} />
+                </CarouselItem>
                 {/* <CarouselItem>PDF</CarouselItem> */}
               </CarouselContent>
             </Carousel>

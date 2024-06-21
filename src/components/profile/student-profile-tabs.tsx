@@ -4,6 +4,7 @@ import EditorOutput from "../editor/editor-output";
 import { Badge } from "../ui/badge";
 import { Accordion } from "../ui/accordion";
 import { ExperienceItem } from "./resume/experience-item";
+import { ProjectItem } from "./resume/project-item";
 
 interface Resume {
   professionalSummary: string;
@@ -15,6 +16,10 @@ export function StudentProfileTabs({ student }: { student: Student }) {
     ?.professionalSummary as string;
   const skills = (student.resume as any)?.skills;
   const experience = (student.resume as any)?.experience;
+  const firstExperienceSlug =
+    experience &&
+    `experience-0-${experience[0].title.toLowerCase().replace(/\s/g, "-")}`;
+  const projects = (student.resume as any)?.projects;
 
   return (
     <Tabs defaultValue="about" className="w-full">
@@ -27,7 +32,7 @@ export function StudentProfileTabs({ student }: { student: Student }) {
       <TabsContent value="about">
         {professionalSummary && <EditorOutput content={professionalSummary} />}
       </TabsContent>
-      <TabsContent value="skills">
+      <TabsContent value="skills" className="pt-3">
         {skills &&
           skills.map((skill: { name: string }) => (
             <Badge key={skill.name} className="m-1">
@@ -37,7 +42,7 @@ export function StudentProfileTabs({ student }: { student: Student }) {
       </TabsContent>
       <TabsContent value="experience">
         {experience && (
-          <Accordion type="multiple">
+          <Accordion type="single" defaultValue={firstExperienceSlug}>
             {experience.map((item: any, index: number) => (
               <ExperienceItem key={index} experience={item} index={index} />
             ))}
@@ -45,11 +50,13 @@ export function StudentProfileTabs({ student }: { student: Student }) {
         )}
       </TabsContent>
       <TabsContent value="projects">
-        <div className="p-4">
-          <p>Project 1</p>
-          <p>Project 2</p>
-          <p>Project 3</p>
-        </div>
+        {projects && (
+          <div className="flex flex-col gap-2 mt-6">
+            {projects.map((project: any, index: number) => (
+              <ProjectItem key={index} project={project} />
+            ))}
+          </div>
+        )}
       </TabsContent>
     </Tabs>
   );

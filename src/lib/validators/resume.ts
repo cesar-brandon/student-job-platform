@@ -30,11 +30,13 @@ export const ResumeValidator = z.object({
   ),
   projects: z.array(
     z.object({
-      name: z.string(),
-      description: z.string(),
-      startDate: z.string(),
-      endDate: z.string(),
-      url: z.string(),
+      name: z.string().min(1, { message: "El nombre es requerido" }),
+      description: z
+        .string()
+        .min(1, { message: "La descripción es requerida" }),
+      url: z.string().url({ message: "La URL es requerida" }).min(1, {
+        message: "La URL es requerida",
+      }),
     }),
   ),
 });
