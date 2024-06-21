@@ -13,6 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { user } from "@/types/next-auth";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { ComingSoonWrapper } from "@/components/common/coming-soon-wrapper";
 
 export default function ResumeOptionsCard({ user }: { user: user }) {
   const [selectedOption, setSelectedOption] = useState<
@@ -49,18 +50,20 @@ export default function ResumeOptionsCard({ user }: { user: user }) {
               </p>
             </Label>
           </div>
-          <div className="flex items-center gap-4 pl-6 rounded-sm border hover:border-primary transition-all duration-300">
-            <RadioGroupItem value="cv-import" id="cv-import" />
-            <Label
-              htmlFor="cv-import"
-              className="w-full font-semibold text-md py-4"
-            >
-              Importa tu CV
-              <p className="font-normal text-sm text-muted-foreground">
-                Importa tu currículum actual y edítalo
-              </p>
-            </Label>
-          </div>
+          <ComingSoonWrapper>
+            <div className="flex items-center gap-4 pl-6 rounded-sm border hover:border-primary transition-all duration-300">
+              <RadioGroupItem value="cv-import" id="cv-import" />
+              <Label
+                htmlFor="cv-import"
+                className="w-full font-semibold text-md py-4"
+              >
+                Importa tu CV
+                <p className="font-normal text-sm text-muted-foreground">
+                  Importa tu currículum actual y edítalo
+                </p>
+              </Label>
+            </div>
+          </ComingSoonWrapper>
         </RadioGroup>
       </CardContent>
       <CardFooter className="flex gap-4">

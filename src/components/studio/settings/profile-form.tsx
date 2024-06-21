@@ -27,6 +27,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 
+//NOTE: donde utilizamos esto?
+
 export function ProfileForm() {
   return (
     <>

@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { privateRoles } from "@/config";
 import dynamic from "next/dynamic";
 import { Feedback } from "../feedback";
+import { ComingSoonWrapper } from "../common/coming-soon-wrapper";
 
 const ThemeToggle = dynamic(() => import("../common/theme-toggle"));
 
@@ -56,23 +57,25 @@ const SidebarNav: React.FC<Props> = ({ user, className, isSheet = false }) => {
         }
         isSheet={isSheet}
       />
-      <ButtonLink
-        href="/notifications"
-        text="Notificaciones"
-        ariaLabel="Notificaciones"
-        variant="ghost"
-        className={`hover:bg-border justify-start ${
-          pathname === "/notifications" && "font-bold"
-        }`}
-        icon={
-          pathname === "/notifications" ? (
-            <BellIconSolid className="w-6 h-6 order-first mr-4" />
-          ) : (
-            <BellIcon className="w-6 h-6 order-first mr-4" />
-          )
-        }
-        isSheet={isSheet}
-      />
+      <ComingSoonWrapper>
+        <ButtonLink
+          href="/notifications"
+          text="Notificaciones"
+          ariaLabel="Notificaciones"
+          variant="ghost"
+          className={`hover:bg-border justify-start ${
+            pathname === "/notifications" && "font-bold"
+          }`}
+          icon={
+            pathname === "/notifications" ? (
+              <BellIconSolid className="w-6 h-6 order-first mr-4" />
+            ) : (
+              <BellIcon className="w-6 h-6 order-first mr-4" />
+            )
+          }
+          isSheet={isSheet}
+        />
+      </ComingSoonWrapper>
       <ThemeToggle />
       <ButtonLink
         href="/settings"
