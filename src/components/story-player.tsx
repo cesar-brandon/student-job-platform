@@ -8,7 +8,11 @@ import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useState } from "react";
 import { DotButton, useDotButton } from "./common/dot-button";
-import { NextButton, PrevButton, usePrevNextButtons } from "./common/arrow-button";
+import {
+  NextButton,
+  PrevButton,
+  usePrevNextButtons,
+} from "./common/arrow-button";
 import { cn } from "@/lib/utils";
 import BlurImage from "./common/blur-image";
 import { CarouselApi, CarouselOptions } from "@/types/carousel";
@@ -20,28 +24,34 @@ interface StoryPlayerProps {
   options?: CarouselOptions;
 }
 
-const StoryPlayer = ({ screen, closeStory, stories, options }: StoryPlayerProps) => {
+const StoryPlayer = ({
+  screen,
+  closeStory,
+  stories,
+  options,
+}: StoryPlayerProps) => {
   const [muted, setMuted] = useState(false);
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
 
   const onButtonClick = useCallback((emblaApi: CarouselApi) => {
     if (!emblaApi) return;
     const { autoplay } = emblaApi.plugins();
     if (!autoplay) return;
-    if ((autoplay as any).options.stopOnInteraction !== false) (autoplay as any).stop();
+    if ((autoplay as any).options.stopOnInteraction !== false)
+      (autoplay as any).stop();
   }, []);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
     emblaApi,
-    onButtonClick
-  )
+    onButtonClick,
+  );
 
   const {
     prevBtnDisabled,
     nextBtnDisabled,
     onPrevButtonClick,
-    onNextButtonClick
-  } = usePrevNextButtons(emblaApi, onButtonClick)
+    onNextButtonClick,
+  } = usePrevNextButtons(emblaApi, onButtonClick);
 
   let containerSize = "w-[22rem] h-[40rem] rounded-[2rem]";
   let imageClass = "w-full h-full object-cover";
@@ -69,10 +79,9 @@ const StoryPlayer = ({ screen, closeStory, stories, options }: StoryPlayerProps)
               <DotButton
                 key={index}
                 onClick={() => onDotButtonClick(index)}
-                className={cn(
-                  'flex-1 h-1 rounded-sm bg-white opacity-40',
-                  { 'opacity-95': index === selectedIndex }
-                )}
+                className={cn("flex-1 h-1 rounded-sm bg-white opacity-40", {
+                  "opacity-95": index === selectedIndex,
+                })}
               />
             ))}
           </div>
@@ -107,7 +116,7 @@ const StoryPlayer = ({ screen, closeStory, stories, options }: StoryPlayerProps)
                     alt={`Story ${title}`}
                     width="1920"
                     height="1080"
-                    className={`${imageClass} bg-white`}
+                    className={`${imageClass} bg-muted`}
                     src={image}
                   />
                 </div>
@@ -118,7 +127,7 @@ const StoryPlayer = ({ screen, closeStory, stories, options }: StoryPlayerProps)
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

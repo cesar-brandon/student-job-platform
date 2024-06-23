@@ -63,21 +63,21 @@ export default function Home() {
                 aria-label="Accede a las oportunidades"
                 className={cn(
                   buttonVariants(),
-                  "bg-orange rounded-full hover:bg-orange/90 lg:font-bold lg:text-lg lg:py-7 lg:px-8"
+                  "bg-orange rounded-full hover:bg-orange/90 lg:font-bold lg:text-lg lg:py-7 lg:px-8",
                 )}
               >
                 Accede a las oportunidades
               </Link>
 
-              <ButtonLink
-                href="/login-enterprise"
-                text="Empresas"
-                ariaLabel="Login empresas"
-                className="group lg:hidden"
-                icon={
-                  <ArrowLongRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-all duration-300" />
-                }
-              />
+              {/* <ButtonLink */}
+              {/*   href="/login-enterprise" */}
+              {/*   text="Empresas" */}
+              {/*   ariaLabel="Login empresas" */}
+              {/*   className="group lg:hidden" */}
+              {/*   icon={ */}
+              {/*     <ArrowLongRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-all duration-300" /> */}
+              {/*   } */}
+              {/* /> */}
             </div>
           </div>
           <div className="hidden lg:flex w-full justify-center">

@@ -15,6 +15,7 @@ interface Props {
   setUserDetails: (userDetails: null) => void;
 }
 
+//NOTE: se comento momentaneamente la funcion de ResetPassword
 const LoginForm = ({ userDetails, setUserDetails }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingCard, setIsLoadingCard] = useState<boolean>(false);
@@ -128,15 +129,14 @@ const LoginForm = ({ userDetails, setUserDetails }: Props) => {
         <>
           <UserCard user={userDetails} setUser={setUserDetails} />
           <PasswordInput value={formData.password} onChange={handleChange} />
-
-          <div className="text-right mt-2">
-            <Link
-              href="/login/reset-password"
-              className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
-            >
-              ¿Olvidó su contraseña?
-            </Link>
-          </div>
+          {/* <div className="text-right mt-2"> */}
+          {/*   <Link */}
+          {/*     href="/login/reset-password" */}
+          {/*     className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700" */}
+          {/*   > */}
+          {/*     ¿Olvidó su contraseña? */}
+          {/*   </Link> */}
+          {/* </div> */}
         </>
       )}
       <Button

@@ -29,14 +29,15 @@ const Carousel = () => {
       loop: true,
       skipSnaps: false,
     },
-    [Autoplay({ delay: 3000 })]
+    [Autoplay({ delay: 3000 })],
   );
 
   return (
     <div className="hidden relative lg:block w-full md:w-1/2 xl:w-2/3 h-screen p-4">
       <div
         ref={emblaRef}
-        className="overflow-hidden rounded-tl-[2rem] rounded-br-[2rem] h-full"
+        // className="overflow-hidden rounded-tl-[2rem] rounded-br-[2rem] h-full"
+        className="overflow-hidden rounded-[2rem] h-full"
       >
         <div className="flex touch-pan-y flex-row h-full">
           {posts.map((post: Post) => (
@@ -52,7 +53,7 @@ const Carousel = () => {
           ))}
         </div>
       </div>
-      <BackButton type="arrow" />
+      {/* <BackButton type="arrow" /> */}
     </div>
   );
 };

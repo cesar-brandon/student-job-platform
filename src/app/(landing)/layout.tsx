@@ -1,4 +1,3 @@
-import { Footer } from "@/components/layouts/footer";
 import "../globals.css";
 import AppBar from "@/components/layouts/app-bar";
 
@@ -7,6 +6,7 @@ export const metadata = {
   description: "Plataforma de empleo de IFV",
 };
 
+//NOTE: se comento momentaneamente el footer
 export default function LandingLayout({
   children,
 }: {
@@ -16,7 +16,7 @@ export default function LandingLayout({
     <>
       <AppBar />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
