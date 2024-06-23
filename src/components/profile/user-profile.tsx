@@ -1,14 +1,43 @@
 import CareerCard from "@/components/common/career-card";
 import { StudentProfileFallback } from "./student-profile-fallback";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { ProfileTabs } from "@/components/profile/profile-tabs";
-import BlurImage from "../common/blur-image";
+import BlurImage from "@/components/common/blur-image";
 import { simplifyName } from "@/lib/utils";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { buttonVariants } from "../ui/button";
+import { ArrowUpRight, LinkIcon } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { db } from "@/lib/prisma";
+import {
+  MetaIcon,
+  LinkedinIcon,
+  XTwitterIcon,
+  YoutubeIcon,
+  GithubIcon,
+  InstagramIcon,
+} from "@/components/common/brands-icons";
+import { cn } from "@/lib/utils";
+import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 
-export function UserProfile({
+const urlIconMappings = [
+  {
+    url: "linkedin.com",
+    icon: <LinkedinIcon className="h-5 w-5 fill-orange" />,
+  },
+  {
+    url: "x.com",
+    icon: <XTwitterIcon className="h-5 w-5 fill-orange" />,
+  },
+  { url: "facebook.com", icon: <MetaIcon className="h-5 w-5 fill-orange" /> },
+  {
+    url: "instagram.com",
+    icon: <InstagramIcon className="h-5 w-5 fill-orange" />,
+  },
+  { url: "youtube.com", icon: <YoutubeIcon className="h-5 w-5 fill-orange" /> },
+  { url: "github.com", icon: <GithubIcon className="h-5 w-5 fill-orange" /> },
+];
+
+export async function UserProfile({
   user,
   isOwner,
 }: {
@@ -16,6 +45,12 @@ export function UserProfile({
   isOwner?: boolean;
 }) {
   if (!user) return <StudentProfileFallback />;
+
+  const enterprise = await db.enterprise.findFirst({
+    where: {
+      userId: user.id,
+    },
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -47,6 +82,33 @@ export function UserProfile({
             </div>
             <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-foreground dark:from-background to-transparent" />
           </div>
+          <div className="h-full flex flex-col items-start gap-2">
+            {enterprise &&
+              enterprise.urls.map((url, index) => (
+                <Tooltip key={index}>
+                  <TooltipTrigger asChild>
+                    <Link
+                      key={url}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        buttonVariants({
+                          variant: "outline",
+                          size: "icon",
+                        }),
+                        "border-none hover:bg-background dark:hover:hover:bg-accent",
+                      )}
+                    >
+                      {urlIconMappings.find((mapping) =>
+                        url.includes(mapping.url),
+                      )?.icon ?? <LinkIcon className="h-5 w-5 stroke-orange" />}
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">{url}</TooltipContent>
+                </Tooltip>
+              ))}
+          </div>
         </div>
       </CareerCard>
       {isOwner && (
@@ -58,7 +120,7 @@ export function UserProfile({
           <ArrowUpRight className="h-4 w-4 ml-2" />
         </Link>
       )}
-      <ProfileTabs userId={user.id} />
+      <ProfileTabs enterprise={enterprise} userId={user.id} />
     </div>
   );
 }

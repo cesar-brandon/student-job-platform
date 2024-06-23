@@ -20,6 +20,7 @@ interface EditorProps {
 }
 
 //NOTE: add is pending in useMutation
+//NOTE: controlar mejor los errores
 
 const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   const {
@@ -39,7 +40,6 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const _titleRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { startUpload } = useUploadThing("imageUploader");
 
@@ -135,7 +135,7 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
     }
   }, [isMounted, initializeEditor]);
 
-  const { mutate: createPost } = useMutation({
+  const { mutate: createPost, isLoading } = useMutation({
     mutationFn: async ({
       title,
       content,
@@ -171,7 +171,6 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   });
 
   async function onSubmit(data: PostCreationRequest) {
-    setIsLoading(true);
     try {
       const blocks = await ref.current?.save();
       if (!blocks) return;
@@ -190,8 +189,6 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
           "Tu publicación no se publicó, inténtalo de nuevo más tarde",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
   }
 

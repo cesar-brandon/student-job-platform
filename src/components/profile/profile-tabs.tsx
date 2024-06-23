@@ -1,7 +1,17 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PostCardList } from "../post/post-card-list";
+import type { Enterprise } from "@prisma/client";
+import EditorOutput from "../editor/editor-output";
 
-export function ProfileTabs({ userId }: { userId: string }) {
+export function ProfileTabs({
+  userId,
+  enterprise,
+}: {
+  userId: string;
+  enterprise: Enterprise | null;
+}) {
+  const enterpriseDescription = enterprise?.description;
+
   return (
     <Tabs defaultValue="about" className="w-full">
       <TabsList className="grid w-full grid-cols-2">
@@ -9,12 +19,9 @@ export function ProfileTabs({ userId }: { userId: string }) {
         <TabsTrigger value="posts">Ofertas</TabsTrigger>
       </TabsList>
       <TabsContent value="about" className="flex flex-col gap-2">
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam
-          porro expedita non id mollitia, unde quia veritatis error! Eligendi
-          dignissimos illum eius aliquid quaerat tempore dicta delectus!
-          Dignissimos, possimus aliquid.
-        </p>
+        {enterpriseDescription && (
+          <EditorOutput content={enterpriseDescription} />
+        )}
       </TabsContent>
       <TabsContent value="posts">
         <PostCardList userId={userId} />

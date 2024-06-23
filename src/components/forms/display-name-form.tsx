@@ -56,8 +56,7 @@ export function DisplayNameForm({
     onSuccess: () => {
       router.refresh();
       return toast({
-        title: "Nombre actualizado",
-        description: "Tu nombre ha sido actualizado con éxito.",
+        description: "Nombre actualizado",
       });
     },
   });

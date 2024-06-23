@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import SearchBar from "@/components/common/search-bar";
 import { ProfileLink } from "@/components/profile/profile-link";
 import { User } from "@prisma/client";
@@ -14,14 +15,14 @@ const ExplorePage = async () => {
       <SearchBar className="mx-auto" />
       <div>
         {users.map((user: User) => (
-          <>
+          <Fragment key={user.id}>
             <ProfileLink
               user={user}
               key={user.id}
               className="px-0 hover:bg-transparent"
             />
             <Separator />
-          </>
+          </Fragment>
         ))}
       </div>
     </div>

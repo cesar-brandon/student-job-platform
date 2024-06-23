@@ -61,6 +61,8 @@ const ProfessionalSummary = forwardRef<
     }
   }, [isMounted, initializeEditor, ref]);
 
+  if (!isMounted) return null;
+
   return (
     <section className="space-y-4">
       <h2 className="text-xl font-bold">Resumen profesional</h2>

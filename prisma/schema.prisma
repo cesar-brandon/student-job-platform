@@ -114,6 +114,8 @@ model Enterprise {
   email       String         @unique
   address     String?
   phone       String?
+  description Json?
+  urls        String[]
   User        User?          @relation(fields: [userId], references: [id])
   userId      String?
   subscribers Subscription[]

@@ -6,11 +6,6 @@ import { Accordion } from "../ui/accordion";
 import { ExperienceItem } from "./resume/experience-item";
 import { ProjectItem } from "./resume/project-item";
 
-interface Resume {
-  professionalSummary: string;
-  skills: { name: string }[];
-}
-
 export function StudentProfileTabs({ student }: { student: Student }) {
   const professionalSummary = (student.resume as any)
     ?.professionalSummary as string;

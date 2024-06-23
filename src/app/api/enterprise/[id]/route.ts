@@ -42,13 +42,50 @@ const DELETE = async (
     if (!session?.user) {
       return new Response("Unauthorized", { status: 401 });
     }
-    console.log("PARAMS", params);
     await db.enterprise.delete({ where: { id: params.id } });
     return new Response("Deleted");
   } catch (error) {
-    console.error(error);
     return new Response("ERROR_DELETING_ENTERPRISE", { status: 500 });
   }
 };
 
-export { PUT, DELETE };
+interface ProfileRequestBody {
+  description?: string;
+  urls?: string[];
+}
+
+const PATCH = async (
+  request: Request,
+  { params }: { params: { id: string } },
+) => {
+  try {
+    const body: ProfileRequestBody = await request.json();
+    const session = await getAuthSession();
+    if (!session?.user) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    if (body.urls) {
+      await db.enterprise.update({
+        where: { id: params.id },
+        data: {
+          urls: { set: body.urls },
+        },
+      });
+    }
+    if (body.description) {
+      await db.enterprise.update({
+        where: { id: params.id },
+        data: {
+          description: body.description,
+        },
+      });
+    }
+
+    return new Response("OK");
+  } catch (error) {
+    return new Response("ERROR_UPDATING_ENTERPRISE", { status: 500 });
+  }
+};
+
+export { PUT, DELETE, PATCH };
