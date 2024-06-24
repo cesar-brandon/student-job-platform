@@ -3,7 +3,6 @@ import { Studio } from "@/components/studio/studio";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
 import getSession from "@/lib/getSession";
-import { Suspense } from "react";
 
 export const metadata = {
   title: "Studio",
@@ -34,13 +33,11 @@ export default async function StudioPage() {
 
   return (
     <div className="hidden flex-col md:flex">
-      <Suspense fallback={<p>Cargando Studio</p>}>
-        <Studio
-          initialPosts={posts}
-          defaultLayout={defaultLayout}
-          user={session?.user}
-        />
-      </Suspense>
+      <Studio
+        initialPosts={posts}
+        defaultLayout={defaultLayout}
+        user={session?.user}
+      />
     </div>
   );
 }

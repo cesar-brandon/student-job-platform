@@ -1,4 +1,4 @@
-import { Post, User } from "@prisma/client";
+import type { Post, User } from "@prisma/client";
 import { create } from "zustand";
 
 export interface PostSelected extends Post {

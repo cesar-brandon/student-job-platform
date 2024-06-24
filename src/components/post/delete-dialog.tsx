@@ -34,7 +34,7 @@ export function DeleteDialog({ id, name }: { id: string; name: string }) {
         description: "Ofera eliminada con éxito",
       });
       setOpen(false);
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["studio-posts"]);
     } catch (error) {
       toast({
         title: "Algo salió mal",
@@ -63,7 +63,7 @@ export function DeleteDialog({ id, name }: { id: string; name: string }) {
         <AlertDialogHeader>
           <AlertDialogTitle>
             Eliminar
-            <span className="ml-2 text-primary">{`"${name}"`}</span>
+            <span className="w-full ml-2 text-primary break-all">{`"${name}"`}</span>
           </AlertDialogTitle>
           <AlertDialogDescription>
             ¿Estás seguro de que deseas eliminar esta oferta?
@@ -74,7 +74,12 @@ export function DeleteDialog({ id, name }: { id: string; name: string }) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <Button onClick={onDelete} variant="destructive" disabled={isLoading}>
+          <Button
+            type="submit"
+            onClick={onDelete}
+            variant="destructive"
+            disabled={isLoading}
+          >
             {isLoading ? (
               <Loader2 className="animate-spin w-4 h-4" />
             ) : (

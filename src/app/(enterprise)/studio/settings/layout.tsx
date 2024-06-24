@@ -42,11 +42,11 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
         <h1 className="text-xl font-bold">Configuración de cuenta</h1>
       </div>
       <Separator />
-      <div className="flex flex-col p-10 pb-16 space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+      <div className="flex flex-col px-10 pt-10 box-border space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <aside className="-mx-4 lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
-        <ScrollArea className="flex-1 lg:max-w-2xl h-[40rem] px-4">
+        <ScrollArea className="flex-1 lg:max-w-2xl h-[90dvh] px-4">
           {children}
         </ScrollArea>
       </div>

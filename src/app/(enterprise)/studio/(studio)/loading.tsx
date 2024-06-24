@@ -1,5 +1,7 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { LoaderIfvIcon } from "@/components/common/icons";
 
 export default function Loading() {
-  return <Skeleton className="w-42 h-42">Loadingggggg</Skeleton>;
+  return (
+    <LoaderIfvIcon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+  );
 }

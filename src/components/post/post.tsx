@@ -108,7 +108,7 @@ const Post: FC<PostProps> = ({
               <Link href={`/${post.author.username}/post/${post.id}`}>
                 <h3
                   className="text-lg sm:text-xl md:text-2xl text-primary font-semibold leading-none tracking-tight 
-                  hover:underline"
+                  hover:underline break-all"
                 >
                   {post.title}
                 </h3>

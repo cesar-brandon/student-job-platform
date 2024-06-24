@@ -5,7 +5,6 @@ import TextareaAutosize from "react-textarea-autosize";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
-import { uploadFiles } from "@/lib/uploadthing";
 import { toast } from "../../hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
@@ -175,7 +174,7 @@ const PostForm: React.FC<PostFormProps> = ({ id, content, filters }) => {
       if (pathname !== "/studio") {
         router.push("/studio");
       }
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["studio-posts"]);
 
       return toast({
         description: "Tu oferta ha sido publicada.",

@@ -1,112 +1,97 @@
-import { ComponentProps } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ExtendedPostApply } from "@/types/db";
 import EditorOutput from "../editor/editor-output";
-import { ClockIcon, MapPinIcon } from "lucide-react";
 import { usePostStore } from "@/store/post";
+import { FilterBadgeList } from "../post/filters/filter-badge-list";
+import { Skeleton } from "@/components/ui/skeleton";
+import { NoItems } from "../common/no-items";
 
 interface MailListProps {
   items: ExtendedPostApply[];
+  lastPostRef: (element: any) => void;
+  isFetchingNextPage: boolean;
 }
 
-const labels = [
-  {
-    id: "address",
-    title: "Dirección de empleo",
-    label: "work",
-    icon: <MapPinIcon className="h-4 w-4" />,
-    variant: "accent",
-  },
-  {
-    id: "full-time",
-    title: "Full Time",
-    label: "personal",
-    icon: <ClockIcon className="h-4 w-4" />,
-    variant: "primary",
-  },
-];
-
-export function PostList({ items }: MailListProps) {
-  const { post, setPost } = usePostStore();
-
+export function PostList({
+  items,
+  lastPostRef,
+  isFetchingNextPage,
+}: MailListProps) {
   return (
-    <ScrollArea className="h-screen">
-      <div className="flex flex-col gap-2 p-4 pt-0">
-        {items.map((item) => (
-          <button
-            key={item.id}
-            className={cn(
-              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              post && post.selected === item.id && "bg-muted",
-            )}
-            onClick={() =>
-              setPost({
-                ...post,
-                selected: item.id,
-              })
-            }
-          >
-            <div className="flex w-full flex-col gap-1">
-              <div className="flex items-center">
-                <div className="flex items-center gap-2">
-                  <div className="font-semibold">{item.title}</div>
-                  {!item.read && (
-                    <span className="flex h-2 w-2 rounded-full bg-blue-600" />
-                  )}
-                </div>
-                <div
-                  className={cn(
-                    "ml-auto text-xs",
-                    post && post.selected === item.id
-                      ? "text-foreground"
-                      : "text-muted-foreground",
-                  )}
-                >
-                  {formatDistanceToNow(new Date(item.createdAt), {
-                    addSuffix: true,
-                  })}
-                </div>
-              </div>
-              <div className="text-xs font-medium">{item.author.name}</div>
+    <ScrollArea className="w-full h-[80vh]">
+      <ul className="w-full flex flex-col gap-2 p-4 pt-0">
+        {items.map((item, index) => {
+          if (index === items.length - 1) {
+            return (
+              <li key={item.id} ref={lastPostRef}>
+                <PostItem item={item} />
+              </li>
+            );
+          } else {
+            return <PostItem key={item.id} item={item} />;
+          }
+        })}
+        {isFetchingNextPage && (
+          <li className="w-full flex flex-col justify-between items-center gap-3 rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+            <div className="w-full">
+              <Skeleton className="h-4 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-1/4 mb-2" />
+              <Skeleton className="h-40 w-full" />
             </div>
-            <div className="line-clamp-2 text-xs text-muted-foreground">
-              {item.content && <EditorOutput content={item.content} />}
-            </div>
-            {labels.length ? (
-              <div className="flex items-center gap-2">
-                {labels.map((label) => (
-                  <Badge
-                    key={label.id}
-                    variant={getBadgeVariantFromLabel(label.label)}
-                    className="gap-2 py-1"
-                  >
-                    {label.icon}
-                    {label.title}
-                  </Badge>
-                ))}
-              </div>
-            ) : null}
-          </button>
-        ))}
-      </div>
+          </li>
+        )}
+      </ul>
     </ScrollArea>
   );
 }
 
-function getBadgeVariantFromLabel(
-  label: string,
-): ComponentProps<typeof Badge>["variant"] {
-  if (["work"].includes(label.toLowerCase())) {
-    return "default";
-  }
+function PostItem({ item }: { item: ExtendedPostApply }) {
+  const { post, setPost } = usePostStore();
 
-  if (["personal"].includes(label.toLowerCase())) {
-    return "secondary";
-  }
-
-  return "secondary";
+  return (
+    <button
+      className={cn(
+        "w-full flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+        post && post.selected === item.id && "bg-muted",
+      )}
+      onClick={() =>
+        setPost({
+          ...post,
+          selected: item.id,
+        })
+      }
+    >
+      <div className="flex w-full flex-col gap-1">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="font-semibold break-all">{item.title}</div>
+            {!item.read && (
+              <span className="flex min-w-2 h-2 w-2 rounded-full bg-blue-600" />
+            )}
+          </div>
+          <div
+            className={cn(
+              "min-w-24 text-xs",
+              post && post.selected === item.id
+                ? "text-foreground"
+                : "text-muted-foreground",
+            )}
+          >
+            {formatDistanceToNow(new Date(item.createdAt), {
+              addSuffix: true,
+            })}
+          </div>
+        </div>
+        <div className="text-xs font-medium">{item.author.name}</div>
+      </div>
+      <div className="line-clamp-2 text-xs text-muted-foreground">
+        {item.content && <EditorOutput content={item.content} />}
+      </div>
+      {item.filters.length ? (
+        <FilterBadgeList filterIds={item.filters} />
+      ) : null}
+    </button>
+  );
 }
