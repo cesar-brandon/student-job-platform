@@ -6,11 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import EditorOutput from "../editor/editor-output";
 import { ExtendedPostApply } from "@/types/db";
 import { ScrollArea } from "../ui/scroll-area";
@@ -20,6 +15,8 @@ import { simplifyName } from "@/lib/utils";
 import { ApplyList } from "./apply/apply-list";
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 import type { User } from "@prisma/client";
+import { DeleteDialog } from "../post/delete-dialog";
+import { PostEditModal } from "../post/edit-modal";
 
 interface PostDisplayProps {
   post: ExtendedPostApply | null;
@@ -33,27 +30,13 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
 
   return (
     <div className="flex min-h-full flex-col">
-      <div className="flex items-center p-2">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={!post}>
-              <Pencil className="h-4 w-4" />
-              <span className="sr-only">Editar</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Editar</TooltipContent>
-        </Tooltip>
-        <Separator orientation="vertical" className="mx-1 h-6" />
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={!post}>
-              <Trash2 className="h-4 w-4" />
-              <span className="sr-only">Eliminar</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Eliminar</TooltipContent>
-        </Tooltip>
-      </div>
+      {post && post.author.id === user.id && (
+        <div className="flex items-center p-2">
+          <PostEditModal post={post} />
+          <Separator orientation="vertical" className="mx-1 h-6" />
+          <DeleteDialog id={post.id} name={post.title} />
+        </div>
+      )}
       <Separator />
       {post ? (
         <div className="h-full flex flex-1 flex-col">
@@ -144,7 +127,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">
-          No message selected
+          Ningún puesto seleccionado.
         </div>
       )}
     </div>

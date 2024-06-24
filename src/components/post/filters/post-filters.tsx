@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Badge } from "@/components/ui/badge";
@@ -22,8 +20,6 @@ import {
 } from "@/components/ui/drawer";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Filter } from "@prisma/client";
-
-const topics = ["Practicas", "Remoto", "Sin experiencia", "Full time"];
 
 interface Props {
   filters: Filter[];

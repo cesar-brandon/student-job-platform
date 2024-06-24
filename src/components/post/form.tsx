@@ -7,22 +7,25 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
 import { uploadFiles } from "@/lib/uploadthing";
 import { toast } from "../../hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { LoaderCircleIcon } from "../common/icons";
 import { useUploadThing } from "@/lib/uploadthing";
 
-interface EditorProps {
+interface PostFormProps {
   id?: string;
+  content?: {
+    title: string;
+    description: any;
+  };
   filters: string[];
 }
 
-//NOTE: add is pending in useMutation
 //NOTE: controlar mejor los errores
 
-const Editor: React.FC<EditorProps> = ({ id, filters }) => {
+const PostForm: React.FC<PostFormProps> = ({ id, content, filters }) => {
   const {
     register,
     handleSubmit,
@@ -31,15 +34,19 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
     resolver: zodResolver(PostValidator),
     defaultValues: {
       id: `${id}`,
-      title: "",
+      title: content?.title ?? "",
       content: null,
-      filters: [],
+      filters: filters ?? [],
     },
   });
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const _titleRef = useRef<HTMLTextAreaElement>(null);
+
   const router = useRouter();
+  const pathname = usePathname();
+
+  const queryClient = useQueryClient();
 
   const { startUpload } = useUploadThing("imageUploader");
 
@@ -59,7 +66,7 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
         },
         placeholder: "Empieza a escribir tu oferta...",
         inlineToolbar: true,
-        data: { blocks: [] },
+        data: content?.description ?? {},
         tools: {
           linkTool: {
             class: LinkTool,
@@ -99,7 +106,7 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
         },
       });
     }
-  }, [startUpload]);
+  }, [startUpload, content]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -136,22 +143,27 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   }, [isMounted, initializeEditor]);
 
   const { mutate: createPost, isLoading } = useMutation({
-    mutationFn: async ({
-      title,
-      content,
-      id,
-      filters,
-    }: PostCreationRequest) => {
+    mutationFn: async (post: PostCreationRequest) => {
+      const blocks = await ref.current?.save();
+      if (!blocks) throw new Error("No se pudo guardar el contenido");
+
       const payload: PostCreationRequest = {
         id: `${id}`,
-        title,
-        content,
+        title: post.title,
+        content: blocks,
         filters,
       };
-      const { data } = await axios.post("/api/user/post/create", payload);
+      const { data } = await axios.patch(`/api/user/post/${id}`, payload);
       return data;
     },
-    onError: () => {
+    onError: (error) => {
+      if (error instanceof Error) {
+        return toast({
+          title: "Algo salió mal",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
       return toast({
         title: "Algo salió mal",
         description:
@@ -160,37 +172,16 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
       });
     },
     onSuccess: () => {
-      router.push("/studio");
-
-      router.refresh();
+      if (pathname !== "/studio") {
+        router.push("/studio");
+      }
+      queryClient.invalidateQueries(["posts"]);
 
       return toast({
         description: "Tu oferta ha sido publicada.",
       });
     },
   });
-
-  async function onSubmit(data: PostCreationRequest) {
-    try {
-      const blocks = await ref.current?.save();
-      if (!blocks) return;
-      const payload: PostCreationRequest = {
-        title: data.title,
-        content: blocks,
-        id: `${id}`,
-        filters,
-      };
-
-      createPost(payload);
-    } catch (error) {
-      toast({
-        title: "Algo salió mal",
-        description:
-          "Tu publicación no se publicó, inténtalo de nuevo más tarde",
-        variant: "destructive",
-      });
-    }
-  }
 
   if (!isMounted) return null;
 
@@ -201,7 +192,7 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
       <form
         id="enterprise-post-form"
         className="w-full"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit((data) => createPost(data))}
       >
         <div className="prose prose-stone dark:prose-invert">
           <TextareaAutosize
@@ -236,4 +227,4 @@ const Editor: React.FC<EditorProps> = ({ id, filters }) => {
   );
 };
 
-export default Editor;
+export default PostForm;

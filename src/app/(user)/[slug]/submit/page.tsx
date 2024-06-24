@@ -1,4 +1,3 @@
-import Editor from "@/components/editor/editor";
 import { privateRoles } from "@/config";
 import getSession from "@/lib/getSession";
 
