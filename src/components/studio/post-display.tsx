@@ -1,5 +1,5 @@
 import format from "date-fns/format";
-import { BriefcaseBusiness, Pencil, Trash2 } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -17,6 +17,7 @@ import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 import type { User } from "@prisma/client";
 import { DeleteDialog } from "../post/delete-dialog";
 import { PostEditModal } from "../post/edit-modal";
+import { FilterBadgeList } from "../post/filters/filter-badge-list";
 
 interface PostDisplayProps {
   post: ExtendedPostApply | null;
@@ -62,7 +63,12 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
           <Separator />
           <ScrollArea className="w-full h-[34rem] whitespace-pre-wrap pt-0 px-4 text-sm">
             {display === "post" ? (
-              <EditorOutput content={post.content} />
+              <div className="flex flex-col">
+                {post.filters.length > 0 && (
+                  <FilterBadgeList filterIds={post.filters} />
+                )}
+                <EditorOutput content={post.content} />
+              </div>
             ) : display === "apply" ? (
               <ApplyList applies={post.applies} />
             ) : (

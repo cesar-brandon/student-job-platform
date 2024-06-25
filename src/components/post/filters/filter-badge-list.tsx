@@ -1,8 +1,9 @@
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useFilterStore } from "@/store/filter";
+import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import type { Filter } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { Accessibility, Book, BriefcaseBusiness, Clock } from "lucide-react";
+import { Accessibility, BriefcaseBusiness, Clock } from "lucide-react";
 import { ComponentProps } from "react";
 
 type FilterOption = {
@@ -15,46 +16,75 @@ type FilterBadge = {
   label: string;
 };
 
+function sortFilters(
+  allFilterLabels: FilterBadge[],
+  filterBadgeIcons: Record<string, { icon: JSX.Element; priority: number }>,
+) {
+  const includedFilters = new Set<string>();
+  return allFilterLabels
+    .filter((filter) => {
+      if (
+        filterBadgeIcons.hasOwnProperty(filter.title) &&
+        !includedFilters.has(filter.title)
+      ) {
+        includedFilters.add(filter.title);
+        return true;
+      }
+      return false;
+    })
+    .sort(
+      (a, b) =>
+        filterBadgeIcons[a.title].priority - filterBadgeIcons[b.title].priority,
+    )
+    .slice(0, 4);
+}
+
 export function FilterBadgeList({ filterIds }: { filterIds: string[] }) {
-  const { data: allFilters, isLoading } = useQuery(
-    ["filter-badges"],
-    async () => {
-      const { data } = await axios.get("/api/filter");
-      const filterLabels = data.flatMap((filter: Filter) => {
-        const labels =
-          Array.isArray(filter.options) &&
-          (filter.options as Array<FilterOption>)
-            .filter((option) => filterIds.includes(option.id))
-            .map((option) => ({ title: filter.title, label: option.label }));
-        return labels;
-      });
-      return filterLabels;
-    },
-  );
+  const { allFilters, isPending } = useFilterStore();
+
+  const allFilterLabels = allFilters.flatMap((filter: Filter) => {
+    const labels =
+      Array.isArray(filter.options) &&
+      (filter.options as Array<FilterOption>)
+        .filter((option) => filterIds.includes(option.id))
+        .map((option) => ({ title: filter.title, label: option.label }));
+    return labels || [];
+  });
 
   const filterBadgeIcons: {
-    [key: string]: JSX.Element;
+    [key: string]: { icon: JSX.Element; priority: number };
   } = {
-    Especialidad: <Book className="h-4 w-4" />,
-    "Modalidad de trabajo": <Book className="h-4 w-4" />,
-    "Nivel laboral": <BriefcaseBusiness className="h-4 w-4" />,
-    "Carga horaria": <Clock className="h-4 w-4" />,
-    "Postulantes con discapacidad": <Accessibility className="h-4 w-4" />,
+    "Modalidad de trabajo": {
+      icon: <BriefcaseIcon className="mr-2 h-4 w-4" />,
+      priority: 1,
+    },
+    "Nivel laboral": {
+      icon: <BriefcaseBusiness className="mr-2 h-4 w-4" />,
+      priority: 2,
+    },
+    "Carga horaria": { icon: <Clock className="mr-2 h-4 w-4" />, priority: 3 },
+    "Postulantes con discapacidad": {
+      icon: <Accessibility className="mr-2 h-4 w-4" />,
+      priority: 4,
+    },
   };
 
+  const filterLabels = sortFilters(allFilterLabels, filterBadgeIcons);
+
   return (
-    <div className="flex flex-wrap gap-2">
-      {allFilters &&
-        allFilters.map((filter: FilterBadge) => (
-          <Badge
-            key={filter.label}
-            variant={getBadgeVariantFromLabel(filter.label)}
-            className="gap-2 py-2"
-          >
-            {filterBadgeIcons[filter.title as keyof typeof filterBadgeIcons]}
-            <p>{filter.label}</p>
-          </Badge>
-        ))}
+    <div className="flex flex-wrap gap-2 pt-5">
+      {isPending
+        ? [...Array(3)].map((_, i) => <Skeleton key={i} className="h-5 w-24" />)
+        : filterLabels.map((filter: FilterBadge) => (
+            <Badge
+              key={filter.label}
+              variant={getBadgeVariantFromLabel(filter.title)}
+              className="font-normal"
+            >
+              {filterBadgeIcons[filter.title].icon}
+              <p>{filter.label}</p>
+            </Badge>
+          ))}
     </div>
   );
 }
@@ -70,5 +100,5 @@ function getBadgeVariantFromLabel(
     return "secondary";
   }
 
-  return "outline";
+  return "secondary";
 }

@@ -6,7 +6,6 @@ import EditorOutput from "../editor/editor-output";
 import { usePostStore } from "@/store/post";
 import { FilterBadgeList } from "../post/filters/filter-badge-list";
 import { Skeleton } from "@/components/ui/skeleton";
-import { NoItems } from "../common/no-items";
 
 interface MailListProps {
   items: ExtendedPostApply[];
@@ -20,7 +19,7 @@ export function PostList({
   isFetchingNextPage,
 }: MailListProps) {
   return (
-    <ScrollArea className="w-full h-[80vh]">
+    <ScrollArea className="w-full h-[93dvh]">
       <ul className="w-full flex flex-col gap-2 p-4 pt-0">
         {items.map((item, index) => {
           if (index === items.length - 1) {
@@ -89,7 +88,7 @@ function PostItem({ item }: { item: ExtendedPostApply }) {
       <div className="line-clamp-2 text-xs text-muted-foreground">
         {item.content && <EditorOutput content={item.content} />}
       </div>
-      {item.filters.length ? (
+      {item.filters.length > 0 ? (
         <FilterBadgeList filterIds={item.filters} />
       ) : null}
     </button>

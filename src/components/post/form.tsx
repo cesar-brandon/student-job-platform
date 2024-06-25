@@ -32,7 +32,7 @@ const PostForm: React.FC<PostFormProps> = ({ id, content, filters }) => {
   } = useForm<PostCreationRequest>({
     resolver: zodResolver(PostValidator),
     defaultValues: {
-      id: `${id}`,
+      id: id ?? "",
       title: content?.title ?? "",
       content: null,
       filters: filters ?? [],

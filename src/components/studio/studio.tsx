@@ -13,7 +13,7 @@ import { PostList } from "@/components/studio/post-list";
 import { useIntersection } from "@mantine/hooks";
 import { ExtendedPostApply } from "@/types/db";
 import { useSession } from "next-auth/react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import axios from "axios";
 import { PostDisplay } from "./post-display";
@@ -22,6 +22,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import type { User } from "@prisma/client";
 import { NoItems } from "../common/no-items";
 import { Skeleton } from "../ui/skeleton";
+import { useFilterStore } from "@/store/filter";
 
 interface MailProps {
   initialPosts: ExtendedPostApply[];
@@ -36,6 +37,7 @@ export function Studio({
   user,
 }: MailProps) {
   const { post } = usePostStore();
+  const { setFilters, setIsPending } = useFilterStore();
   const lastPostRef = useRef<HTMLDivElement>(null);
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
@@ -44,21 +46,36 @@ export function Studio({
 
   const { data: session } = useSession();
 
-  const { data, fetchNextPage, isFetchingNextPage, isFetching } =
-    useInfiniteQuery(
-      ["studio-posts"],
-      async ({ pageParam = 1 }) => {
-        const query = `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
-        const { data } = await axios.get(query);
-        return data as ExtendedPostApply[];
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    ["studio-posts"],
+    async ({ pageParam = 1 }) => {
+      const query = `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
+      const { data } = await axios.get(query);
+      return data as ExtendedPostApply[];
+    },
+    {
+      getNextPageParam: (_, pages) => {
+        return pages.length + 1;
       },
-      {
-        getNextPageParam: (_, pages) => {
-          return pages.length + 1;
-        },
-        initialData: { pages: [initialPosts], pageParams: [1] },
+      initialData: { pages: [initialPosts], pageParams: [1] },
+    },
+  );
+
+  useQuery(
+    ["filter-badges"],
+    async () => {
+      setIsPending(true);
+      const { data } = await axios.get("/api/filter");
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        setFilters(data);
+        setIsPending(false);
       },
-    );
+      staleTime: Infinity,
+    },
+  );
 
   useEffect(() => {
     if (entry?.isIntersecting) {
