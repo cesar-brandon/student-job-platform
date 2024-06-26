@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { FunnelIcon } from "@heroicons/react/24/outline";
 import {
   Accordion,
   AccordionContent,
@@ -14,21 +12,18 @@ import {
   Drawer,
   DrawerContent,
   DrawerHeader,
-  DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { Filter } from "@prisma/client";
+import { useFilterStore } from "@/store/filter";
 
 interface Props {
-  filters: Filter[];
   selectedFilters: string[];
   setSelectedFilters: (filters: string[]) => void;
 }
 
 export default function PostFilters({
-  filters,
   selectedFilters,
   setSelectedFilters,
 }: Props) {
@@ -39,7 +34,6 @@ export default function PostFilters({
     <div className="flex items-center justify-between gap-4 cursor-default px-4 sm:p-0">
       {isDesktop ? (
         <PostFilterContent
-          filters={filters}
           selectedFilters={selectedFilters}
           setSelectedFilters={setSelectedFilters}
         />
@@ -84,15 +78,13 @@ export default function PostFilters({
   );
 }
 
-function PostFilterContent({
-  filters,
-  selectedFilters,
-  setSelectedFilters,
-}: Props) {
-  const _multiselectFilters = filters.filter(
+function PostFilterContent({ selectedFilters, setSelectedFilters }: Props) {
+  const { allFilters, setIsPending } = useFilterStore();
+
+  const _multiselectFilters = allFilters.filter(
     (filter) => filter.type === "MULTISELECT",
   );
-  const _singleselectFilters = filters.filter(
+  const _singleselectFilters = allFilters.filter(
     (filter) => filter.type === "SELECT",
   );
 

@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { HoverProfile } from "@/components/profile/hover-profile";
+import { FilterBadgeList } from "@/components/post/filters/filter-badge-list";
 
 interface SubRedditPostPageProps {
   params: {
@@ -81,8 +83,16 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
               </Button>
             </Link>
 
-            <p className="max-h-40 mt-1 truncate text-xs text-muted-foreground">
-              Publicado por @{post?.author.name ?? cachedPost.authorUsername}{" "}
+            <p className="flex items-center gap-1 max-h-40 mt-1 truncate text-xs text-muted-foreground">
+              Publicado por
+              <HoverProfile
+                authorName={post?.author.name ?? cachedPost.authorUsername}
+                authorImage={post?.author.image ?? cachedPost.authorUsername}
+              >
+                <span className="text-xs text-primary leading-none tracking-tight hover:underline cursor-default">
+                  @{post?.author.username ?? cachedPost.authorUsername}
+                </span>
+              </HoverProfile>
               {formatTimeToNow(
                 new Date(post?.createdAt ?? cachedPost.createdAt),
               )}
@@ -93,22 +103,11 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
             {post?.title ?? cachedPost.title}
           </h1>
 
-          <div className="w-full flex gap-2 mb-6">
-            <Badge
-              className="gap-2 text-muted-foreground py-1"
-              variant="secondary"
-            >
-              <MapPinIcon className="h-4 w-4" />
-              Direccion de ejemplo
-            </Badge>
-            <Badge
-              className="gap-2 text-muted-foreground py-1"
-              variant="secondary"
-            >
-              <ClockIcon className="h-4 w-4" />
-              Full Time
-            </Badge>
-          </div>
+          {post?.filters && post?.filters.length > 0 ? (
+            <div className="w-full flex gap-2 mb-6">
+              <FilterBadgeList filterIds={post?.filters} />
+            </div>
+          ) : null}
 
           <div className="flex gap-2">
             <Button>

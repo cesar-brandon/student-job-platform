@@ -12,11 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export function PostEditModal({ post }: { post: ExtendedPostApply }) {
-  const { data: filters } = useQuery(
-    ["filters"],
-    async () => await axios.get("/api/filter").then((res) => res.data),
-  );
-
   return (
     <Dialog>
       <Tooltip>
@@ -32,7 +27,7 @@ export function PostEditModal({ post }: { post: ExtendedPostApply }) {
       </Tooltip>
 
       <DialogContent className="h-[80%] max-w-[80%]">
-        <Submit post={post} filters={filters} />
+        <Submit post={post} />
       </DialogContent>
     </Dialog>
   );

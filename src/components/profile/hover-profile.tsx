@@ -19,7 +19,7 @@ export function HoverProfile({
   return (
     <HoverCard>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
-      <HoverCardContent className="w-80">
+      <HoverCardContent className="w-80 overflow-hidden">
         {" "}
         <div className="flex justify-between space-x-4">
           <Avatar>
@@ -30,7 +30,7 @@ export function HoverProfile({
           </Avatar>
           <div className="space-y-1">
             <h4 className="text-sm font-semibold">@{authorName}</h4>
-            <p className="text-sm">
+            <p className="w-full font-normal text-sm break-all">
               The React Framework – created and maintained by @vercel.
             </p>
             <div className="flex items-center pt-2">

@@ -3,13 +3,14 @@
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { ExtendedPost } from "@/types/db";
 import { useIntersection } from "@mantine/hooks";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef } from "react";
 import Post from "./post";
 import { Skeleton } from "../ui/skeleton";
 import { NoItems } from "../common/no-items";
+import { useFilterStore } from "@/store/filter";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -24,6 +25,8 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
   });
 
   const { data: session } = useSession();
+
+  const { setFilters, setIsPending } = useFilterStore();
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ["posts"],
@@ -40,6 +43,22 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
         return pages.length + 1;
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
+    },
+  );
+
+  useQuery(
+    ["filters"],
+    async () => {
+      setIsPending(true);
+      const { data } = await axios.get("/api/filter");
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        setFilters(data);
+        setIsPending(false);
+      },
+      staleTime: Infinity,
     },
   );
 

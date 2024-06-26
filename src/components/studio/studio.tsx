@@ -62,7 +62,7 @@ export function Studio({
   );
 
   useQuery(
-    ["filter-badges"],
+    ["filters"],
     async () => {
       setIsPending(true);
       const { data } = await axios.get("/api/filter");
