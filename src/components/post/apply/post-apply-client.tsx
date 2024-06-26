@@ -5,7 +5,7 @@ import { toast } from "@/hooks/use-toast";
 import { PostApplyRequest } from "@/lib/validators/apply";
 import { usePrevious } from "@mantine/hooks";
 import { ApplyStatus } from "@prisma/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { ArrowUpRight, Check, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -21,6 +21,8 @@ export function PostApplyClient({
 }: PostApplyClientProps) {
   const [currentApply, setCurrentApply] = useState(initialApply);
   const prevApply = usePrevious(currentApply);
+
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setCurrentApply(initialApply);
@@ -61,6 +63,7 @@ export function PostApplyClient({
       }
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(["applies", postId]);
       toast({
         title: "Postulación exitosa.",
         description: "Se ha postulado al post.",

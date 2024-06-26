@@ -1,18 +1,8 @@
 "use client";
 
 import { cn, formatTimeToNow, simplifyName } from "@/lib/utils";
-import {
-  ClockIcon,
-  MapPinIcon,
-  PaperAirplaneIcon,
-} from "@heroicons/react/24/outline";
-import type {
-  Apply,
-  Bookmark,
-  Post as PrismaPost,
-  User,
-  Vote,
-} from "@prisma/client";
+import { ClockIcon } from "@heroicons/react/24/outline";
+import type { Apply, Post as PrismaPost, User, Vote } from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef, useState } from "react";
@@ -21,7 +11,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HistoryIcon } from "@/components/common/icons";
 import { PostBookmarkClient } from "./bookmark/post-bookmark-client";
-import { Badge } from "@/components/ui/badge";
 import { useMediaQuery } from "@mantine/hooks";
 import {
   Sheet,
@@ -42,8 +31,9 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PostApplyClient } from "./apply/post-apply-client";
 import { HoverProfile } from "../profile/hover-profile";
-import { BookmarkIcon, LinkIcon, MessageSquareText } from "lucide-react";
+import { LinkIcon, MessageSquareText } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { FilterBadgeList } from "./filters/filter-badge-list";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -124,24 +114,14 @@ const Post: FC<PostProps> = ({
                 </HoverProfile>
               ) : null}
             </div>
-            <PostContent post={post} pRef={pRef} _currentApply={_currentApply}>
-              {/* <div className="w-full flex gap-2 overflow-scroll my-2"> */}
-              {/*   <Badge */}
-              {/*     className="text-muted-foreground py-1" */}
-              {/*     variant="secondary" */}
-              {/*   > */}
-              {/*     <MapPinIcon className="h-4 w-4 mr-2" /> */}
-              {/*     <span className="truncate">Direccion de ejemplo</span> */}
-              {/*   </Badge> */}
-              {/*   <Badge */}
-              {/*     className="text-muted-foreground py-1" */}
-              {/*     variant="secondary" */}
-              {/*   > */}
-              {/*     <ClockIcon className="h-4 w-4 mr-2" /> */}
-              {/*     <span className="truncate">Full Time</span> */}
-              {/*   </Badge> */}
-              {/* </div> */}
-
+            <PostContent
+              post={post}
+              pRef={pRef}
+              _currentApply={_currentApply}
+              _bookmarkAmt={_bookmarkAmt}
+              currentBookmark={currentBookmark}
+            >
+              <FilterBadgeList filterIds={post.filters} />
               <div
                 className="relative text-sm max-h-32 w-full overflow-clip"
                 ref={pRef}
@@ -192,6 +172,8 @@ function PostContent({
   post,
   pRef,
   _currentApply,
+  _bookmarkAmt,
+  currentBookmark,
   children,
 }: {
   post: PrismaPost & {
@@ -200,6 +182,8 @@ function PostContent({
   };
   pRef: React.RefObject<HTMLParagraphElement>;
   _currentApply?: Apply;
+  _bookmarkAmt: number;
+  currentBookmark: boolean;
   children?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -218,13 +202,20 @@ function PostContent({
               <ClockIcon className="h-4 w-4 inline-block" /> Publicado hace{" "}
               {formatTimeToNow(new Date(post.createdAt))}{" "}
             </SheetDescription>
+            <FilterBadgeList filterIds={post.filters} className="pt-2" />
           </SheetHeader>
           <div className="flex gap-2">
             <PostApplyClient
               postId={post.id}
               initialApply={_currentApply?.status}
             />
-            <Button variant="outline">Guardar</Button>
+            {/* <Button variant="outline">Guardar</Button> */}
+            <PostBookmarkClient
+              postId={post.id}
+              initialBookmarksAmt={_bookmarkAmt}
+              initialBookmark={currentBookmark}
+              className="h-12 px-4 py-2"
+            />
           </div>
 
           <Separator className="mb-2" />
@@ -254,7 +245,12 @@ function PostContent({
               postId={post.id}
               initialApply={_currentApply?.status}
             />
-            <Button variant="outline">Guardar</Button>
+            <PostBookmarkClient
+              postId={post.id}
+              initialBookmarksAmt={_bookmarkAmt}
+              initialBookmark={currentBookmark}
+              className="h-12 px-4 py-2"
+            />
           </div>
           <Separator className="mb-2" />
 

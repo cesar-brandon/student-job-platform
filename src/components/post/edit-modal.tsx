@@ -8,8 +8,6 @@ import { Pencil } from "lucide-react";
 import { ExtendedPostApply } from "@/types/db";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import Submit from "../studio/submit";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 export function PostEditModal({ post }: { post: ExtendedPostApply }) {
   return (

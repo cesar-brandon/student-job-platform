@@ -1,6 +1,7 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import { useFilterStore } from "@/store/filter";
 import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import type { Filter } from "@prisma/client";
@@ -40,7 +41,13 @@ function sortFilters(
     .slice(0, 4);
 }
 
-export function FilterBadgeList({ filterIds }: { filterIds: string[] }) {
+export function FilterBadgeList({
+  filterIds,
+  className,
+}: {
+  filterIds: string[];
+  className?: string;
+}) {
   const { allFilters, isPending } = useFilterStore();
 
   const allFilterLabels = allFilters.flatMap((filter: Filter) => {
@@ -73,7 +80,7 @@ export function FilterBadgeList({ filterIds }: { filterIds: string[] }) {
   const filterLabels = sortFilters(allFilterLabels, filterBadgeIcons);
 
   return (
-    <div className="flex flex-wrap gap-2 pt-5">
+    <div className={cn("flex flex-wrap gap-2 pt-5", className)}>
       {isPending
         ? [...Array(3)].map((_, i) => <Skeleton key={i} className="h-5 w-24" />)
         : filterLabels.map((filter: FilterBadge) => (

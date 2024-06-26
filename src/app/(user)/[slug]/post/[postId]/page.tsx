@@ -9,15 +9,8 @@ import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { Post, User, Vote } from "@prisma/client";
 import { Suspense } from "react";
 import { kv } from "@/lib/redis";
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  ClockIcon,
-  LibraryBig,
-  MapPinIcon,
-} from "lucide-react";
+import { ArrowLeft, ArrowUpRight, LibraryBig } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { HoverProfile } from "@/components/profile/hover-profile";
 import { FilterBadgeList } from "@/components/post/filters/filter-badge-list";
 
