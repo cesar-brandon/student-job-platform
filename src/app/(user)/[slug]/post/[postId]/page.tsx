@@ -1,20 +1,21 @@
 import CommentsSection from "@/components/post/comment/comments-section";
 import EditorOutput from "@/components/editor/editor-output";
-import { LoaderCircleIcon } from "@/components/common/icons";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";
 import { formatTimeToNow } from "@/lib/utils";
 import { CachedPost } from "@/types/redis";
-import { HandThumbUpIcon } from "@heroicons/react/24/outline";
-import { Post, User, Vote } from "@prisma/client";
+import { Post, User, Bookmark } from "@prisma/client";
 import { Suspense } from "react";
 import { kv } from "@/lib/redis";
-import { ArrowLeft, ArrowUpRight, LibraryBig } from "lucide-react";
+import { ArrowLeft, LibraryBig, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { HoverProfile } from "@/components/profile/hover-profile";
 import { FilterBadgeList } from "@/components/post/filters/filter-badge-list";
+import { PostBookmarkServer } from "@/components/post/bookmark/post-bookmark-server";
+import getSession from "@/lib/getSession";
+import PostApplyServer from "@/components/post/apply/post-apply-server";
 
-interface SubRedditPostPageProps {
+interface PostPageProps {
   params: {
     postId: string;
   };
@@ -23,10 +24,11 @@ interface SubRedditPostPageProps {
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
+const PostPage = async ({ params }: PostPageProps) => {
   const cachedPost = (await kv.hgetall(`post:${params.postId}`)) as CachedPost;
+  const session = await getSession();
 
-  let post: (Post & { votes: Vote[]; author: User }) | null = null;
+  let post: (Post & { bookmarks: Bookmark[]; author: User }) | null = null;
 
   if (!cachedPost) {
     post = await db.post.findFirst({
@@ -34,8 +36,8 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
         id: params.postId,
       },
       include: {
-        votes: true,
         author: true,
+        bookmarks: true,
       },
     });
   }
@@ -102,16 +104,44 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
             </div>
           ) : null}
 
-          <div className="flex gap-2">
-            <Button>
-              Solicitar
-              <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button variant="outline">Guardar</Button>
+          <div className="flex justify-between gap-2 pt-2">
+            <Suspense fallback={<PostButtonShell />}>
+              <PostApplyServer
+                postId={post?.id ?? cachedPost.id}
+                userId={session?.user?.id}
+                getData={async () => {
+                  return await db.post.findUnique({
+                    where: {
+                      id: params.postId,
+                    },
+                    include: {
+                      applies: true,
+                    },
+                  });
+                }}
+              />
+            </Suspense>
+            <Suspense fallback={<PostButtonShell />}>
+              <PostBookmarkServer
+                postId={post?.id ?? cachedPost.id}
+                userId={session?.user?.id}
+                getData={async () => {
+                  return await db.post.findUnique({
+                    where: {
+                      id: params.postId,
+                    },
+                    include: {
+                      bookmarks: true,
+                    },
+                  });
+                }}
+                showBookmarkAmt={false}
+              />
+            </Suspense>
           </div>
 
           <EditorOutput content={post?.content ?? cachedPost.content} />
-          <Suspense fallback={<LoaderCircleIcon />}>
+          <Suspense fallback={<PostCommentShell />}>
             {/* @ts-expect-error Server Component */}
             <CommentsSection postId={post?.id ?? cachedPost.id} />
           </Suspense>
@@ -121,20 +151,21 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
   );
 };
 
-function PostVoteShell() {
+function PostButtonShell() {
   return (
-    <div className="flex items-center flex-col pr-6 w-20">
-      {/* upvote */}
-      <div className={buttonVariants({ variant: "ghost" })}>
-        <HandThumbUpIcon className="h-5 w-5 text-zinc-700" />
-      </div>
+    <Button variant="outline">
+      <Loader2 className="animate-spin h-5 w-5" />
+    </Button>
+  );
+}
 
-      {/* score */}
-      <div className="text-center py-2 font-medium text-sm text-zinc-900">
-        <LoaderCircleIcon />
-      </div>
+function PostCommentShell() {
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <Loader2 className="animate-spin h-5 w-5" />
+      <p className="text-accent-foreground">Cargando comentarios...</p>
     </div>
   );
 }
 
-export default SubRedditPostPage;
+export default PostPage;

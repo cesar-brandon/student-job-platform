@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 interface PostApplyClientProps {
   postId: string;
-  initialApply?: ApplyStatus;
+  initialApply?: ApplyStatus | null;
 }
 
 export function PostApplyClient({

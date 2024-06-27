@@ -57,6 +57,7 @@ export async function PATCH(req: Request) {
           id: post.id,
           title: post.title,
           createdAt: post.createdAt,
+          currentBookmark: false,
         };
 
         await kv.hset(`post:${postId}`, cachePayload);
@@ -83,6 +84,7 @@ export async function PATCH(req: Request) {
         id: post.id,
         title: post.title,
         createdAt: post.createdAt,
+        currentBookmark: true,
       };
 
       await kv.hset(`post:${postId}`, cachePayload);

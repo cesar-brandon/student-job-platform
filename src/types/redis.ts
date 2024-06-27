@@ -1,4 +1,4 @@
-import { Vote } from "@prisma/client";
+import type { Apply, Vote } from "@prisma/client";
 
 export type CachedPost = {
   id: string;
@@ -6,5 +6,7 @@ export type CachedPost = {
   authorUsername: string;
   content: string;
   currentVote?: Vote["type"] | null;
+  currentBookmark?: boolean;
+  currentApply?: Apply["status"] | null;
   createdAt: Date;
 };

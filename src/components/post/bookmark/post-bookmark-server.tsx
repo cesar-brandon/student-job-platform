@@ -7,7 +7,7 @@ interface BookmarsClientProps {
   userId: string;
   initialBookmarksAmt?: number;
   initialBookmark?: boolean;
-  getData?: () => Promise<(Post & { bookmark: Bookmark }) | null>;
+  getData?: () => Promise<(Post & { bookmarks: Bookmark[] }) | null>;
   showBookmarkAmt?: boolean;
 }
 
@@ -17,21 +17,24 @@ export async function PostBookmarkServer({
   initialBookmarksAmt = 0,
   getData,
   showBookmarkAmt,
+  initialBookmark,
 }: BookmarsClientProps) {
   let _bookmarksAmt: number = 0;
-  let _currentBookmark: boolean = false;
+  let _currentBookmark: boolean | undefined = false;
 
   if (getData) {
     const post = await getData();
     if (!post) return notFound();
 
-    _currentBookmark = post.bookmark?.userId === userId;
+    _currentBookmark = post.bookmarks?.some(
+      (bookmark) => bookmark.userId === userId,
+    );
     if (_currentBookmark) {
       _bookmarksAmt = initialBookmarksAmt + 1;
     }
   } else {
     _bookmarksAmt = initialBookmarksAmt;
-    _currentBookmark = false;
+    _currentBookmark = initialBookmark;
   }
 
   return (
@@ -39,8 +42,9 @@ export async function PostBookmarkServer({
       postId={postId}
       userId={userId}
       initialBookmarksAmt={_bookmarksAmt}
-      initialBookmark
+      initialBookmark={_currentBookmark}
       showBookmarkAmt={showBookmarkAmt}
+      className="h-12 px-4 py-2"
     />
   );
 }
