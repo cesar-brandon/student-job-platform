@@ -28,11 +28,7 @@ export function PostApplyClient({
     setCurrentApply(initialApply);
   }, [initialApply]);
 
-  const {
-    mutate: apply,
-    isLoading,
-    isSuccess,
-  } = useMutation({
+  const { mutate: apply, isLoading } = useMutation({
     mutationFn: async () => {
       const payload: PostApplyRequest = { postId };
       await axios.patch("/api/user/post/apply", payload);
@@ -74,12 +70,12 @@ export function PostApplyClient({
   return (
     <Button
       onClick={() => apply()}
-      variant={currentApply === "APPLIED" ? "checked" : "default"}
+      variant={currentApply ? "checked" : "default"}
     >
-      {currentApply === "APPLIED" ? "Solicitado" : "Solicitar"}
+      {currentApply ? "Solicitado" : "Solicitar"}
       {isLoading ? (
         <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-      ) : currentApply === "APPLIED" ? (
+      ) : currentApply ? (
         <Check className="ml-2 h-4 w-4" />
       ) : (
         <ArrowUpRight className="ml-2 h-4 w-4" />
