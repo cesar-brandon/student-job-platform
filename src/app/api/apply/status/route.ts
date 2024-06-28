@@ -2,6 +2,7 @@ import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { ApplyStatusRequestBody } from "@/types/apply";
 
+//WARNING: las rutas de las aplicaciones estan dispersas y desordenadas
 export async function PATCH(req: Request) {
   try {
     const body: ApplyStatusRequestBody = await req.json();

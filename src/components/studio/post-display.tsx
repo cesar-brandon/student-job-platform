@@ -10,7 +10,7 @@ import EditorOutput from "../editor/editor-output";
 import { ExtendedPostApply } from "@/types/db";
 import { ScrollArea } from "../ui/scroll-area";
 import { UserStack } from "@/components/user-stack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { simplifyName } from "@/lib/utils";
 import { ApplyList } from "./apply/apply-list";
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
@@ -28,6 +28,10 @@ export type displayType = "post" | "apply" | "comment";
 
 export function PostDisplay({ post, user }: PostDisplayProps) {
   const [display, setDisplay] = useState<displayType>("post");
+
+  useEffect(() => {
+    setDisplay("post");
+  }, [post?.id]);
 
   return (
     <div className="flex min-h-full flex-col">
@@ -70,7 +74,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
                 <EditorOutput content={post.content} />
               </div>
             ) : display === "apply" ? (
-              <ApplyList applies={post.applies} />
+              <ApplyList applyCount={post.applies.length} postId={post.id} />
             ) : (
               <p>Comentarios</p>
             )}

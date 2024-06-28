@@ -49,7 +49,7 @@ export function Studio({
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ["studio-posts"],
     async ({ pageParam = 1 }) => {
-      const query = `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
+      const query = `/api/post?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
       const { data } = await axios.get(query);
       return data as ExtendedPostApply[];
     },

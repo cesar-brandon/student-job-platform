@@ -32,7 +32,7 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
     ["posts"],
     async ({ pageParam = 1 }) => {
       const query =
-        `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
+        `/api/post?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
         (!!authorName ? `&authorName=${authorName}` : "");
 
       const { data } = await axios.get(query);

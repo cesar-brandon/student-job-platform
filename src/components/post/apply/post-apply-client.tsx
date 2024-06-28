@@ -52,7 +52,7 @@ export function PostApplyClient({
       });
     },
     onMutate: () => {
-      if (currentApply === ApplyStatus.APPLIED) {
+      if (currentApply && currentApply in ApplyStatus) {
         setCurrentApply(undefined);
       } else {
         setCurrentApply(ApplyStatus.APPLIED);
@@ -60,10 +60,14 @@ export function PostApplyClient({
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["applies", postId]);
-      toast({
-        title: "Postulación exitosa.",
-        description: "Se ha postulado al post.",
-      });
+      if (currentApply) {
+        if (currentApply === ApplyStatus.APPLIED) {
+          toast({
+            title: "Postulación exitosa.",
+            description: "Se ha postulado al post.",
+          });
+        }
+      }
     },
   });
 

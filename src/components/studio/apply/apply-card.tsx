@@ -4,20 +4,27 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { ApplyStatusRequestBody } from "@/types/apply";
 import { ExtendedApply } from "@/types/db";
 import { ApplyDisplay } from "./apply-display";
+import { ApplyStatus } from "@prisma/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ApplyCard({ apply }: { apply: ExtendedApply }) {
   const { userId, postId, status } = apply;
 
-  const { mutate: updateApplyStatus } = useMutation({
+  const queryClient = useQueryClient();
+
+  const { mutate: updateApplyStatus, isLoading } = useMutation({
     mutationFn: async ({ userId, postId, status }: ApplyStatusRequestBody) => {
       const payload: ApplyStatusRequestBody = { postId, userId, status };
       const { data } = await axios.patch("/api/apply/status/", payload);
       return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["applies", postId]);
     },
   });
 
@@ -41,17 +48,25 @@ export function ApplyCard({ apply }: { apply: ExtendedApply }) {
           </p>
         </div>
       </div>
-      <Badge variant={applyStatusColor[apply.status].variant || "outline"}>
-        {applyStatusColor[apply.status].name}
-      </Badge>
+      {isLoading ? (
+        <Skeleton className="h-6 w-20" />
+      ) : (
+        <Badge variant={applyStatusColor[apply.status].variant || "outline"}>
+          {applyStatusColor[apply.status].name}
+        </Badge>
+      )}
       <Dialog>
         <DialogTrigger>
           <Button
             variant="outline"
             size="icon"
             onClick={() => {
-              if (status === "APPLIED") {
-                updateApplyStatus({ userId, postId, status: "VIEWED" });
+              if (status === ApplyStatus.APPLIED) {
+                updateApplyStatus({
+                  userId,
+                  postId,
+                  status: ApplyStatus.VIEWED,
+                });
               }
             }}
           >
@@ -59,7 +74,11 @@ export function ApplyCard({ apply }: { apply: ExtendedApply }) {
           </Button>
         </DialogTrigger>
         <DialogContent className="lg:min-w-[45rem] h-[80%]">
-          <ApplyDisplay updateApplyStatus={updateApplyStatus} apply={apply} />
+          <ApplyDisplay
+            isLoading={isLoading}
+            updateApplyStatus={updateApplyStatus}
+            apply={apply}
+          />
         </DialogContent>
       </Dialog>
     </div>

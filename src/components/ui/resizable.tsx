@@ -33,7 +33,7 @@ const ResizableHandle = ({
     {...props}
   >
     {withHandle && (
-      <div className="absolute z-10 h-10 w-2 rounded-sm border bg-muted hover:h-16 transition-all duration-300" />
+      <div className="absolute z-10 h-10 w-2 rounded-sm border bg-muted dark:hover:bg-foreground hover:h-16 transition-all duration-300" />
     )}
   </ResizablePrimitive.PanelResizeHandle>
 );
