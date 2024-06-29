@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/24/solid";
 import ButtonLink from "../common/button-link";
 import { user } from "@/types/next-auth";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,12 +21,13 @@ import {
 } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { LogOut } from "lucide-react";
+import { LogOut, MessageCircleQuestion } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { privateRoles } from "@/config";
 import dynamic from "next/dynamic";
 import { Feedback } from "../feedback";
 import { ComingSoonWrapper } from "../common/coming-soon-wrapper";
+import Link from "next/link";
 
 const ThemeToggle = dynamic(() => import("../common/theme-toggle"));
 
@@ -87,13 +88,24 @@ const SidebarNav: React.FC<Props> = ({ user, className, isSheet = false }) => {
         }`}
         icon={
           pathname === "/settings" ? (
-            <CogIconIconSolid className="w-6 h-6 order-first mr-4" />
+            <CogIconIconSolid className="w-6 h-6 order-first mr-4 stroke-[1.5]" />
           ) : (
-            <CogIcon className="w-6 h-6 order-first mr-4" />
+            <CogIcon className="w-6 h-6 order-first mr-4 stroke-[1.5]" />
           )
         }
         isSheet={isSheet}
       />
+      <Link
+        href="https://forms.gle/tTAjZapLnk3bL7vs5"
+        target="_blank"
+        className={cn(
+          buttonVariants({ variant: "ghost" }),
+          "rounded-full hover:bg-border justify-start",
+        )}
+      >
+        Cuestionario
+        <MessageCircleQuestion className="w-6 h-6 order-first mr-4 stroke-[1.5]" />
+      </Link>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

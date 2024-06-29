@@ -69,7 +69,7 @@ const SearchBar: FC<SearchBarProps> = ({ className }) => {
     <Command
       ref={commandRef}
       className={cn(
-        "relative rounded-2xl border max-w-lg z-40 overflow-visible",
+        "relative rounded-2xl border max-w-lg z-30 overflow-visible",
         className,
         input.length > 0 && "rounded-b-none",
       )}

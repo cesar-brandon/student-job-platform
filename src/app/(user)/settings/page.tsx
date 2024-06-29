@@ -18,7 +18,7 @@ const Page = async () => {
 
   return (
     <div className="w-full px-4 sm:p-0 flex flex-col gap-4">
-      <h1 className="font-bold text-xl">Configuración</h1>
+      <h1 className="font-bold text-xl hidden sm:flex">Configuración</h1>
       <div className="grid gap-10">
         <UserNameForm
           user={{

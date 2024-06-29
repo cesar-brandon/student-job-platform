@@ -78,20 +78,19 @@ const PostPage = async ({ params }: PostPageProps) => {
               </Button>
             </Link>
 
-            <p className="flex items-center gap-1 max-h-40 mt-1 truncate text-xs text-muted-foreground">
-              Publicado por
-              <HoverProfile
-                authorName={post?.author.name ?? cachedPost.authorUsername}
-                authorImage={post?.author.image ?? cachedPost.authorUsername}
-              >
-                <span className="text-xs text-primary leading-none tracking-tight hover:underline cursor-default">
-                  @{post?.author.username ?? cachedPost.authorUsername}
-                </span>
-              </HoverProfile>
-              {formatTimeToNow(
-                new Date(post?.createdAt ?? cachedPost.createdAt),
-              )}
-            </p>
+            {post?.author && (
+              <p className="flex items-center gap-1 max-h-40 mt-1 truncate text-xs text-muted-foreground">
+                Publicado por
+                <HoverProfile user={post?.author}>
+                  <span className="text-xs text-primary leading-none tracking-tight hover:underline cursor-default">
+                    @{post?.author.username ?? cachedPost.authorUsername}
+                  </span>
+                </HoverProfile>
+                {formatTimeToNow(
+                  new Date(post?.createdAt ?? cachedPost.createdAt),
+                )}
+              </p>
+            )}
           </div>
 
           <h1 className="text-xl font-semibold py-2 leading-6 text-foreground">

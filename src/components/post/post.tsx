@@ -43,8 +43,6 @@ interface PostProps {
     votes: Vote[];
   };
   votesAmt: number;
-  authorName: string;
-  authorImage: string;
   currentVote?: PartialVote;
   commentAmt: number;
   bookmarkAmt: number;
@@ -54,8 +52,6 @@ interface PostProps {
 
 const Post: FC<PostProps> = ({
   post,
-  authorName,
-  authorImage,
   votesAmt: _votesAmt,
   bookmarkAmt: _bookmarkAmt,
   commentAmt,
@@ -64,12 +60,14 @@ const Post: FC<PostProps> = ({
   currentBookmark,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null);
+  const author = post.author;
 
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(
         `${process.env.NEXT_PUBLIC_BASE_URL}/${post.author.username}/post/${post.id}`,
       );
+
       toast({
         description: "Copiado al portapapeles",
       });
@@ -85,11 +83,11 @@ const Post: FC<PostProps> = ({
     <div className="overflow-hidden bg-background sm:bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
       <div className="px-4 sm:px-6 pt-6 pb-4 flex justify-between">
         <div className="relative w-full flex gap-4">
-          <HoverProfile authorName={authorName} authorImage={authorImage}>
+          <HoverProfile user={author}>
             <Avatar className="flex items-center justify-center">
-              <AvatarImage src={authorImage} alt="avatar" />
+              <AvatarImage src={author.image || ""} alt="avatar" />
               <AvatarFallback>
-                {simplifyName(authorName.toUpperCase())}
+                {simplifyName(author.name.toUpperCase())}
               </AvatarFallback>
             </Avatar>
           </HoverProfile>
@@ -103,13 +101,13 @@ const Post: FC<PostProps> = ({
                   {post.title}
                 </h3>
               </Link>
-              {authorName ? (
-                <HoverProfile authorName={authorName} authorImage={authorImage}>
+              {author.name ? (
+                <HoverProfile user={author}>
                   <a
                     className="hover:underline underline-offset-2"
                     href={`/${post.author.username}`}
                   >
-                    {authorName}
+                    {author.name}
                   </a>
                 </HoverProfile>
               ) : null}
@@ -147,11 +145,17 @@ const Post: FC<PostProps> = ({
             href={`/${post.author.username}/post/${post.id}`}
             className={cn(
               buttonVariants({ variant: "outline", size: "icon" }),
-              "w-auto px-3 gap-2",
+              "group w-auto px-3 gap-2 hover:bg-sky-500/20 hover:border-sky-500/30",
             )}
           >
-            <MessageCircle className="w-4 h-4" />
-            {commentAmt > 0 ? commentAmt : ""}
+            <MessageCircle className="group-hover:text-sky-500 w-4 h-4" />
+            <span
+              className={`group-hover:text-sky-600 ${
+                commentAmt === 0 && "hidden"
+              }`}
+            >
+              {commentAmt > 0 ? commentAmt : ""}
+            </span>
           </Link>
           <PostBookmarkClient
             postId={post.id}

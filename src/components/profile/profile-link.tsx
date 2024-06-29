@@ -20,7 +20,7 @@ export function ProfileLink({
       )}
     >
       <div className="flex justify-between space-x-4">
-        <HoverProfile authorName={user.name} authorImage={user.image || ""}>
+        <HoverProfile user={user}>
           <Avatar>
             <AvatarImage src={user.image || ""} alt={user.name} />
             <AvatarFallback>{simplifyName(user.name)}</AvatarFallback>
@@ -29,7 +29,7 @@ export function ProfileLink({
 
         <div className="space-y-1">
           <p className="text-sm font-semibold line-clamp-1">{user.name}</p>
-          <HoverProfile authorName={user.name} authorImage={user.image || ""}>
+          <HoverProfile user={user}>
             <span className="text-xs text-muted-foreground leading-none tracking-tight hover:underline">
               @{user.username}
             </span>

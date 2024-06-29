@@ -101,8 +101,6 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
             <li key={post.id} ref={ref}>
               <Post
                 post={post}
-                authorName={post.author.name}
-                authorImage={post.author.image || ""}
                 commentAmt={post.comments.length}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
@@ -117,8 +115,6 @@ const PostFeed = ({ initialPosts, authorName }: PostFeedProps) => {
             <Post
               key={post.id}
               post={post}
-              authorName={post.author.name}
-              authorImage={post.author.image || ""}
               commentAmt={post.comments.length}
               votesAmt={votesAmt}
               currentVote={currentVote}

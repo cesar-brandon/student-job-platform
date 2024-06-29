@@ -18,7 +18,7 @@ export function StudentProfile({
   if (!student) return <StudentProfileFallback />;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-2">
       <CareerCard
         career={student.career || "ENTERPRISE"}
         className="relative min-h-[20rem] w-full flex flex-row items-start gap-4 px-4 rounded-3xl"
@@ -49,7 +49,9 @@ export function StudentProfile({
         </div>
 
         <div className="w-full h-full flex items-end text-right p-2">
-          <i className="text-white font-semibold text-lg">{student.User.bio}</i>
+          <i className="text-white font-semibold hidden min-[480px]:flex text-sm md:text-lg">
+            {student.User.bio}
+          </i>
         </div>
         <div className="absolute flex flex-col gap-4 right-5 top-5 z-10">
           {isOwner && (

@@ -142,7 +142,13 @@ export function PostBookmarkClient({
           </svg>
         </div>
       )}
-      {showBookmarkAmt && bookmarksAmt > 0 ? bookmarksAmt : ""}
+      <span
+        className={`group-hover:text-amber-600 ${
+          bookmarksAmt === 0 && "hidden"
+        }`}
+      >
+        {showBookmarkAmt && bookmarksAmt > 0 ? bookmarksAmt : ""}
+      </span>
     </Button>
   );
 }
