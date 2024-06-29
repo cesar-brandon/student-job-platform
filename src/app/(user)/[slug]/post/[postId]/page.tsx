@@ -142,7 +142,6 @@ const PostPage = async ({ params }: PostPageProps) => {
 
           <EditorOutput content={post?.content ?? cachedPost.content} />
           <Suspense fallback={<PostCommentShell />}>
-            {/* @ts-expect-error Server Component */}
             <CommentsSectionServer postId={post?.id ?? cachedPost.id} />
           </Suspense>
         </div>

@@ -20,7 +20,7 @@ import { Link } from "next-view-transitions";
 
 type ExtendedComment = Comment & {
   votes: CommentVote[];
-  author: User;
+  author: User | null;
 };
 
 interface PostCommentProps {
@@ -41,7 +41,9 @@ const PostComment: FC<PostCommentProps> = ({
   const { data: session } = useSession();
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
-  const [input, setInput] = useState<string>(comment.author.name + " ");
+  const [input, setInput] = useState<string>(
+    comment.author ? comment.author.name + " " : "",
+  );
   const router = useRouter();
   useOnClickOutside(commentRef, () => {
     setIsReplying(false);
@@ -77,20 +79,24 @@ const PostComment: FC<PostCommentProps> = ({
   return (
     <div ref={commentRef} className="flex flex-col">
       <div className="flex items-center">
-        <UserAvatar
-          user={{
-            name: comment.author.name,
-            image: comment.author.image || null,
-          }}
-          className="h-6 w-6"
-        />
+        {comment.author && (
+          <UserAvatar
+            user={{
+              name: comment.author.name,
+              image: comment.author.image || null,
+            }}
+            className="h-6 w-6"
+          />
+        )}
         <div className="ml-2 flex items-center gap-x-2">
-          <Link
-            href={`/${comment.author.username}`}
-            className="text-sm font-medium text-foreground hover:underline"
-          >
-            {comment.author.name}
-          </Link>
+          {comment.author && (
+            <Link
+              href={`/${comment.author.username}`}
+              className="text-sm font-medium text-foreground hover:underline"
+            >
+              {comment.author.name}
+            </Link>
+          )}
 
           <p className="max-h-40 truncate text-xs text-muted-foreground">
             {formatTimeToNow(new Date(comment.createdAt))}

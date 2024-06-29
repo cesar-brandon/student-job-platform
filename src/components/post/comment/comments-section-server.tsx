@@ -5,7 +5,7 @@ import { ExtendedComment } from "@/types/comment";
 
 interface CommentsSectionProps {
   postId: string;
-  comments: ExtendedComment[];
+  // comments: ExtendedComment[];
 }
 
 const CommentsSectionServer = async ({ postId }: CommentsSectionProps) => {
