@@ -1,4 +1,4 @@
-import CommentsSection from "@/components/post/comment/comments-section";
+import CommentsSectionServer from "@/components/post/comment/comments-section-server";
 import EditorOutput from "@/components/editor/editor-output";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";
@@ -143,7 +143,7 @@ const PostPage = async ({ params }: PostPageProps) => {
           <EditorOutput content={post?.content ?? cachedPost.content} />
           <Suspense fallback={<PostCommentShell />}>
             {/* @ts-expect-error Server Component */}
-            <CommentsSection postId={post?.id ?? cachedPost.id} />
+            <CommentsSectionServer postId={post?.id ?? cachedPost.id} />
           </Suspense>
         </div>
       </div>

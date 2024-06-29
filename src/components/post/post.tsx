@@ -31,7 +31,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PostApplyClient } from "./apply/post-apply-client";
 import { HoverProfile } from "../profile/hover-profile";
-import { LinkIcon, MessageSquareText } from "lucide-react";
+import { LinkIcon, MessageCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { FilterBadgeList } from "./filters/filter-badge-list";
 
@@ -82,7 +82,7 @@ const Post: FC<PostProps> = ({
   };
 
   return (
-    <div className="overflow-hidden bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
+    <div className="overflow-hidden bg-background sm:bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
       <div className="px-4 sm:px-6 pt-6 pb-4 flex justify-between">
         <div className="relative w-full flex gap-4">
           <HoverProfile authorName={authorName} authorImage={authorImage}>
@@ -150,7 +150,7 @@ const Post: FC<PostProps> = ({
               "w-auto px-3 gap-2",
             )}
           >
-            <MessageSquareText className="w-4 h-4" />
+            <MessageCircle className="w-4 h-4" />
             {commentAmt > 0 ? commentAmt : ""}
           </Link>
           <PostBookmarkClient

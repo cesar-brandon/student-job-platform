@@ -1,23 +1,20 @@
-import format from "date-fns/format";
-import { BriefcaseBusiness } from "lucide-react";
+import { BriefcaseBusiness, MessageCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import EditorOutput from "../editor/editor-output";
 import { ExtendedPostApply } from "@/types/db";
 import { ScrollArea } from "../ui/scroll-area";
 import { UserStack } from "@/components/user-stack";
 import { useEffect, useState } from "react";
-import { simplifyName } from "@/lib/utils";
+import { formatDateTime, simplifyName } from "@/lib/utils";
 import { ApplyList } from "./apply/apply-list";
-import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 import type { User } from "@prisma/client";
 import { DeleteDialog } from "../post/delete-dialog";
 import { PostEditModal } from "../post/edit-modal";
 import { FilterBadgeList } from "../post/filters/filter-badge-list";
+import { CommentDisplay } from "./comment/comment-display";
+import CreateComment from "../post/comment/create-comment";
 
 interface PostDisplayProps {
   post: ExtendedPostApply | null;
@@ -60,7 +57,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
             </div>
             {post.updatedAt && (
               <div className="ml-auto text-xs text-muted-foreground">
-                {format(new Date(post.updatedAt), "PPpp")}
+                {formatDateTime(`${new Date(post.createdAt)}`)}
               </div>
             )}
           </div>
@@ -76,7 +73,11 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
             ) : display === "apply" ? (
               <ApplyList applyCount={post.applies.length} postId={post.id} />
             ) : (
-              <p>Comentarios</p>
+              <CommentDisplay
+                commentCount={post.comments.length}
+                postId={post.id}
+                userId={user.id}
+              />
             )}
           </ScrollArea>
           <Separator />
@@ -102,37 +103,19 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
                 variant="outline"
                 className="h-10"
               >
-                <ChatBubbleLeftIcon className="h-4 w-4 mr-2" />
+                <MessageCircle className="h-4 w-4 mr-2" />
                 Comentarios
               </Button>
             )}
           </div>
           <Separator />
+
           <div className="p-4">
-            <form>
-              <div className="grid gap-4">
-                <Textarea
-                  className="p-4"
-                  placeholder={`Comentar este puesto...`}
-                />
-                <div className="flex items-center">
-                  <Label
-                    htmlFor="mute"
-                    className="flex items-center gap-2 text-xs font-normal"
-                  >
-                    <Switch id="mute" aria-label="Silenciar hilo" /> Silenciar
-                    hilo
-                  </Label>
-                  <Button
-                    onClick={(e) => e.preventDefault()}
-                    size="sm"
-                    className="ml-auto"
-                  >
-                    Comentar
-                  </Button>
-                </div>
-              </div>
-            </form>
+            <CreateComment
+              postId={post.id}
+              isOwner={post.author.id === user.id}
+              fromStudio
+            />
           </div>
         </div>
       ) : (

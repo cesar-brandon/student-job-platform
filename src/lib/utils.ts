@@ -34,6 +34,23 @@ export const formatDate = (createdAt: string): string => {
   return formattedDate;
 };
 
+export const formatDateTime = (updatedAt: string): string => {
+  const date = new Date(updatedAt);
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+  const formattedDate = date.toLocaleDateString("es-ES", dateOptions);
+  const formattedTime = date.toLocaleTimeString("es-ES", timeOptions);
+  return `${formattedDate}, ${formattedTime}`;
+};
+
 const formatDistanceLocale = {
   lessThanXSeconds: "justo ahora",
   xSeconds: "justo ahora",

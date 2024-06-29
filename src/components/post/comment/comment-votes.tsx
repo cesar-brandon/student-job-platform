@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { FC, useState } from "react";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
+import { ThumbsUp } from "lucide-react";
 
 interface CommentVotesProps {
   commentId: string;
@@ -38,7 +39,7 @@ const CommentVotes: FC<CommentVotesProps> = ({
         commentId,
       };
 
-      await axios.patch("/api/subreddit/post/comment/vote", payload);
+      await axios.patch("/api/user/post/comment/vote", payload);
     },
     onError: (err, voteType) => {
       if (voteType === "UP") setVotesAmt((prev) => prev - 1);
@@ -54,8 +55,9 @@ const CommentVotes: FC<CommentVotesProps> = ({
       }
 
       return toast({
-        title: "Something went wrong.",
-        description: "Your vote was not registered. Please try again.",
+        title: "Algo salió mal.",
+        description:
+          "Tu voto no se ha registrado correctamente. Inténtalo de nuevo.",
         variant: "destructive",
       });
     },
@@ -82,7 +84,7 @@ const CommentVotes: FC<CommentVotesProps> = ({
       variant="ghost"
       aria-label="upvote"
     >
-      <HandThumbUpIcon
+      <ThumbsUp
         className={cn("h-5 w-5 text-muted-foreground mr-1.5", {
           "text-emerald-500 fill-emerald-500": currentVote?.type === "UP",
         })}

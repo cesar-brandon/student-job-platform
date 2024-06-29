@@ -4,18 +4,19 @@ import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 import { formatTimeToNow } from "@/lib/utils";
 import { CommentRequest } from "@/lib/validators/comment";
 import { Comment, CommentVote, User } from "@prisma/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FC, useRef, useState } from "react";
 import CommentVotes from "@/components/post/comment/comment-votes";
-import { UserAvatar } from "../../common/user-avatar";
-import { Button } from "../../ui/button";
-import { Label } from "../../ui/label";
-import { Textarea } from "../../ui/textarea";
-import { toast } from "../../../hooks/use-toast";
+import { UserAvatar } from "@/components/common/user-avatar";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
-import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
+import { MessageCircle } from "lucide-react";
+import { Link } from "next-view-transitions";
 
 type ExtendedComment = Comment & {
   votes: CommentVote[];
@@ -27,6 +28,7 @@ interface PostCommentProps {
   votesAmt: number;
   currentVote: CommentVote | undefined;
   postId: string;
+  fromStudio?: boolean;
 }
 
 const PostComment: FC<PostCommentProps> = ({
@@ -34,15 +36,18 @@ const PostComment: FC<PostCommentProps> = ({
   votesAmt,
   currentVote,
   postId,
+  fromStudio,
 }) => {
   const { data: session } = useSession();
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
-  const [input, setInput] = useState<string>(`@${comment.author.name} `);
+  const [input, setInput] = useState<string>(comment.author.name + " ");
   const router = useRouter();
   useOnClickOutside(commentRef, () => {
     setIsReplying(false);
   });
+
+  const queryClient = useQueryClient();
 
   const { mutate: postComment, isLoading } = useMutation({
     mutationFn: async ({ postId, text, replyToId }: CommentRequest) => {
@@ -60,7 +65,11 @@ const PostComment: FC<PostCommentProps> = ({
       });
     },
     onSuccess: () => {
-      router.refresh();
+      if (fromStudio) {
+        queryClient.invalidateQueries(["comments", postId]);
+      } else {
+        router.refresh();
+      }
       setIsReplying(false);
     },
   });
@@ -76,9 +85,12 @@ const PostComment: FC<PostCommentProps> = ({
           className="h-6 w-6"
         />
         <div className="ml-2 flex items-center gap-x-2">
-          <p className="text-sm font-medium text-foreground">
-            @{comment.author.name}
-          </p>
+          <Link
+            href={`/${comment.author.username}`}
+            className="text-sm font-medium text-foreground hover:underline"
+          >
+            {comment.author.name}
+          </Link>
 
           <p className="max-h-40 truncate text-xs text-muted-foreground">
             {formatTimeToNow(new Date(comment.createdAt))}
@@ -103,14 +115,16 @@ const PostComment: FC<PostCommentProps> = ({
           variant="ghost"
           size="xs"
         >
-          <ChatBubbleLeftIcon className="h-4 w-4 mr-1.5" />
-          Reply
+          <MessageCircle className="h-4 w-4 mr-1.5" />
+          responder
         </Button>
       </div>
 
       {isReplying ? (
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="comment">Tu comentario</Label>
+        <div className="grid w-full gap-1.5 px-2">
+          <Label htmlFor="comment" className="sr-only">
+            Tu comentario
+          </Label>
           <div className="mt-2">
             <Textarea
               onFocus={(e) =>
@@ -146,7 +160,7 @@ const PostComment: FC<PostCommentProps> = ({
                   });
                 }}
               >
-                Commentar
+                Comentar
               </Button>
             </div>
           </div>

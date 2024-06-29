@@ -1,54 +1,42 @@
-import { getAuthSession } from "@/lib/auth";
-import { db } from "@/lib/prisma";
-import { Comment, CommentVote, User } from "@prisma/client";
 import CreateComment from "@/components/post/comment/create-comment";
 import PostComment from "@/components/post/comment/post-comment";
+import { ExtendedComment } from "@/types/comment";
 
-type ExtendedComment = Comment & {
-  votes: CommentVote[];
-  author: User;
-  replies: ReplyComment[];
-};
-
-type ReplyComment = Comment & {
-  votes: CommentVote[];
-  author: User;
-};
-
-interface CommentsSectionProps {
-  postId: string;
+export function CommentSectionClient({
+  comments,
+  postId,
+  userId,
+}: {
   comments: ExtendedComment[];
-}
-
-const CommentsSection = async ({ postId }: CommentsSectionProps) => {
-  const session = await getAuthSession();
-
-  const comments = await db.comment.findMany({
-    where: {
-      postId: postId,
-      replyToId: null, // only fetch top-level comments
-    },
-    include: {
-      author: true,
-      votes: true,
-      replies: {
-        // first level replies
-        include: {
-          author: true,
-          votes: true,
-        },
-      },
-    },
-  });
-
+  postId: string;
+  userId: string;
+}) {
   return (
     <div className="flex flex-col gap-y-4 mt-4">
       <hr className="w-full h-px my-6" />
 
       <CreateComment postId={postId} />
 
-      <div className="flex flex-col gap-y-6 mt-4">
-        {comments
+      <CommentList comments={comments} postId={postId} userId={userId} />
+    </div>
+  );
+}
+
+export function CommentList({
+  comments,
+  postId,
+  userId,
+  fromStudio,
+}: {
+  comments: ExtendedComment[];
+  postId: string;
+  userId: string;
+  fromStudio?: boolean;
+}) {
+  return (
+    <div className="flex flex-col gap-y-4 my-4">
+      {comments &&
+        comments
           .filter((comment) => !comment.replyToId)
           .map((topLevelComment) => {
             const topLevelCommentVotesAmt = topLevelComment.votes.reduce(
@@ -60,17 +48,21 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
             );
 
             const topLevelCommentVote = topLevelComment.votes.find(
-              (vote) => vote.userId === session?.user.id,
+              (vote) => vote.userId === userId,
             );
 
             return (
-              <div key={topLevelComment.id} className="flex flex-col">
+              <div
+                key={topLevelComment.id}
+                className="flex flex-col border rounded-md p-3"
+              >
                 <div className="mb-2">
                   <PostComment
                     comment={topLevelComment as ExtendedComment}
                     currentVote={topLevelCommentVote}
                     votesAmt={topLevelCommentVotesAmt}
                     postId={postId}
+                    fromStudio={fromStudio}
                   />
                 </div>
 
@@ -84,7 +76,7 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
                     }, 0);
 
                     const replyVote = reply.votes.find(
-                      (vote) => vote.userId === session?.user.id,
+                      (vote) => vote.userId === userId,
                     );
 
                     return (
@@ -94,6 +86,7 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
                           currentVote={replyVote}
                           votesAmt={replyVotesAmt}
                           postId={postId}
+                          fromStudio={fromStudio}
                         />
                       </div>
                     );
@@ -101,9 +94,6 @@ const CommentsSection = async ({ postId }: CommentsSectionProps) => {
               </div>
             );
           })}
-      </div>
     </div>
   );
-};
-
-export default CommentsSection;
+}

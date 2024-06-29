@@ -17,7 +17,7 @@ export const AsideFeed = async () => {
   return (
     <div className="w-[25%] p-4 hidden xl:flex flex-col gap-4">
       <AsideFeedHeader />
-      <div className="bg-card rounded-xl mt-2 font-semibold border">
+      <div className="bg-card rounded-xl mt-2 font-semibold border overflow-hidden">
         <p className="text-lg px-6 pt-6 pb-4">Empresas</p>
         {enterprises ? (
           enterprises.map((enterprise: User) => (
@@ -31,7 +31,7 @@ export const AsideFeed = async () => {
           </div>
         )}
       </div>
-      <div className="bg-card min-h-[30rem] rounded-xl mt-2 font-semibold border">
+      <div className="bg-card min-h-[30rem] rounded-xl mt-2 font-semibold border overflow-hidden">
         <p className="text-lg px-6 pt-6 pb-4">Estudiantes</p>
         {students ? (
           students.map((student: User) => (
