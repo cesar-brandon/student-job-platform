@@ -4,12 +4,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "https://ifvempleos.vercel.app/"
+    process.env.NEXT_PUBLIC_BASE_URL || "https://ifvempleos.vercel.app/",
   ),
   title: {
     default: "IFV",
@@ -47,7 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "min-h-screen bg-background antialiased",
-          inter.className
+          inter.className,
         )}
       >
         <Providers attribute="class" defaultTheme="light" enableSystem>
@@ -55,6 +57,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <TailwindIndicator />
         </Providers>
         <Toaster />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
