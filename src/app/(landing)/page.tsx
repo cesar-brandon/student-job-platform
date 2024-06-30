@@ -1,13 +1,13 @@
 "use client";
 import StoryPlayer from "@/components/story-player";
 import StoryPreview from "@/components/story-preview";
-import ButtonLink from "@/components/common/button-link";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { OPTIONS } from "@/config";
-import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { MessageCircleQuestion } from "lucide-react";
+import { StudentCarousel } from "@/components/student-carousel";
 
 export default function Home() {
   const [openStory, setOpenStory] = useState(false);
@@ -15,7 +15,7 @@ export default function Home() {
     {
       id: 1,
       image: "/stories/4.png",
-      title: "DSI",
+      title: "Farmacia",
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ export default function Home() {
     {
       id: 4,
       image: "/stories/1.png",
-      title: "Farmacia",
+      title: "DSI",
     },
   ];
 
@@ -52,10 +52,20 @@ export default function Home() {
           <section className="lg:hidden block">
             <StoryPreview stories={stories} openStory={HandleOpenStory} />
           </section>
-          <div className="w-full">
-            <h1 className="text-7xl lg:text-left text-center">
-              Descubre tu potencial, encuentra tu empleo ideal_
-            </h1>
+          <div className="w-full flex flex-col items-center justify-center lg:mt-10">
+            <div className="flex flex-col gap-2 sm:gap-4">
+              <h1 className="text-5xl sm:text-7xl text-center font-medium">
+                Descubre tu potencial
+                <br />
+                <span className="hidden sm:block font-light">
+                  encuentra tu empleo ideal
+                </span>
+              </h1>
+              <p className="text-lg text-center mt-4">
+                Podrás acceder a las mejores oportunidades laborales y practicas
+                para ti.
+              </p>
+            </div>
 
             <div className="mt-12 lg:block flex xs:flex-col justify-center gap-3">
               <Link
@@ -66,7 +76,7 @@ export default function Home() {
                   "bg-orange rounded-full hover:bg-orange/90 lg:font-bold lg:text-lg lg:py-7 lg:px-8",
                 )}
               >
-                Accede a las oportunidades
+                Empieza ya
               </Link>
 
               {/* <ButtonLink */}
@@ -80,9 +90,9 @@ export default function Home() {
               {/* /> */}
             </div>
           </div>
-          <div className="hidden lg:flex w-full justify-center">
-            <StoryPlayer stories={stories} options={OPTIONS} />
-          </div>
+          {/* <div className="hidden lg:flex w-full justify-center"> */}
+          {/*   <StoryPlayer stories={stories} options={OPTIONS} /> */}
+          {/* </div> */}
           {openStory && (
             <StoryPlayer
               stories={stories}
@@ -93,7 +103,10 @@ export default function Home() {
           )}
         </div>
       </section>
-      <section className="mt-[11rem]"></section>
+      <StudentCarousel />
+      <Link href="https://forms.gle/tTAjZapLnk3bL7vs5" target="_blank">
+        <MessageCircleQuestion className="fixed bottom-10 right-10 w-12 h-12 text-primary z-20" />
+      </Link>
     </main>
   );
 }

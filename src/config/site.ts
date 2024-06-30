@@ -13,7 +13,7 @@ const links = {
 export const siteConfig = {
   name: "IFV Empleos",
   description: "Plataforma de empleos del Instituto Federico Villarreal",
-  url: "https://www.ifvempleos.com/",
+  url: "https://www.ifvempleos.com",
   ogImage: "https://cesarbrandon.vercel.app/opengraph-image.png",
   mainNav: [
     {
