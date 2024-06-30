@@ -9,7 +9,6 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
-//NOTE: se comento momentaneamente la funcion de RegisterUser
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState(null);

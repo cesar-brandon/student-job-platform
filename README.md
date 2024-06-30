@@ -1,8 +1,8 @@
-<h1 align="center"><a href="https://ifvempleos.vercel.app/">Job Platform</a></h1>
+<h1 align="center"><a href="https://www.ifvempleos.com/">Job Platform</a></h1>
 
 <p align="center">An online student job platform that connects students with part-time jobs, internships, and entry-level positions.</p>
 
-[![Job Platform](./src/app/opengraph-image.png)](https://ifvempleos.vercel.app/)
+[![Job Platform](./src/app/opengraph-image.png)](https://www.ifvempleos.com/)
 
 > **Warning**
 > This project is still in development and is not ready for production use.
@@ -29,7 +29,6 @@
 - [ ] Application Tracking and Status Updates
 - [ ] Advanced Search and Filters
 - [ ] Gamification to Encourage Student Engagement
-
 
 ## Running Locally
 
@@ -70,3 +69,4 @@ Thanks goes to these wonderful people for their contributions:
 <p align="center">
  Made with <a rel="noopener noreferrer" target="_blank" href="https://contrib.rocks">contrib.rocks</a>
 </p>
+
