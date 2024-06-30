@@ -1,9 +1,15 @@
 import { toast } from "@/hooks/use-toast";
 import { careerData, generateCode } from "@/lib/utils";
 import axios from "axios";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { LoaderCircleIcon } from "@/components/common/icons";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 interface OtpInputProps {
   user: {
@@ -55,11 +61,9 @@ const OtpInput: React.FC<OtpInputProps> = ({
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCode(e.target.value);
-    const enteredCode = e.target.value.toUpperCase();
-    if (enteredCode.length === 6) {
-      if (enteredCode === randomCode) {
+  useEffect(() => {
+    if (code.length === 6) {
+      if (code === randomCode) {
         toast({
           title: "Código correcto",
           description: "Se ha verificado su identidad",
@@ -74,25 +78,42 @@ const OtpInput: React.FC<OtpInputProps> = ({
         });
       }
     }
-  };
+  }, [code, randomCode, setTitle, setIsVerified]);
 
   return (
     <div className="flex flex-col gap-4 mt-4">
       <label className="text-gray-499">
         El código sera enviado a su correo electrónico
       </label>
-      <div className="flex items-center gap-4 mt-2">
-        <input
-          type="text"
-          name="otp"
-          maxLength={6}
+      <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
+        {/* <input */}
+        {/*   type="text" */}
+        {/*   name="otp" */}
+        {/*   maxLength={6} */}
+        {/*   value={code} */}
+        {/*   onChange={handleChange} */}
+        {/*   placeholder="------" */}
+        {/*   className="w-full text-center uppercase font-bold tracking-[.8rem]  */}
+        {/* px-4 py-3 rounded-lg bg-background border focus:border-blue-500 focus:outline-none" */}
+        {/* /> */}
+        <InputOTP
           value={code}
-          onChange={handleChange}
-          placeholder="------"
-          className="w-full text-center uppercase font-bold tracking-[.8rem] 
-								px-4 py-3 rounded-lg bg-background border focus:border-blue-500 focus:outline-none"
-        />
+          onChange={(value) => setCode(value)}
+          maxLength={6}
+          pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+          className="uppercase m-auto"
+        >
+          <InputOTPGroup>
+            <InputOTPSlot index={0} className="uppercase" />
+            <InputOTPSlot index={1} className="uppercase" />
+            <InputOTPSlot index={2} className="uppercase" />
+            <InputOTPSlot index={3} className="uppercase" />
+            <InputOTPSlot index={4} className="uppercase" />
+            <InputOTPSlot index={5} className="uppercase" />
+          </InputOTPGroup>
+        </InputOTP>
         <Button
+          type="button"
           className="w-24"
           onClick={sendCode}
           disabled={isSending || isDisabled}

@@ -11,6 +11,17 @@ import PasswordInput from "@/components/common/password-input";
 import { StudentCard, UserCardFallback } from "../user-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AccountRequest, AccountValidator } from "@/lib/validators/account";
 
 interface Props {
   userDetails: Student;
@@ -22,42 +33,35 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isCreatedUser, setIsCreatedUser] = useState<boolean>(false);
   const [isLoadingCard, setIsLoadingCard] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
-    identifier: "",
-    username: "",
-    password: "",
-  });
+  const [identifier, setIdentifier] = useState<string>("");
   const [isVerified, setIsVerified] = useState<boolean>(false);
 
   const router = useRouter();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const form = useForm<AccountRequest>({
+    resolver: zodResolver(AccountValidator),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    userDetails ? createAccount() : getStudent();
-  };
-
-  const createAccount = async () => {
+  const createAccount = async (data: AccountRequest) => {
     setIsCreatedUser(true);
     !isVerified &&
       toast({ title: "Tu correo no esta verificado", variant: "destructive" });
     try {
-      await axios.post("/api/user/create/", {
-        name: `${userDetails.name} ${userDetails.lastname}`,
-        username: formData.username.toLowerCase(),
+      const payload = {
+        ...data,
+        userId: userDetails.userId,
         email: userDetails.email,
-        password: formData.password,
-        userId: userDetails.userId
-      });
+        name: `${userDetails.name} ${userDetails.lastname}`,
+      };
+
+      await axios.post("/api/user/create/", payload);
       const result = await signIn("credentials", {
-        username: formData.username.toLowerCase(),
-        password: formData.password,
+        username: data.username.toLowerCase(),
+        password: data.password,
         redirect: false,
       });
       if (result?.error) return router.push("/login");
@@ -76,7 +80,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
     try {
       const result = await axios.get("/api/student/", {
         headers: {
-          identifier: formData.identifier,
+          identifier,
         },
       });
       toast({ title: "Estudiante encontrado", variant: "default" });
@@ -96,61 +100,105 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
   };
 
   return (
-    <form className="mt-6" method="POST" onSubmit={handleSubmit}>
+    <div className="mt-6">
       {!isLoading && !userDetails && (
-        <>
-          <input
-            type="text"
-            name="identifier"
-            id="input-identifier"
-            value={formData.identifier}
-            onChange={handleChange}
-            placeholder="Ingrese su correo institucional o código de estudiante"
-            className="w-full px-4 py-3 rounded-lg bg-gray-200 dark:bg-background mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-            autoFocus
-            autoComplete="on"
-            required
-          />
-        </>
+        <Input
+          value={identifier}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setIdentifier(e.target.value)
+          }
+          className="w-full h-12 text-md"
+          placeholder="Ingrese su correo institucional o código de estudiante"
+          autoFocus
+        />
       )}
       {isLoadingCard && <UserCardFallback />}
       {userDetails && (
         <>
           {userDetails.userId ? (
-            <p className="text-center">Ya existe una cuenta con este correo, <Link className="text-primary" href="/login">inicia sesión</Link></p>
+            <p className="text-center">
+              Ya existe una cuenta con este correo,{" "}
+              <Link className="text-primary" href="/login">
+                inicia sesión
+              </Link>
+            </p>
           ) : !isVerified ? (
             <>
               <StudentCard user={userDetails} setUser={setUserDetails} />
-              <OtpInput user={userDetails} setIsVerified={setIsVerified} setTitle={setTitle} />
+              <OtpInput
+                user={userDetails}
+                setIsVerified={setIsVerified}
+                setTitle={setTitle}
+              />
             </>
           ) : (
-            <>
-              <input
-                type="text"
-                name="username"
-                id="input-username"
-                value={formData.username}
-                onChange={handleChange}
-                placeholder="Crea tu nombre de usuario"
-                className="w-full lowercase px-4 py-3 rounded-lg bg-gray-200 dark:bg-background border focus:border-blue-500 focus:bg-white focus:outline-none"
-                autoFocus
-                autoComplete="on"
-                required
-              />
-              <PasswordInput
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Registra una contraseña"
-              />
-            </>
+            <Form {...form}>
+              <form
+                className="mt-6"
+                onSubmit={form.handleSubmit(createAccount)}
+              >
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Crea tu nombre de usuario"
+                          className="w-full h-12 text-md"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <PasswordInput
+                          {...field}
+                          placeholder="Registra una contraseña"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="submit"
+                  className="w-full text-base mt-6"
+                  disabled={isLoading || isCreatedUser}
+                  style={{
+                    display:
+                      userDetails &&
+                      (userDetails.userId || !isVerified) &&
+                      "none",
+                  }}
+                >
+                  {isLoading || isCreatedUser ? (
+                    <LoaderCircleIcon />
+                  ) : (
+                    <>{userDetails ? "Crea una cuenta" : "Continuar"}</>
+                  )}
+                </Button>
+              </form>
+            </Form>
           )}
         </>
       )}
       <Button
-        type="submit"
+        type="button"
         className="w-full text-base mt-6"
         disabled={isLoading || isCreatedUser}
-        style={{ display: userDetails && (userDetails.userId || !isVerified) && 'none' }}
+        style={{
+          display: userDetails && "none",
+        }}
+        onClick={getStudent}
       >
         {isLoading || isCreatedUser ? (
           <LoaderCircleIcon />
@@ -158,7 +206,7 @@ const RegisterForm = ({ userDetails, setUserDetails, setTitle }: Props) => {
           <>{userDetails ? "Crea una cuenta" : "Continuar"}</>
         )}
       </Button>
-    </form >
+    </div>
   );
 };
 

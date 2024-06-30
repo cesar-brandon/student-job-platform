@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
 
 //NOTE: se comento momentaneamente la funcion de RegisterUser
@@ -53,16 +54,16 @@ const LoginPage = () => {
             )}
           </Button>
 
-          {/* <p className="mt-8"> */}
-          {/*   ¿Necesitas una cuenta? */}
-          {/*   <Link */}
-          {/*     href="/register" */}
-          {/*     className="font-semibold text-blue-500 hover:text-blue-700 focus:text-blue-700" */}
-          {/*   > */}
-          {/*     {" "} */}
-          {/*     Crear una cuenta */}
-          {/*   </Link> */}
-          {/* </p> */}
+          <p className="mt-8">
+            ¿Necesitas una cuenta?
+            <Link
+              href="/register"
+              className="font-semibold text-blue-500 hover:text-blue-700 focus:text-blue-700"
+            >
+              {" "}
+              Crear una cuenta
+            </Link>
+          </p>
         </>
       )}
     </div>

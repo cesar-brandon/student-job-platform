@@ -5,7 +5,7 @@ export const UserNameValidator = z.object({
     .string()
     .min(4)
     .max(15)
-    .regex(/^[a-zA-Z0-9_]+$/),
+    .regex(/^[a-z0-9.-]+$/),
 });
 
 export type UserNameRequest = z.infer<typeof UserNameValidator>;

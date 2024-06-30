@@ -58,6 +58,7 @@
     "editorjs-react-renderer": "^3.5.1",
     "embla-carousel-autoplay": "^8.0.0-rc07",
     "embla-carousel-react": "^8.0.4",
+    "input-otp": "^1.2.4",
     "jsonwebtoken": "^9.0.0",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.354.0",
