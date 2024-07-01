@@ -27,7 +27,7 @@ export default async function UserLayout({
           >
             <NavBar user={user} />
             <SidebarFeed user={user} />
-            <div className="w-full lg:w-[75%] xl:w-[50%] lg:pr-0 xl:pr-4 pt-4 lg:pt-6 sm:p-10">
+            <div className="w-full lg:w-[75%] xl:w-[50%] lg:pr-0 xl:pr-4 pt-4 lg:pt-4 sm:p-10">
               <HeaderFeed className="md:hidden fixed top-0 left-0 right-0 bg-background/30 backdrop-blur py-3 z-40" />
               <div className="flex md:hidden w-full h-12" />
               {children}

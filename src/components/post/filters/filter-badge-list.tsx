@@ -8,12 +8,12 @@ import type { Filter } from "@prisma/client";
 import { Accessibility, BriefcaseBusiness, Clock } from "lucide-react";
 import { ComponentProps } from "react";
 
-type FilterOption = {
+export type FilterOption = {
   id: string;
   label: string;
 };
 
-type FilterBadge = {
+export type FilterBadge = {
   title: string;
   label: string;
 };

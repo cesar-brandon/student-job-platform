@@ -25,9 +25,9 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex lg:block flex-col gap-4">
       <HeaderFeed className="hidden md:flex" />
-      <PostFilters />
+      {/* <PostFilters /> */}
       <PostFeed initialPosts={posts} />
     </div>
   );

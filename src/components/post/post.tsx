@@ -243,7 +243,7 @@ function PostContent({
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Oferta {post.title}</DrawerTitle>
+          <DrawerTitle className="break-all">{post.title}</DrawerTitle>
           <DrawerDescription>
             Publicado hace {formatTimeToNow(new Date(post.createdAt))}{" "}
           </DrawerDescription>
