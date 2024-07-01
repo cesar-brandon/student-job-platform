@@ -63,7 +63,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
 
   useEffect(() => {
     if (code.length === 6) {
-      if (code === randomCode) {
+      if (code.toUpperCase() === randomCode) {
         toast({
           title: "Código correcto",
           description: "Se ha verificado su identidad",
@@ -101,7 +101,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
           onChange={(value) => setCode(value)}
           maxLength={6}
           pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-          className="uppercase m-auto"
+          className="m-auto"
         >
           <InputOTPGroup>
             <InputOTPSlot index={0} className="uppercase" />
