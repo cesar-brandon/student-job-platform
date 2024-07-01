@@ -152,6 +152,7 @@ model Post {
   title     String
   content   Json?
   filters   String[]
+  address   String?
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

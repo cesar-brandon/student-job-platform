@@ -23,7 +23,7 @@ const PATCH = async (req: Request) => {
   try {
     const body = await req.json();
 
-    const { title, content, filters, id } = PostValidator.parse(body);
+    const { title, content, filters, id, address } = PostValidator.parse(body);
 
     const session = await getAuthSession();
     if (!session?.user) return new Response("Unauthorized", { status: 401 });
@@ -35,11 +35,13 @@ const PATCH = async (req: Request) => {
         content,
         authorId: session.user.id,
         filters,
+        address,
       },
       update: {
         title,
         content,
         filters,
+        address,
       },
     });
 

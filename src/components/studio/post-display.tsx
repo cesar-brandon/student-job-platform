@@ -55,11 +55,12 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
                 <div className="line-clamp-1 text-xs">{post.author.name}</div>
               </div>
             </div>
-            {post.updatedAt && (
-              <div className="ml-auto text-xs text-muted-foreground">
-                {formatDateTime(`${new Date(post.createdAt)}`)}
-              </div>
-            )}
+            <div className="flex flex-col gap-2 items-end ml-auto text-xs text-muted-foreground">
+              {post.updatedAt && (
+                <span>{formatDateTime(`${new Date(post.createdAt)}`)}</span>
+              )}
+              <span>{post.address}</span>
+            </div>
           </div>
           <Separator />
           <ScrollArea className="w-full h-[34rem] whitespace-pre-wrap pt-0 px-4 text-sm">

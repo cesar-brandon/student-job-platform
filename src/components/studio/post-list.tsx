@@ -83,7 +83,12 @@ function PostItem({ item }: { item: ExtendedPostApply }) {
             })}
           </div>
         </div>
-        <div className="text-xs font-medium">{item.author.name}</div>
+        <div className="flex justify-between text-xs font-medium">
+          {item.author.name}
+          <span className="text-xs text-muted-foreground font-normal mr-2">
+            {item.address}
+          </span>
+        </div>
       </div>
       <div className="line-clamp-2 text-xs text-muted-foreground">
         {item.content && <EditorOutput content={item.content} />}

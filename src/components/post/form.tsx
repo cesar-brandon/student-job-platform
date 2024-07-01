@@ -20,11 +20,18 @@ interface PostFormProps {
     description: any;
   };
   filters: string[];
+  address?: string;
 }
 
 //NOTE: controlar mejor los errores
+//FIX: bug al insertar direccion cuando editamos un post
 
-const PostForm: React.FC<PostFormProps> = ({ id, content, filters }) => {
+const PostForm: React.FC<PostFormProps> = ({
+  id,
+  content,
+  filters,
+  address,
+}) => {
   const {
     register,
     handleSubmit,
@@ -36,6 +43,7 @@ const PostForm: React.FC<PostFormProps> = ({ id, content, filters }) => {
       title: content?.title ?? "",
       content: null,
       filters: filters ?? [],
+      address: address ?? "",
     },
   });
   const ref = useRef<EditorJS>();
@@ -151,6 +159,7 @@ const PostForm: React.FC<PostFormProps> = ({ id, content, filters }) => {
         title: post.title,
         content: blocks,
         filters,
+        address: address as string,
       };
       const { data } = await axios.patch(`/api/user/post/${id}`, payload);
       return data;
