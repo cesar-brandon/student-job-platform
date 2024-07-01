@@ -6,6 +6,7 @@ import SidebarNav from "./sidebar-nav";
 import { IfvLoveIcon } from "../common/icons";
 import { Link } from "next-view-transitions";
 import getSession from "@/lib/getSession";
+import { MessageCircleQuestion } from "lucide-react";
 
 const HeaderFeed: React.FC<{ className?: string }> = async ({ className }) => {
   const session = await getSession();
@@ -52,7 +53,11 @@ const HeaderFeed: React.FC<{ className?: string }> = async ({ className }) => {
         <Link href="/home">
           <IfvLoveIcon />
         </Link>
-        <BellIcon className="w-6 h-6 stroke-muted-foreground" />
+        {/* <BellIcon className="w-6 h-6 stroke-muted-foreground" /> */}
+        <Link href="https://forms.gle/tTAjZapLnk3bL7vs5" target="_blank">
+          <MessageCircleQuestion className="w-6 h-6 stroke-muted-foreground stroke-[1.5]" />
+        </Link>
+        {/* <span className="w-6 h-6" /> */}
       </div>
     </div>
   );

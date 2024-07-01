@@ -66,7 +66,7 @@ export default function ResumeOptionsCard({ user }: { user: user }) {
           </ComingSoonWrapper>
         </RadioGroup>
       </CardContent>
-      <CardFooter className="flex gap-4">
+      <CardFooter className="flex flex-col sm:flex-row gap-4">
         <Button
           className="w-full"
           variant="outline"

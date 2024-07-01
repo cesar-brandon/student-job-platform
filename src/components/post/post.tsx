@@ -80,7 +80,7 @@ const Post: FC<PostProps> = ({
   };
 
   return (
-    <div className="overflow-hidden bg-background sm:bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
+    <div className="overflow-hidden bg-background dark:sm:bg-card text-card-foreground shadow-sm border-b-[1px] sm:border-[1px] sm:rounded-xl">
       <div className="px-4 sm:px-6 pt-6 pb-4 flex justify-between">
         <div className="relative w-full flex gap-4">
           <HoverProfile user={author}>
@@ -162,8 +162,13 @@ const Post: FC<PostProps> = ({
             initialBookmarksAmt={_bookmarkAmt}
             initialBookmark={currentBookmark}
           />
-          <Button onClick={copyToClipboard} size="icon" variant="outline">
-            <LinkIcon className="w-4 h-4" />
+          <Button
+            onClick={copyToClipboard}
+            size="icon"
+            variant="outline"
+            className="group hover:bg-indigo-500/20 hover:border-indigo-500/30"
+          >
+            <LinkIcon className="w-4 h-4 group-hover:text-indigo-600" />
           </Button>
         </div>
       </div>

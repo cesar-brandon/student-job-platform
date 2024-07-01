@@ -53,7 +53,7 @@ export function StudentCarousel() {
   return (
     <section
       className="relative xl:w-[1440px] lg:w-[1024px] min-[0px]:w-[480px] max-w-full mr-auto ml-auto lg:px-8 xl:px-16 px-6
-      mt-[5rem] flex justify-center gap-8"
+      my-[5rem] flex justify-center gap-8"
     >
       <Carousel
         className="w-full"
