@@ -59,7 +59,9 @@ function BookmarkItem({ bookmark }: { bookmark: ExtendedBookmark }) {
       >
         {bookmark.post.title}
         <p className="text-sm">{"Nombre de la empresa"}</p>
-        <p className="text-sm dark:font-thin font-light">Dirección</p>
+        <p className="text-sm dark:font-thin font-light">
+          {bookmark.post.address}
+        </p>
       </Link>
       <div className="m-4">
         <PostBookmarkServer

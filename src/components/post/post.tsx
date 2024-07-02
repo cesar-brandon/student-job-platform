@@ -101,16 +101,24 @@ const Post: FC<PostProps> = ({
                   {post.title}
                 </h3>
               </Link>
-              {author.name ? (
-                <HoverProfile user={author}>
-                  <a
-                    className="hover:underline underline-offset-2"
-                    href={`/${post.author.username}`}
-                  >
-                    {author.name}
-                  </a>
-                </HoverProfile>
-              ) : null}
+              <div>
+                {author.name ? (
+                  <HoverProfile user={author}>
+                    <a
+                      className="hover:underline underline-offset-2"
+                      href={`/${post.author.username}`}
+                    >
+                      {author.name}
+                    </a>
+                  </HoverProfile>
+                ) : null}
+                {post.address && (
+                  <span className="text-sm dark:font-thin font-light">
+                    {" "}
+                    - {post.address}
+                  </span>
+                )}
+              </div>
             </div>
             <PostContent
               post={post}

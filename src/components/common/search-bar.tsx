@@ -81,7 +81,8 @@ const SearchBar: FC<SearchBarProps> = ({ className }) => {
           debounceRequest();
         }}
         value={input}
-        placeholder="Puesto, empresa o palabra clave"
+        // placeholder="Puesto, empresa o palabra clave"
+        placeholder="Buscar usuarios o empresas"
         className="pr-6"
       />
 

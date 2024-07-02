@@ -12,9 +12,18 @@ export async function GET(req: Request) {
 
   const results = await db.user.findMany({
     where: {
-      name: {
-        startsWith: q,
-      },
+      OR: [
+        {
+          name: {
+            startsWith: q,
+          },
+        },
+        {
+          username: {
+            startsWith: q,
+          },
+        },
+      ],
     },
     include: {
       _count: true,
