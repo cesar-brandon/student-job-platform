@@ -8,6 +8,7 @@ import {
   CircleArrowLeft,
   Cog,
   File,
+  MessageCircleQuestion,
   PieChart,
   Send,
   Users2,
@@ -147,6 +148,13 @@ export function Nav({ defaultCollapsed, user, counters }: NavProps) {
                 icon: Cog,
                 variant: "ghost",
               },
+              {
+                title: "Cuestionario",
+                href: "https://docs.google.com/forms/d/e/1FAIpQLSentVI056EKSdnPZy42B3nRZXYjCykPLdai0LX48j7bXwphnQ/viewform?usp=sf_link",
+                icon: MessageCircleQuestion,
+                variant: "ghost",
+              },
+
               // {
               //   title: "Anuncios",
               //   label: 22,

@@ -73,7 +73,7 @@ const VerificationCodeEmail: React.FC<Props> = ({ name, career, code }) => {
                 color: "rgb(0,0,0, 0.7)",
               }}
             >
-              © 2023 | Instituto Federico Villarreal
+              © 2024 | Instituto Federico Villarreal
             </Text>
           </Tailwind>
         </Container>

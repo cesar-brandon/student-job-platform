@@ -104,9 +104,18 @@ export default function Home() {
         </div>
       </section>
       <StudentCarousel />
-      <Link href="https://forms.gle/tTAjZapLnk3bL7vs5" target="_blank">
-        <MessageCircleQuestion className="fixed bottom-10 right-10 w-12 h-12 text-primary z-20" />
-      </Link>
+      <div className="fixed flex items-center justify-center gap-4 bottom-10 right-10 z-20">
+        <span className="p-2 px-4 border bg-background rounded-full">
+          Cuestionario
+        </span>
+        <Link
+          href="https://forms.gle/tTAjZapLnk3bL7vs5"
+          target="_blank"
+          className="flex items-center justify-center rounded-full w-12 h-12 bg-primary"
+        >
+          <MessageCircleQuestion className="w-8 h-8 text-background" />
+        </Link>
+      </div>
     </main>
   );
 }
