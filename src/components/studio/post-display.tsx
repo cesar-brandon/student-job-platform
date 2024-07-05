@@ -31,7 +31,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
   }, [post?.id]);
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="flex flex-col min-h-[100dvh]">
       {post && post.author.id === user.id && (
         <div className="flex items-center p-2">
           <PostEditModal post={post} />
@@ -63,7 +63,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
             </div>
           </div>
           <Separator />
-          <ScrollArea className="w-full h-[34rem] whitespace-pre-wrap pt-0 px-4 text-sm">
+          <ScrollArea className="w-full h-[40dvh] whitespace-pre-wrap pt-0 px-4 text-sm">
             {display === "post" ? (
               <div className="flex flex-col">
                 {post.filters.length > 0 && (
@@ -82,7 +82,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
             )}
           </ScrollArea>
           <Separator />
-          <div className="flex items-center justify-between p-6">
+          <div className="flex items-center justify-between h-[10dvh] p-6">
             {display !== "apply" && post.author.id === user?.id && (
               <UserStack applies={post.applies} setDisplay={setDisplay} />
             )}
@@ -111,7 +111,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
           </div>
           <Separator />
 
-          <div className="p-4">
+          <div className="p-4 h-[20dvh]">
             <CreateComment
               postId={post.id}
               isOwner={post.author.id === user.id}
