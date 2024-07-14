@@ -85,7 +85,8 @@ export const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role: UserRole = row.getValue("role") as UserRole;
       const variant = roleData[role].variant;
-      return <Badge variant={variant}>{row.getValue("role")}</Badge>;
+      const name = roleData[role].name;
+      return <Badge variant={variant}>{name}</Badge>;
     },
   },
   // {

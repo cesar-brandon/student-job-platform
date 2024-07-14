@@ -9,9 +9,7 @@ export const metadata = {
 };
 
 export default async function StudentsPage() {
-  const students = await db.student.findMany({
-    take: 10,
-  });
+  const students = await db.student.findMany();
 
   return (
     <div className="min-h-screen w-full">

@@ -6,6 +6,7 @@ import getSession from "@/lib/getSession";
 import { privateRoles } from "@/config";
 import { db } from "@/lib/prisma";
 import { Feedback } from "@/components/feedback";
+import { SmartphoneIcon } from "lucide-react";
 
 export default async function DashboardLayout({
   children,
@@ -27,15 +28,23 @@ export default async function DashboardLayout({
 
   if (session && privateRoles.includes(session.user.role)) {
     return (
-      <main className="bg-background flex justify-center">
-        <Nav
-          defaultCollapsed={defaultCollapsed}
-          user={session.user}
-          counters={{ userCount, studentCount, enterpriseCount, postCount }}
-        />
-        <div className="min-h-screen w-full">{children}</div>
-        <div className="fixed right-10 bottom-10 z-10">
-          <Feedback userId={session.user.id} />
+      <main className="bg-background ">
+        <div className="hidden md:flex">
+          <Nav
+            defaultCollapsed={defaultCollapsed}
+            user={session.user}
+            counters={{ userCount, studentCount, enterpriseCount, postCount }}
+          />
+          <div className="min-h-screen w-full">{children}</div>
+          <div className="fixed right-10 bottom-10 z-10">
+            <Feedback userId={session.user.id} />
+          </div>
+        </div>
+        <div className="w-full h-[100dvh] flex flex-col items-center justify-center gap-4 md:hidden">
+          <SmartphoneIcon className="w-10 h-10 animate-bounce" />
+          <p className="max-w-md text-lg font-semibold text-center text-balance">
+            El Sistema no esta disponible en dispositivos móviles
+          </p>
         </div>
       </main>
     );

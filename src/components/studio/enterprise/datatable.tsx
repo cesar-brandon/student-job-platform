@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 import {
   ColumnFiltersState,
   SortingState,
@@ -42,13 +42,11 @@ const columnLabels: { [key: string]: string } = {
 };
 
 export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
@@ -61,11 +59,13 @@ export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter,
     },
   });
 
@@ -75,9 +75,9 @@ export function EnterpriseDataTable({ data }: { data: Enterprise[] }) {
         <div className="flex items-center gap-4">
           <Input
             placeholder="Buscar por palabra clave"
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            value={globalFilter ?? ""}
             onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
+              setGlobalFilter(event.currentTarget.value ?? "")
             }
             className="max-w-sm py-6"
           />
