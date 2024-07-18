@@ -1,18 +1,25 @@
 import AsideFeedHeader from "./aside-feed-header";
 import { User } from "@prisma/client";
 import { ProfileLink } from "@/components/profile/profile-link";
-import getUsers from "@/lib/data/getUsers";
 import { privateRoles, normalRoles } from "@/config";
+import { db } from "@/lib/prisma";
 
 export const AsideFeed = async () => {
-  const users = await getUsers();
-
-  const enterprises = users.filter((user: User) =>
-    privateRoles.includes(user.role),
-  );
-  const students = users.filter((user: User) =>
-    normalRoles.includes(user.role),
-  );
+  const enterprises = await db.user.findMany({
+    where: {
+      role: {
+        in: privateRoles,
+      },
+    },
+  });
+  const students = await db.user.findMany({
+    where: {
+      role: {
+        in: normalRoles,
+      },
+    },
+    take: 6,
+  });
 
   return (
     <div className="w-[25%] p-4 hidden xl:flex flex-col gap-4">
