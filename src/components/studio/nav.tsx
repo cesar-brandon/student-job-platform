@@ -20,13 +20,15 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Button, buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import Image from "next/image";
 import { adminRoles, privateRoles } from "@/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AccountSwitcher } from "./account-switcher";
 
 interface NavProps {
   defaultCollapsed?: boolean;
+  authorizedUsers?: User[];
   user: User;
   counters: {
     userCount: number;
@@ -36,7 +38,12 @@ interface NavProps {
   };
 }
 
-export function Nav({ defaultCollapsed, user, counters }: NavProps) {
+export function Nav({
+  defaultCollapsed,
+  authorizedUsers,
+  user,
+  counters,
+}: NavProps) {
   const [isCollapsed, setIsCollapsed] = React.useState<boolean>(
     defaultCollapsed || false,
   );
@@ -74,7 +81,7 @@ export function Nav({ defaultCollapsed, user, counters }: NavProps) {
             isCollapsed ? "h-[56px] justify-center" : "px-4 justify-start",
           )}
         >
-          <Avatar>
+          <Avatar className="w-8 h-8">
             <AvatarImage src={user.image || ""} alt="Foto de perfil" />
             <AvatarFallback>
               {simplifyName(user.name.toUpperCase())}
@@ -85,7 +92,19 @@ export function Nav({ defaultCollapsed, user, counters }: NavProps) {
           </span>
         </div>
 
-        {/* <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} /> */}
+        {/* <div */}
+        {/*   className={cn( */}
+        {/*     "flex h-[56px] items-center justify-center", */}
+        {/*     isCollapsed ? "h-[56px]" : "px-2", */}
+        {/*   )} */}
+        {/* > */}
+        {/*   <AccountSwitcher */}
+        {/*     user={user} */}
+        {/*     isCollapsed={isCollapsed} */}
+        {/*     accounts={authorizedUsers} */}
+        {/*   /> */}
+        {/* </div> */}
+
         <Separator />
         {privateRoles.includes(user.role) && (
           <NavGroup

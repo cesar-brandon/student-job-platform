@@ -178,12 +178,12 @@ export type Mail = (typeof mails)[number];
 export const accounts = [
   {
     label: "Cristina Flores",
-    email: "cristina@ifv.com",
+    email: "cesarbrandon.v0@gmail.com",
     icon: <LoaderIfvIcon />,
   },
   {
     label: "Alicia Maria",
-    email: "alicia@ifv.com",
+    email: "elmorsa303@gmail.com",
     icon: <LoaderIfvIcon />,
   },
   {

@@ -4,6 +4,7 @@ import { ProfileLink } from "@/components/profile/profile-link";
 import { privateRoles, normalRoles } from "@/config";
 import { db } from "@/lib/prisma";
 
+//NOTE: Ver si podemos cachear esta lista junto a Explore Page
 export const AsideFeed = async () => {
   const enterprises = await db.user.findMany({
     where: {

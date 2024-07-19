@@ -26,6 +26,14 @@ export default async function DashboardLayout({
       db.post.count(),
     ]);
 
+  // const authorizedUsers = await db.user.findMany({
+  //   where: {
+  //     role: {
+  //       in: privateRoles,
+  //     },
+  //   },
+  // });
+
   if (session && privateRoles.includes(session.user.role)) {
     return (
       <main className="bg-background ">

@@ -93,7 +93,11 @@ function PostFilterContent({ selectedFilters, setSelectedFilters }: Props) {
       <p className="font-bold mb-4">Filtros</p>
       <Accordion type="multiple" className="w-full">
         {_multiselectFilters.map((filter, index) => (
-          <AccordionItem value={`item-${index}`} key={index}>
+          <AccordionItem
+            className="last:border-none"
+            value={`item-${index}`}
+            key={index}
+          >
             <AccordionTrigger className="hover:no-underline lg:hover:underline">
               <p className="text-sm">{filter.title}</p>
             </AccordionTrigger>

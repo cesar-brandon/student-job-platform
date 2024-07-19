@@ -5,6 +5,9 @@ import type { Post } from "@prisma/client";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { AccountSwitcher } from "../account-switcher";
+import { accounts } from "../data";
+import { Label } from "@/components/ui/label";
 
 export default function Submit({ post }: { post?: Post }) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
@@ -17,7 +20,7 @@ export default function Submit({ post }: { post?: Post }) {
   return (
     <ScrollArea className={post ? "h-full" : "h-[94vh]"}>
       <div className="w-full grid md:grid-cols-2 gap-6">
-        <div className="flex flex-col items-start gap-6 p-10">
+        <div className="flex flex-col items-start gap-6 py-10 pl-10">
           <div className="w-full flex flex-col justify-end gap-4">
             {post ? (
               <PostForm
@@ -36,6 +39,9 @@ export default function Submit({ post }: { post?: Post }) {
         </div>
 
         <div className="flex flex-col gap-6 p-10">
+          {/* <div className="w-full"> */}
+          {/*   <AccountSwitcher isCollapsed={false} accounts={accounts} /> */}
+          {/* </div> */}
           <PostFilters
             selectedFilters={selectedFilters}
             setSelectedFilters={setSelectedFilters}
