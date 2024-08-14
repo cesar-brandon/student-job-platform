@@ -20,6 +20,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/drawer";
+import { PencilIcon } from "lucide-react";
 
 export function ProfileEditModal({
   user,
@@ -69,8 +70,8 @@ export function ProfileEditModal({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" size="lg" className={className}>
-          Editar Pefil
+        <Button variant="outline" size="icon" className={className}>
+          <PencilIcon className="h-5 w-5" />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
