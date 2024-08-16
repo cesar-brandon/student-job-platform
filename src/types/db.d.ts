@@ -17,7 +17,7 @@ export type ExtendedPostApply = Post & {
   author: User;
   comments: Comment[];
   applies: ExtendedApply[];
-  read?: boolean;
+  readByUser?: boolean;
 };
 
 export type Student = Student;

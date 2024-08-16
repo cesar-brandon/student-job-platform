@@ -19,13 +19,14 @@ import axios from "axios";
 import { PostDisplay } from "./post-display";
 import { usePostStore } from "@/store/post";
 import { ScrollArea } from "../ui/scroll-area";
-import type { User } from "@prisma/client";
+import type { Post, User } from "@prisma/client";
 import { NoItems } from "../common/no-items";
 import { Skeleton } from "../ui/skeleton";
 import { useFilterStore } from "@/store/filter";
 
 interface MailProps {
   initialPosts: ExtendedPostApply[];
+  userWithReadPosts: { readPosts: { id: string }[] } | null;
   defaultLayout: number[] | undefined;
   user: User;
 }
@@ -33,6 +34,7 @@ interface MailProps {
 //NOTE: añadir funcionalidad de busqueda
 export function Studio({
   initialPosts,
+  userWithReadPosts,
   defaultLayout = [70, 30],
   user,
 }: MailProps) {
@@ -83,7 +85,19 @@ export function Studio({
     }
   }, [entry, fetchNextPage]);
 
-  const allPosts = data?.pages.flatMap((page) => page) ?? initialPosts;
+  const postsWithReadStatus =
+    data?.pages.map((page: ExtendedPostApply[]) =>
+      page.map((post: Post) => ({
+        ...post,
+        readByUser:
+          userWithReadPosts?.readPosts?.some(
+            (readPost: { id: string }) => readPost.id === post.id,
+          ) ?? false,
+      })),
+    ) ?? [];
+
+  const allPosts =
+    postsWithReadStatus.pages.flatMap((page) => page) ?? initialPosts;
   const myPosts = allPosts.filter((p) => p.author.id === session?.user?.id);
 
   return (
@@ -123,6 +137,7 @@ export function Studio({
                       items={myPosts}
                       lastPostRef={ref}
                       isFetchingNextPage={isFetchingNextPage}
+                      user={user}
                     />
                   </Suspense>
                 ) : (
@@ -138,6 +153,7 @@ export function Studio({
                       items={allPosts}
                       lastPostRef={ref}
                       isFetchingNextPage={isFetchingNextPage}
+                      user={user}
                     />
                   </Suspense>
                 ) : (

@@ -11,6 +11,7 @@ import { ExtendedApply } from "@/types/db";
 import { ApplyDisplay } from "./apply-display";
 import { ApplyStatus } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function ApplyCard({ apply }: { apply: ExtendedApply }) {
   const { userId, postId, status } = apply;
@@ -74,11 +75,13 @@ export function ApplyCard({ apply }: { apply: ExtendedApply }) {
           </Button>
         </DialogTrigger>
         <DialogContent className="lg:min-w-[45rem] h-[80%]">
-          <ApplyDisplay
-            isLoading={isLoading}
-            updateApplyStatus={updateApplyStatus}
-            apply={apply}
-          />
+          <ScrollArea className="w-full h-full">
+            <ApplyDisplay
+              isLoading={isLoading}
+              updateApplyStatus={updateApplyStatus}
+              apply={apply}
+            />
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </div>

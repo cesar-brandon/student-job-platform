@@ -70,6 +70,7 @@ model User {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   Post          Post[]
+  readPosts     Post[]         @relation("ReadPosts")
   Student       Student[]
   Enterprise    Enterprise[]
   CommentVote   CommentVote[]
@@ -153,7 +154,6 @@ model Post {
   content   Json?
   filters   String[]
   address   String?
-  published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -164,6 +164,7 @@ model Post {
   comments  Comment[]
   votes     Vote[]
   bookmarks Bookmark[]
+  readBy    User[]     @relation("ReadPosts")
 }
 
 model Comment {

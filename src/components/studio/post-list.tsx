@@ -6,17 +6,22 @@ import EditorOutput from "../editor/editor-output";
 import { usePostStore } from "@/store/post";
 import { FilterBadgeList } from "../post/filters/filter-badge-list";
 import { Skeleton } from "@/components/ui/skeleton";
+import { markedAsRead } from "@/actions/post/markedAsRead";
+import type { User } from "@prisma/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface MailListProps {
   items: ExtendedPostApply[];
   lastPostRef: (element: any) => void;
   isFetchingNextPage: boolean;
+  user: User;
 }
 
 export function PostList({
   items,
   lastPostRef,
   isFetchingNextPage,
+  user,
 }: MailListProps) {
   return (
     <ScrollArea className="w-full h-[93dvh]">
@@ -25,11 +30,11 @@ export function PostList({
           if (index === items.length - 1) {
             return (
               <li key={item.id} ref={lastPostRef}>
-                <PostItem item={item} />
+                <PostItem item={item} user={user} />
               </li>
             );
           } else {
-            return <PostItem key={item.id} item={item} />;
+            return <PostItem key={item.id} item={item} user={user} />;
           }
         })}
         {isFetchingNextPage && (
@@ -46,28 +51,32 @@ export function PostList({
   );
 }
 
-function PostItem({ item }: { item: ExtendedPostApply }) {
+function PostItem({ item, user }: { item: ExtendedPostApply; user: User }) {
   const { post, setPost } = usePostStore();
+  const queryClient = useQueryClient();
 
   return (
     <button
       className={cn(
         "w-full flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-        post && post.selected === item.id && "bg-muted",
+        item.readByUser && "bg-muted",
+        post && post.selected === item.id && "bg-accent",
       )}
-      onClick={() =>
+      onClick={async () => {
         setPost({
           ...post,
           selected: item.id,
-        })
-      }
+        });
+        await markedAsRead(item.id, user.id);
+        queryClient.invalidateQueries(["studio-posts"]);
+      }}
     >
       <div className="flex w-full flex-col gap-1">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="font-semibold break-all">{item.title}</div>
-            {!item.read && (
-              <span className="flex min-w-2 h-2 w-2 rounded-full bg-blue-600" />
+            {!item.readByUser && (
+              <span className="flex min-w-2 h-2 w-2 rounded-full bg-primary" />
             )}
           </div>
           <div

@@ -15,6 +15,15 @@ export default async function StudioPage() {
 
   const session = await getSession();
 
+  const userWithReadPosts = await db.user.findUnique({
+    where: {
+      id: session?.user.id,
+    },
+    select: {
+      readPosts: true,
+    },
+  });
+
   const posts = await db.post.findMany({
     orderBy: {
       createdAt: "desc",
@@ -31,10 +40,19 @@ export default async function StudioPage() {
     take: INFINITE_SCROLL_PAGINATION_RESULTS,
   });
 
+  const postsWithReadStatus = posts.map((post) => ({
+    ...post,
+    readByUser:
+      userWithReadPosts?.readPosts?.some(
+        (readPost: { id: string }) => readPost.id === post.id,
+      ) ?? false,
+  }));
+
   return (
     <div className="hidden flex-col md:flex">
       <Studio
-        initialPosts={posts}
+        initialPosts={postsWithReadStatus}
+        userWithReadPosts={userWithReadPosts}
         defaultLayout={defaultLayout}
         user={session?.user}
       />
