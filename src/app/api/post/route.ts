@@ -1,6 +1,7 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { z } from "zod";
+import getUserWithReadPosts from "@/lib/data/getUserWithReadPosts";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -39,6 +40,8 @@ export async function GET(req: Request) {
       };
     }
 
+    const userWithReadPosts = await getUserWithReadPosts(session);
+
     const posts = await db.post.findMany({
       take: parseInt(limit),
       skip: (parseInt(page) - 1) * parseInt(limit), // skip should start from 0 for page 1
@@ -58,7 +61,15 @@ export async function GET(req: Request) {
       },
     });
 
-    return new Response(JSON.stringify(posts));
+    const postsWithReadStatus = posts.map((post) => ({
+      ...post,
+      readByUser:
+        userWithReadPosts?.readPosts?.some(
+          (readPost: { id: string }) => readPost.id === post.id,
+        ) ?? false,
+    }));
+
+    return new Response(JSON.stringify(postsWithReadStatus));
   } catch (error) {
     return new Response("Could not fetch posts", { status: 500 });
   }

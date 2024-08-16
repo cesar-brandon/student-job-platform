@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -19,7 +19,7 @@ import axios from "axios";
 import { PostDisplay } from "./post-display";
 import { usePostStore } from "@/store/post";
 import { ScrollArea } from "../ui/scroll-area";
-import type { Post, User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { NoItems } from "../common/no-items";
 import { Skeleton } from "../ui/skeleton";
 import { useFilterStore } from "@/store/filter";
@@ -35,7 +35,7 @@ interface MailProps {
 export function Studio({
   initialPosts,
   userWithReadPosts,
-  defaultLayout = [70, 30],
+  defaultLayout = [70, 50],
   user,
 }: MailProps) {
   const { post } = usePostStore();
@@ -48,7 +48,11 @@ export function Studio({
 
   const { data: session } = useSession();
 
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  const {
+    data: studioPosts,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
     ["studio-posts"],
     async ({ pageParam = 1 }) => {
       const query = `/api/post?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
@@ -85,19 +89,7 @@ export function Studio({
     }
   }, [entry, fetchNextPage]);
 
-  const postsWithReadStatus =
-    data?.pages.map((page: ExtendedPostApply[]) =>
-      page.map((post: Post) => ({
-        ...post,
-        readByUser:
-          userWithReadPosts?.readPosts?.some(
-            (readPost: { id: string }) => readPost.id === post.id,
-          ) ?? false,
-      })),
-    ) ?? [];
-
-  const allPosts =
-    postsWithReadStatus.pages.flatMap((page) => page) ?? initialPosts;
+  const allPosts = studioPosts?.pages.flatMap((page) => page) ?? initialPosts;
   const myPosts = allPosts.filter((p) => p.author.id === session?.user?.id);
 
   return (
@@ -111,7 +103,7 @@ export function Studio({
         }}
         className="h-full max-h-screen items-stretch"
       >
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+        <ResizablePanel defaultSize={defaultLayout[0]} minSize={30}>
           <Tabs defaultValue="myPosts">
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Puestos</h1>
@@ -141,7 +133,7 @@ export function Studio({
                     />
                   </Suspense>
                 ) : (
-                  <NoItems text="No tienes ofertas publicadas" />
+                  <PostListSkeleton />
                 )}
               </ScrollArea>
             </TabsContent>
@@ -164,12 +156,18 @@ export function Studio({
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[2]}>
-          {post && post.selected && (
+        <ResizablePanel defaultSize={defaultLayout[1]}>
+          {post && post.selected ? (
             <PostDisplay
               user={user}
               post={allPosts.find((item) => item.id === post.selected) || null}
             />
+          ) : (
+            <div className="flex items-center justify-center h-full m-3">
+              <h1 className="text-lg text-muted-foreground">
+                Selecciona un puesto para ver los detalles
+              </h1>
+            </div>
           )}
         </ResizablePanel>
       </ResizablePanelGroup>
@@ -180,18 +178,20 @@ export function Studio({
 function PostListSkeleton() {
   return (
     <ul className="w-full flex flex-col gap-2 p-4 pt-0">
-      {Array.from({ length: 4 }).map((_, index) => (
-        <li
-          key={index}
-          className="w-full flex flex-col justify-between items-center gap-3 rounded-lg border bg-card text-card-foreground shadow-sm p-6"
-        >
-          <div className="w-full">
-            <Skeleton className="h-4 w-3/4 mb-2" />
-            <Skeleton className="h-4 w-1/4 mb-2" />
-            <Skeleton className="h-40 w-full" />
-          </div>
-        </li>
-      ))}
+      {Array.from({ length: INFINITE_SCROLL_PAGINATION_RESULTS }).map(
+        (_, index) => (
+          <li
+            key={index}
+            className="w-full flex flex-col justify-between items-center gap-3 rounded-lg border bg-card text-card-foreground shadow-sm p-6"
+          >
+            <div className="w-full">
+              <Skeleton className="h-4 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-1/4 mb-2" />
+              <Skeleton className="h-40 w-full" />
+            </div>
+          </li>
+        ),
+      )}
     </ul>
   );
 }

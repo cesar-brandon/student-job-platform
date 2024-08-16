@@ -3,7 +3,7 @@ import type { UserRole } from "@prisma/client";
 
 // 2 to demonstrate infinite scroll, should be higher in production
 export const INFINITE_SCROLL_PAGINATION_RESULTS =
-  process.env.NODE_ENV === "production" ? 20 : 4;
+  process.env.NODE_ENV === "production" ? 20 : 10;
 
 // embla carousel
 export const OPTIONS: CarouselOptions = { align: "start", loop: true };

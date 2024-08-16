@@ -67,8 +67,10 @@ function PostItem({ item, user }: { item: ExtendedPostApply; user: User }) {
           ...post,
           selected: item.id,
         });
-        await markedAsRead(item.id, user.id);
-        queryClient.invalidateQueries(["studio-posts"]);
+        if (!item.readByUser) {
+          await markedAsRead(item.id, user.id);
+          queryClient.invalidateQueries(["studio-posts"]);
+        }
       }}
     >
       <div className="flex w-full flex-col gap-1">

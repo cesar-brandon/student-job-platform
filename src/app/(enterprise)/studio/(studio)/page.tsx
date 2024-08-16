@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
-import { Studio } from "@/components/studio/studio";
+import { Studio } from "@/components/studio";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { db } from "@/lib/prisma";
 import getSession from "@/lib/getSession";
+import getUserWithReadPosts from "@/lib/data/getUserWithReadPosts";
 
 export const metadata = {
   title: "Studio",
@@ -14,15 +15,10 @@ export default async function StudioPage() {
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
 
   const session = await getSession();
+  if (!session)
+    return { redirect: { destination: "/login", permanent: false } };
 
-  const userWithReadPosts = await db.user.findUnique({
-    where: {
-      id: session?.user.id,
-    },
-    select: {
-      readPosts: true,
-    },
-  });
+  const userWithReadPosts = await getUserWithReadPosts(session);
 
   const posts = await db.post.findMany({
     orderBy: {
@@ -54,7 +50,7 @@ export default async function StudioPage() {
         initialPosts={postsWithReadStatus}
         userWithReadPosts={userWithReadPosts}
         defaultLayout={defaultLayout}
-        user={session?.user}
+        user={session.user}
       />
     </div>
   );
