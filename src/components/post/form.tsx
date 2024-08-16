@@ -12,6 +12,8 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { LoaderCircleIcon } from "../common/icons";
 import { useUploadThing } from "@/lib/uploadthing";
+import { ToolConstructable } from "@editorjs/editorjs";
+import { autocompleteInput } from "@/lib/editor/actions/autocompleteInput";
 
 interface PostFormProps {
   id?: string;
@@ -23,8 +25,9 @@ interface PostFormProps {
   address?: string;
 }
 
-//NOTE: controlar mejor los errores
-//FIX: bug al insertar direccion cuando editamos un post
+//NOTE: Controlar mejor los errores
+//FIX: Bug al insertar direccion cuando editamos un post
+//FIX: Arreglar el output de tablas
 
 const PostForm: React.FC<PostFormProps> = ({
   id,
@@ -60,10 +63,11 @@ const PostForm: React.FC<PostFormProps> = ({
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
     const Embed = (await import("@editorjs/embed")).default;
-    const Table = (await import("@editorjs/table")).default;
+    // const Table = (await import("@editorjs/table")).default;
     const List = (await import("@editorjs/list")).default;
     const LinkTool = (await import("@editorjs/link")).default;
     const ImageTool = (await import("@editorjs/image")).default;
+    const AIText = (await import("@/lib/editor/ai")).default;
 
     if (!ref.current) {
       const editor = new EditorJS({
@@ -108,12 +112,22 @@ const PostForm: React.FC<PostFormProps> = ({
             },
           },
           list: List,
-          table: Table,
+          // table: Table,
           embed: Embed,
+          paragraph: {
+            class: AIText as unknown as ToolConstructable,
+            config: {
+              callback: async (text: string) => {
+                const title = _titleRef.current?.value;
+                const res = await autocompleteInput(text, "ENTERPRISE", title);
+                return res.text;
+              },
+            },
+          },
         },
       });
     }
-  }, [startUpload, content]);
+  }, [startUpload, content, ref]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -214,13 +228,13 @@ const PostForm: React.FC<PostFormProps> = ({
             className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
           />
           <div id="editor" className="p-0" />
-          {/* <p className="text-sm text-gray-500"> */}
-          {/*   Usa{" "} */}
-          {/*   <kbd className="rounded-md border bg-muted px-1 text-xs uppercase"> */}
-          {/*     Tab */}
-          {/*   </kbd>{" "} */}
-          {/*   para abrir el menú de comandos. */}
-          {/* </p> */}
+          <p className="py-4 text-sm text-gray-500">
+            Usa{" "}
+            <kbd className="rounded border bg-muted px-1 text-xs uppercase">
+              /
+            </kbd>{" "}
+            para abrir el menú de comandos.
+          </p>
         </div>
         <Button
           type="submit"

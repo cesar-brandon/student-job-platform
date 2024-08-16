@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 
 const Output = dynamic(
   async () => (await import("editorjs-react-renderer")).default,
-  { ssr: false }
+  { ssr: false },
 );
 
 interface EditorOutputProps {
@@ -29,7 +29,7 @@ const style = {
   },
   list: {
     container: {
-       marginLeft: "1.5rem",
+      marginLeft: "1.5rem",
     },
     listItem: {
       fontSize: "0.885rem",
@@ -41,6 +41,13 @@ const style = {
 };
 
 const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
+  if (!content) return null;
+  if (
+    content.blocks.filter((block: any) => block.type === "table").length > 0
+  ) {
+    return null;
+  }
+
   return (
     <Output
       style={style}

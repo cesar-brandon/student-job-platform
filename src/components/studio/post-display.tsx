@@ -28,7 +28,8 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
 
   useEffect(() => {
     setDisplay("post");
-  }, [post?.id]);
+    console.log(post?.content);
+  }, [post?.id, post?.content]);
 
   return (
     <div className="flex flex-col min-h-[100dvh]">

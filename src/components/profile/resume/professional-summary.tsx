@@ -3,6 +3,8 @@ import type EditorJS from "@editorjs/editorjs";
 import { toast } from "@/hooks/use-toast";
 import { PostCreationRequest } from "@/lib/validators/post";
 import { FieldErrors } from "react-hook-form";
+import { ToolConstructable } from "@editorjs/editorjs";
+import { autocompleteInput } from "@/lib/editor/actions/autocompleteInput";
 
 //FIX: Controlar sol el error del editor y no de todo el form
 
@@ -14,6 +16,8 @@ const ProfessionalSummary = forwardRef<
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
+    const AIText = (await import("@/lib/editor/ai")).default;
+
     if (ref && "current" in ref && !ref.current) {
       const editor = new EditorJS({
         holder: "editor-professional-summary",
@@ -22,6 +26,17 @@ const ProfessionalSummary = forwardRef<
         },
         placeholder: "Empieza tu resumen profesional...",
         inlineToolbar: true,
+        tools: {
+          paragraph: {
+            class: AIText as unknown as ToolConstructable,
+            config: {
+              callback: async (text: string) => {
+                const res = await autocompleteInput(text, "STUDENT");
+                return res.text;
+              },
+            },
+          },
+        },
         // data: { blocks: [] },
       });
     }
