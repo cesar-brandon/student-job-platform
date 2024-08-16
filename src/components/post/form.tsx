@@ -14,6 +14,7 @@ import { LoaderCircleIcon } from "../common/icons";
 import { useUploadThing } from "@/lib/uploadthing";
 import { ToolConstructable } from "@editorjs/editorjs";
 import { autocompleteInput } from "@/lib/editor/actions/autocompleteInput";
+import { ArrowBigRightIcon } from "lucide-react";
 
 interface PostFormProps {
   id?: string;
@@ -228,13 +229,22 @@ const PostForm: React.FC<PostFormProps> = ({
             className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
           />
           <div id="editor" className="p-0" />
-          <p className="py-4 text-sm text-gray-500">
-            Usa{" "}
-            <kbd className="rounded border bg-muted px-1 text-xs uppercase">
-              /
-            </kbd>{" "}
-            para abrir el menú de comandos.
-          </p>
+          <div className="flex flex-col gap-2 py-3">
+            <p className="text-sm text-gray-500">
+              Usa{" "}
+              <kbd className="rounded border bg-muted px-1 text-xs uppercase">
+                /
+              </kbd>{" "}
+              para abrir el menú de comandos.
+            </p>
+            <p className="text-sm text-gray-500">
+              Usa{" "}
+              <kbd className="rounded border bg-muted px-1 text-xs uppercase">
+                Alt + <ArrowBigRightIcon className="w-4 h-4 inline-block" />
+              </kbd>{" "}
+              para autocompletar.
+            </p>
+          </div>
         </div>
         <Button
           type="submit"

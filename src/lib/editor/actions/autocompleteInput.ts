@@ -8,20 +8,20 @@ import { normalRoles, privateRoles } from "@/config";
 export async function autocompleteInput(
   writtenText: string,
   userRole: UserRole,
-  title?: string,
+  info?: string,
 ) {
   let prompt = "";
-  console.log(title);
 
   if (privateRoles.includes(userRole)) {
     prompt = `El usuario esta creando una oferta de trabajo en IFV Empleos. 
-          * Titulo de la oferta: ${title}
+          * Titulo de la oferta: ${info}
           * El usuario ha escrito lo siguiente: ${writtenText}
           * El usuario nesesita que predigas lo demas.
           * Se conciso y preciso, completa con texto plano y sin signos`;
   }
   if (normalRoles.includes(userRole)) {
     prompt = `El estudiante esta creando su descripción profesional en la plataforma de empleo en IFV Empleos. 
+          * La carrera del estudiante es: ${info}
           * El usuario ha escrito lo siguiente: ${writtenText}
           * El usuario nesesita que predigas lo demas
           * Se conciso y preciso, completa con texto plano y sin signos`;

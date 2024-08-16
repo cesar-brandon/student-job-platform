@@ -1,6 +1,5 @@
 "use client";
 
-import { DotButton, useDotButton } from "@/components/common/dot-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -10,7 +9,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Form } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
+import { careerData, cn } from "@/lib/utils";
 import { ResumeRequest, ResumeValidator } from "@/lib/validators/resume";
 import { user } from "@/types/next-auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -117,6 +116,7 @@ export default function ResumeCreateCard({ user }: { user: user }) {
               <CarouselContent>
                 <CarouselItem>
                   <ProfessionalSummary
+                    career={careerData[user.career || ""].name}
                     errors={form.formState.errors}
                     ref={ref}
                   />

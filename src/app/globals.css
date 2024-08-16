@@ -155,6 +155,10 @@ a {
   background-color: hsl(var(--accent));
 }
 
+.dark .ce-popover__container {
+  background-color: hsl(var(--background));
+  border-color: hsl(var(--border));
+}
 .dark .ce-popover__items {
   scrollbar-color: hsl(var(--border)) hsl(var(--primary));
 }

@@ -9,62 +9,15 @@ import {
   TAITextReadOnly,
 } from "./aitext";
 import { debounce } from "./lib";
+import { toast } from "@/hooks/use-toast";
 
 class AIText extends Paragraph {
   private callback: TAITextCallback;
-  private _element: TAITextElement = null;
-  private _CSS: TAITextCSS = {
-    block: "ce-paragraph",
-    wrapper: "ce-block",
-  };
-  private _data: TAITextData = {
-    text: "",
-  };
+  private _element?: TAITextElement;
+  private _CSS?: TAITextCSS;
+  private _data?: TAITextData;
   private readOnly: TAITextReadOnly = false;
-  private api: TAITextApi = {
-    i18n: {
-      t: (_placeholder: any) => "Escribe tu contenido aquí...",
-    },
-    blocks: {
-      clear: () => {},
-      render: () => {},
-      delete: (index: number) => {},
-      swap: (fromIndex: number, toIndex: number) => {},
-      move: (fromIndex: number, toIndex: number) => {},
-      getBlockByIndex: (index: number) => document.createElement("div"),
-      getCurrentBlockIndex: () => 0,
-      getBlocksCount: () => 0,
-      stretchBlock: (index: number) => {},
-      insert: (index: number, data: object) => {},
-    },
-    selection: {
-      findParentTag: (tag: string, className: string) =>
-        document.createElement("div"),
-      expandToTag: (tag: string) => {},
-    },
-    toolbar: {
-      open: () => {},
-      close: () => {},
-    },
-    sanitizer: {
-      clean: (tainted: string, rules: object) => tainted,
-    },
-    caret: {
-      setToFirstBlock: () => {},
-      setToLastBlock: () => {},
-      setToPreviousBlock: () => {},
-      setToNextBlock: () => {},
-      setToBlock: (index: number) => {},
-      focus: () => {},
-    },
-    listeners: {
-      on: (event: string, callback: (event: Event) => void) => {},
-      off: (event: string, callback: (event: Event) => void) => {},
-    },
-    saver: {
-      save: () => ({}),
-    },
-  };
+  private api?: TAITextApi;
 
   static get toolbox() {
     return {
@@ -144,7 +97,10 @@ class AIText extends Paragraph {
         this._element?.querySelector("#ai-suggestions-loader")?.remove();
       })
       .catch((error) => {
-        throw new Error(error);
+        toast({
+          description: "Error al obtener sugerencias de IA",
+          variant: "destructive",
+        });
       });
   }
 
@@ -202,11 +158,16 @@ class AIText extends Paragraph {
   drawView() {
     const div = document.createElement("DIV");
 
-    div.classList.add(this._CSS.wrapper, this._CSS.block);
+    if (this._CSS?.wrapper) {
+      div.classList.add(this._CSS.wrapper);
+    }
+    if (this._CSS?.block) {
+      div.classList.add(this._CSS.block);
+    }
     div.contentEditable = "false";
-    div.dataset.placeholder = this.api.i18n.t(this._placeholder);
+    div.dataset.placeholder = this.api?.i18n.t(this._placeholder);
 
-    if (this._data.text) {
+    if (this._data?.text) {
       div.innerHTML = this._data.text;
     }
 

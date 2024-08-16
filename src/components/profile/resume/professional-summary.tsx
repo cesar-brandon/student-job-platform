@@ -1,6 +1,5 @@
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
-import { toast } from "@/hooks/use-toast";
 import { PostCreationRequest } from "@/lib/validators/post";
 import { FieldErrors } from "react-hook-form";
 import { ToolConstructable } from "@editorjs/editorjs";
@@ -10,8 +9,8 @@ import { autocompleteInput } from "@/lib/editor/actions/autocompleteInput";
 
 const ProfessionalSummary = forwardRef<
   EditorJS | undefined | null,
-  { errors: FieldErrors<PostCreationRequest> }
->(({ errors }, ref) => {
+  { errors: FieldErrors<PostCreationRequest>; career: string }
+>(({ errors, career }, ref) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   const initializeEditor = useCallback(async () => {
@@ -31,7 +30,7 @@ const ProfessionalSummary = forwardRef<
             class: AIText as unknown as ToolConstructable,
             config: {
               callback: async (text: string) => {
-                const res = await autocompleteInput(text, "STUDENT");
+                const res = await autocompleteInput(text, "STUDENT", career);
                 return res.text;
               },
             },
@@ -40,7 +39,7 @@ const ProfessionalSummary = forwardRef<
         // data: { blocks: [] },
       });
     }
-  }, [ref]);
+  }, [ref, career]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -87,7 +86,7 @@ const ProfessionalSummary = forwardRef<
       </p>
       <div
         id="editor-professional-summary"
-        className="border rounded-md overflow-hidden overflow-y-auto min-h-[150px] px-4 py-1"
+        className="border rounded-md overflow-hidden overflow-y-auto min-h-[250px] px-4 py-1"
       />
     </section>
   );
