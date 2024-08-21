@@ -1,18 +1,15 @@
 "use server";
 import { db } from "@/lib/prisma";
+import { PostStatus } from "@prisma/client";
 
-export async function markedAsRead(postId: string, userId: string) {
+export async function closePost(postId: string) {
   try {
     await db.post.update({
       where: {
         id: postId,
       },
       data: {
-        readBy: {
-          connect: {
-            id: userId,
-          },
-        },
+        status: PostStatus.CLOSED,
       },
     });
   } catch (error) {

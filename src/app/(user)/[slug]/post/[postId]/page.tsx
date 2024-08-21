@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";
 import { formatTimeToNow } from "@/lib/utils";
 import { CachedPost } from "@/types/redis";
-import { Post, User, Bookmark } from "@prisma/client";
+import { Post, User, Bookmark, PostStatus } from "@prisma/client";
 import { Suspense } from "react";
 import { kv } from "@/lib/redis";
-import { ArrowLeft, LibraryBig, Loader2 } from "lucide-react";
+import { ArrowLeft, CircleMinusIcon, LibraryBig, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { HoverProfile } from "@/components/profile/hover-profile";
 import { FilterBadgeList } from "@/components/post/filters/filter-badge-list";
@@ -105,20 +105,27 @@ const PostPage = async ({ params }: PostPageProps) => {
 
           <div className="flex justify-between gap-2 pt-2">
             <Suspense fallback={<PostButtonShell />}>
-              <PostApplyServer
-                postId={post?.id ?? cachedPost.id}
-                userId={session?.user?.id}
-                getData={async () => {
-                  return await db.post.findUnique({
-                    where: {
-                      id: params.postId,
-                    },
-                    include: {
-                      applies: true,
-                    },
-                  });
-                }}
-              />
+              {post?.status === PostStatus.CLOSED ? (
+                <div className="flex gap-2 items-center mr-2 text-destructive">
+                  <CircleMinusIcon className="w-4 h-4 ml-2" />
+                  Ya no se aceptan solicitudes
+                </div>
+              ) : (
+                <PostApplyServer
+                  postId={post?.id ?? cachedPost.id}
+                  userId={session?.user?.id}
+                  getData={async () => {
+                    return await db.post.findUnique({
+                      where: {
+                        id: params.postId,
+                      },
+                      include: {
+                        applies: true,
+                      },
+                    });
+                  }}
+                />
+              )}
             </Suspense>
             <Suspense fallback={<PostButtonShell />}>
               <PostBookmarkServer

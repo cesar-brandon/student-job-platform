@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircleIcon } from "../common/icons";
 import { useUploadThing } from "@/lib/uploadthing";
 import { ToolConstructable } from "@editorjs/editorjs";
-import { autocompleteInput } from "@/actions/editor/autocompleteInput";
+import { autocompleteInput } from "@/actions/editor/autocomplete-input";
 import { ArrowBigRightIcon } from "lucide-react";
 
 interface PostFormProps {

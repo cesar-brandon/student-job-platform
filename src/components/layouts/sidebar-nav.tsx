@@ -58,25 +58,23 @@ const SidebarNav: React.FC<Props> = ({ user, className, isSheet = false }) => {
         }
         isSheet={isSheet}
       />
-      <ComingSoonWrapper>
-        <ButtonLink
-          href="/notifications"
-          text="Notificaciones"
-          ariaLabel="Notificaciones"
-          variant="ghost"
-          className={`hover:bg-border justify-start ${
-            pathname === "/notifications" && "font-bold"
-          }`}
-          icon={
-            pathname === "/notifications" ? (
-              <BellIconSolid className="w-6 h-6 order-first mr-4" />
-            ) : (
-              <BellIcon className="w-6 h-6 order-first mr-4" />
-            )
-          }
-          isSheet={isSheet}
-        />
-      </ComingSoonWrapper>
+      <ButtonLink
+        href="/notifications"
+        text="Notificaciones"
+        ariaLabel="Notificaciones"
+        variant="ghost"
+        className={`hover:bg-border justify-start ${
+          pathname === "/notifications" && "font-bold"
+        }`}
+        icon={
+          pathname === "/notifications" ? (
+            <BellIconSolid className="w-6 h-6 order-first mr-4" />
+          ) : (
+            <BellIcon className="w-6 h-6 order-first mr-4" />
+          )
+        }
+        isSheet={isSheet}
+      />
       <ThemeToggle />
       <ButtonLink
         href="/settings"

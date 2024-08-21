@@ -3,7 +3,7 @@ import type EditorJS from "@editorjs/editorjs";
 import { PostCreationRequest } from "@/lib/validators/post";
 import { FieldErrors } from "react-hook-form";
 import { ToolConstructable } from "@editorjs/editorjs";
-import { autocompleteInput } from "@/actions/editor/autocompleteInput";
+import { autocompleteInput } from "@/actions/editor/autocomplete-input";
 
 //FIX: Controlar sol el error del editor y no de todo el form
 

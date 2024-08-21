@@ -15,6 +15,7 @@ import { PostEditModal } from "../post/edit-modal";
 import { FilterBadgeList } from "../post/filters/filter-badge-list";
 import { CommentDisplay } from "./comment/comment-display";
 import CreateComment from "../post/comment/create-comment";
+import { ClosedDialog } from "../post/closed-dialog";
 
 interface PostDisplayProps {
   post: ExtendedPostApply | null;
@@ -36,6 +37,7 @@ export function PostDisplay({ post, user }: PostDisplayProps) {
         <div className="flex items-center p-2">
           <PostEditModal post={post} />
           <Separator orientation="vertical" className="mx-1 h-6" />
+          <ClosedDialog id={post.id} name={post.title} />
           <DeleteDialog id={post.id} name={post.title} />
         </div>
       )}

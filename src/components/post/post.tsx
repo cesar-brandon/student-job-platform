@@ -2,7 +2,13 @@
 
 import { cn, formatTimeToNow, simplifyName } from "@/lib/utils";
 import { ClockIcon } from "@heroicons/react/24/outline";
-import type { Apply, Post as PrismaPost, User, Vote } from "@prisma/client";
+import {
+  PostStatus,
+  type Apply,
+  type Post as PrismaPost,
+  type User,
+  type Vote,
+} from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FC, useRef, useState } from "react";
@@ -31,7 +37,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PostApplyClient } from "./apply/post-apply-client";
 import { HoverProfile } from "../profile/hover-profile";
-import { LinkIcon, MessageCircle } from "lucide-react";
+import { CircleMinusIcon, LinkIcon, MessageCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { FilterBadgeList } from "./filters/filter-badge-list";
 
@@ -222,10 +228,17 @@ function PostContent({
             <FilterBadgeList filterIds={post.filters} className="pt-2" />
           </SheetHeader>
           <div className="flex gap-2">
-            <PostApplyClient
-              postId={post.id}
-              initialApply={_currentApply?.status}
-            />
+            {post.status === PostStatus.CLOSED ? (
+              <div className="flex gap-2 items-center mr-2 text-destructive">
+                <CircleMinusIcon className="w-4 h-4 ml-2" />
+                Ya no se aceptan solicitudes
+              </div>
+            ) : (
+              <PostApplyClient
+                postId={post.id}
+                initialApply={_currentApply?.status}
+              />
+            )}
             {/* <Button variant="outline">Guardar</Button> */}
             <PostBookmarkClient
               postId={post.id}
@@ -257,11 +270,18 @@ function PostContent({
           </DrawerDescription>
         </DrawerHeader>
         <div className="p-4 flex-1 max-w-md mx-auto">
-          <div className="flex gap-2">
-            <PostApplyClient
-              postId={post.id}
-              initialApply={_currentApply?.status}
-            />
+          <div className="flex items-center justify-center gap-2">
+            {post.status === PostStatus.CLOSED ? (
+              <div className="flex gap-2 items-center mr-2 text-destructive">
+                <CircleMinusIcon className="w-4 h-4 ml-2" />
+                Ya no se aceptan solicitudes
+              </div>
+            ) : (
+              <PostApplyClient
+                postId={post.id}
+                initialApply={_currentApply?.status}
+              />
+            )}
             <PostBookmarkClient
               postId={post.id}
               initialBookmarksAmt={_bookmarkAmt}

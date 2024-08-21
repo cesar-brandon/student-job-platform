@@ -82,6 +82,7 @@ model User {
   sessions      Session[]
   Apply         Apply[]
   Feedback      Feedback[]
+  Notification  Notification[]
 }
 
 model VerificationToken {
@@ -148,14 +149,21 @@ model Filter {
   options Json
 }
 
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+}
+
 model Post {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   title     String
   content   Json?
   filters   String[]
   address   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status    PostStatus @default(PUBLISHED)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
@@ -218,6 +226,7 @@ enum ApplyStatus {
   VIEWED
   PENDING
   ACCEPTED
+  CONFIRMED
   REJECTED
 }
 
@@ -231,6 +240,27 @@ model Apply {
   Post      Post        @relation(fields: [postId], references: [id], map: "post")
 
   @@id([userId, postId])
+}
+
+enum NotificationVariant {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+}
+
+model Notification {
+  id        String              @id @default(cuid())
+  title     String?
+  message   String
+  variant   NotificationVariant @default(INFO)
+  url       String?
+  read      Boolean             @default(false)
+  createdAt DateTime            @default(now())
+  userId    String
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
 }
 
 model Feedback {

@@ -161,7 +161,7 @@ export const applyStatusColor: {
 } = {
   APPLIED: {
     name: "Aplicado",
-    variant: "info",
+    variant: "default",
   },
   VIEWED: {
     name: "Visto",
@@ -174,6 +174,10 @@ export const applyStatusColor: {
   ACCEPTED: {
     name: "Aceptado",
     variant: "success",
+  },
+  CONFIRMED: {
+    name: "Confirmado",
+    variant: "info",
   },
   REJECTED: {
     name: "Descartado",

@@ -1,6 +1,8 @@
+import { notifyApplicationAccepted } from "@/actions/notification/application-accepted";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { ApplyStatusRequestBody } from "@/types/apply";
+import { ApplyStatus } from "@prisma/client";
 
 //WARNING: las rutas de las aplicaciones estan dispersas y desordenadas
 export async function PATCH(req: Request) {
@@ -20,6 +22,10 @@ export async function PATCH(req: Request) {
       },
       data: { status },
     });
+    if (status === ApplyStatus.ACCEPTED) {
+      await notifyApplicationAccepted(userId);
+    }
+
     return new Response("OK");
   } catch (e) {
     return new Response("Error", { status: 500 });

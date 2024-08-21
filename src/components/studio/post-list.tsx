@@ -1,13 +1,12 @@
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import { cn } from "@/lib/utils";
+import { cn, formatDate, formatTimeToNow } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ExtendedPostApply } from "@/types/db";
 import EditorOutput from "../editor/editor-output";
 import { usePostStore } from "@/store/post";
 import { FilterBadgeList } from "../post/filters/filter-badge-list";
 import { Skeleton } from "@/components/ui/skeleton";
-import { markedAsRead } from "@/actions/post/markedAsRead";
-import type { User } from "@prisma/client";
+import { markPostAsRead } from "@/actions/post/marked-as-read";
+import { PostStatus, type User } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface MailListProps {
@@ -59,7 +58,7 @@ function PostItem({ item, user }: { item: ExtendedPostApply; user: User }) {
     <button
       className={cn(
         "w-full flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-        item.readByUser && "bg-muted",
+        item.status === PostStatus.CLOSED && "bg-muted",
         post && post.selected === item.id && "bg-accent",
       )}
       onClick={async () => {
@@ -68,7 +67,7 @@ function PostItem({ item, user }: { item: ExtendedPostApply; user: User }) {
           selected: item.id,
         });
         if (!item.readByUser) {
-          await markedAsRead(item.id, user.id);
+          await markPostAsRead(item.id, user.id);
           queryClient.invalidateQueries(["studio-posts"]);
         }
       }}
@@ -89,9 +88,7 @@ function PostItem({ item, user }: { item: ExtendedPostApply; user: User }) {
                 : "text-muted-foreground",
             )}
           >
-            {formatDistanceToNow(new Date(item.createdAt), {
-              addSuffix: true,
-            })}
+            {formatDate(`${item.createdAt}`)}
           </div>
         </div>
         <div className="flex justify-between text-xs font-medium">
