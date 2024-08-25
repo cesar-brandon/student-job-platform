@@ -19,16 +19,9 @@
 ## Features to be Implemented for Student Employment Platform
 
 - [x] User Registration and Authentication
-- [ ] Profile Creation with Education and Skills
+- [x] Profile Creation with Education and Skills
 - [x] Job Posting and Search Functionality
-- [ ] Resume/CV Upload and Management
-- [ ] Real-time Messaging for Students and Employers
-- [ ] Notifications for New Job Opportunities
-- [ ] Recommendations and Matching Algorithm
-- [ ] Feedback and Ratings System for Employers and Students
-- [ ] Application Tracking and Status Updates
-- [ ] Advanced Search and Filters
-- [ ] Gamification to Encourage Student Engagement
+- [x] Resume/CV Upload and Management
 
 ## Running Locally
 
@@ -55,18 +48,3 @@
    ```bash
    npm run dev
    ```
-
-## Contributors
-
-Thanks goes to these wonderful people for their contributions:
-
-<p align="center">
- <a href="https://github.com/cesar-brandon/job-platform/graphs/contributors">
-   <img src="https://contrib.rocks/image?repo=cesar-brandon/job-platform" />
- </a>
-</p>
-
-<p align="center">
- Made with <a rel="noopener noreferrer" target="_blank" href="https://contrib.rocks">contrib.rocks</a>
-</p>
-
